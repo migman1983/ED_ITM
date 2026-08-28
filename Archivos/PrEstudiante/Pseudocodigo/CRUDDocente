@@ -1,0 +1,204 @@
+Clase CRUDDocente
+
+  publico CRUDDocente()
+  FinMetodo
+
+  publico vacio IngresarDocente(Archivo objArchivo)
+    Docente objD = nuevo Docente()
+    entero idDocente = leerEntero("Ingresar Codigo del Docente: ")
+
+    si (Buscar(objArchivo, idDocente) == falso) entonces
+      objD = objD.ingresarDatos(idDocente)
+      Grabar(objArchivo, objD)
+    sino
+      imprimir("*****Docente YA existe en el archivo*****")
+    FinSi
+  FinMetodo
+
+  publico vacio Grabar(Archivo objArchivos, Docente objD)
+    objArchivos.abrirModoEscritura("DatosDocentes.txt")
+    objArchivos.escribir(objD.aTexto())
+    objArchivos.cerrarModoEscritura()
+  FinMetodo
+
+  publico booleano Buscar(Archivo objArch, entero idDocente)
+    booleano sw = falso
+    entero cod
+    Intentar
+      Docente objD = nuevo Docente()
+      entero tamaño = objArch.contadorLineas("DatosDocentes.txt")
+      objArch.abrirModoLectura("DatosDocentes.txt")
+      Docente vecD[] = nuevo Docente[tamaño]
+      vecD = objArch.leerDocente()
+      entero i = 0
+      entero cantRegistros = objArch.contadorLineas("DatosDocentes.txt")
+      mientras (i <= cantRegistros) hacer
+        objD = vecD[i]
+        cod = objD.obtenerIdDocente()
+        si (cod == idDocente) entonces
+          sw = verdadero
+          romper
+        FinSi
+        i = i + 1
+      FinMientras
+      objArch.cerrarModoLectura()
+    Excepcion (Exception e)
+      imprimir("***Archivo leido y cerrado correctamente*****")
+    FinIntentar
+    retornar sw
+  FinMetodo
+
+  publico Docente Consultar(Archivo objArchivo, entero idDocente)
+    objArchivo.abrirModoLectura("DatosDocentes.txt")
+    Docente[] docentes = objArchivo.leerDocente()
+    objArchivo.cerrarModoLectura()
+
+    para cada (Docente d en docentes) hacer
+      si (d != nulo y d.obtenerIdDocente() == idDocente) entonces
+        retornar d
+      FinSi
+    FinPara
+    retornar nulo
+  FinMetodo
+
+  publico vacio Actualizar(Archivo objArchivos, entero codDocente)
+    Cadena nombre, titulo
+    entero idDocente, edad, experiencia
+    objArchivos.abrirModoLectura("DatosDocentes.txt")
+    entero op
+    si (objArchivos.archivo.existe() == verdadero) entonces
+      entero cantLineas = objArchivos.contadorLineas("DatosDocentes.txt")
+      Docente vecD[] = nuevo Docente[cantLineas]
+      Intentar
+        booleano sw = falso
+        Docente objD = nuevo Docente()
+        vecD = objArchivos.leerDocente()
+        entero i = 0
+        mientras (i < cantLineas) hacer
+          objD = vecD[i]
+          idDocente = objD.obtenerIdDocente()
+          nombre = objD.obtenerNombre()
+          edad = objD.obtenerEdad()
+          titulo = objD.obtenerTitulo()
+          experiencia = objD.obtenerExperiencia()
+          si (codDocente == idDocente) entonces
+            sw = verdadero
+            imprimir("Se actualizará el registro cuyo docente es: " + idDocente)
+            hacer
+              op = leerEntero(" 1. experiencia █ 2. edad █ 3. título ")
+              segun (op) hacer
+                caso 1:
+                  experiencia = leerExperienciaDocente("Ingrese la nueva experiencia del Docente: ")
+                  romper
+                caso 2:
+                  edad = leerEdadDocente("Ingrese la nueva edad del Docente: ")
+                  romper
+                caso 3:
+                  titulo = leerTitulo("Ingrese el nuevo Titulo 1. especialista / 2. magister / 3. doctor")
+                  romper
+              FinSegun
+            mientras (op < 3)
+            objD = nuevo Docente(idDocente, nombre, titulo, experiencia, edad)
+            vecD[i] = objD
+            imprimir(" registro actualizado" + objD.aTexto())
+          sino
+            vecD[i] = objD
+          FinSi
+          i = i + 1
+        FinMientras
+        si (sw == falso) entonces
+          imprimir("El Docente No existe")
+        FinSi
+        objArchivos.cerrarModoLectura()
+      Excepcion (Exception e)
+        imprimir("***Archivo leido y cerrado correctamente*****")
+        objArchivos.cerrarModoLectura()
+      FinIntentar
+      grabarActualizacion(vecD, objArchivos)
+    sino
+      imprimir("No existe un archivo para actualizar")
+    FinSi
+  FinMetodo
+
+  publico vacio grabarActualizacion(Docente[] vecD, Archivo objArchCopy)
+    Docente objD
+    objArchCopy.cerrarModoLectura()
+    objArchCopy.eliminaArchivo("DatosDocentes.txt")
+    objArchCopy.abrirModoEscritura("DatosDocentes.txt")
+    para (entero i = 0; i < vecD.longitud; i = i + 1) hacer
+      objD = vecD[i]
+      Cadena texto = ""
+      texto = objD.aTexto()
+      objArchCopy.escribir(texto)
+    FinPara
+    objArchCopy.cerrarModoEscritura()
+  FinMetodo
+
+  publico Cadena Mostrar(Archivo objArch)
+    Cadena cadena = " "
+    Docente objD
+    Intentar
+      entero cantRegistros = objArch.contadorLineas("DatosDocentes.txt")
+      Docente vecD[] = nuevo Docente[cantRegistros]
+      objArch.abrirModoLectura("DatosDocentes.txt")
+      vecD = objArch.leerDocente()
+      entero i = 0
+      mientras (i <= cantRegistros) hacer
+        objD = vecD[i]
+        cadena = cadena + "[ " + objD.aTexto() + " ]\n"
+        i = i + 1
+      FinMientras
+      objArch.cerrarModoLectura()
+    Excepcion (Exception e)
+      imprimir("***Archivo leído y cerrado correctamente*****")
+    FinIntentar
+    retornar cadena
+  FinMetodo
+
+  publico Cadena EliminarRegistro(Archivo objArchivos, entero carneDoc)
+    Intentar
+      objArchivos.abrirModoLectura("DatosDocentes.txt")
+      Docente[] todos = objArchivos.leerDocente()
+      objArchivos.cerrarModoLectura()
+
+      si (todos == nulo o todos.longitud == 0) entonces
+        retornar "No hay Docentes registrados."
+      FinSi
+
+      entero contador = 0
+      Cadena eliminado = ""
+      para cada (Docente d en todos) hacer
+        si (d != nulo y d.obtenerIdDocente() != carneDoc) entonces
+          contador = contador + 1
+        sino si (d != nulo) entonces
+          eliminado = d.aTexto()
+        FinSi
+      FinPara
+
+      si (eliminado.estaVacio()) entonces
+        retornar "Docente no encontrado."
+      FinSi
+
+      Docente[] nuevos = nuevo Docente[contador]
+      entero indice = 0
+      para cada (Docente d en todos) hacer
+        si (d != nulo y d.obtenerIdDocente() != carneDoc) entonces
+          nuevos[indice] = d
+          indice = indice + 1
+        FinSi
+      FinPara
+
+      objArchivos.eliminaArchivo("DatosDocentes.txt")
+      para cada (Docente d en nuevos) hacer
+        si (d != nulo) entonces
+          Grabar(objArchivos, d)
+        FinSi
+      FinPara
+
+      retornar "Eliminado: " + eliminado
+    Excepcion (Exception e)
+      retornar "Error al eliminar: " + e.obtenerMensaje()
+    FinIntentar
+  FinMetodo
+
+FinClase

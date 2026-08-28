@@ -1,0 +1,208 @@
+Clase CRUDBoletin
+
+  // Relaciona a un Estudiante con un Curso y con un Docente
+  // Se valida que cada elemento a relacionar exista en los otros archivos
+  // Se garantiza que el registro sea único: un estudiante no puede matricular
+  // la misma materia mas de una vez, ni verla con otro docente
+
+  publico vacio ingresar(Archivo objA, entero idEstudiante, entero idDocente, entero idCurso)
+    Boletin objB = nuevo Boletin()
+    si (buscarDatosArchivos(objA, idEstudiante, idDocente, idCurso) y buscarBoletin(objA, idEstudiante, idDocente, idCurso)) entonces
+      objB = objB.ingresarDatos(idEstudiante, idDocente, idCurso)
+      grabar(objA, objB)
+    sino
+      imprimir("Registro no puede ser almacenado")
+    FinSi
+  FinMetodo
+
+  publico booleano buscarDatosArchivos(Archivo objA, entero idEstudiante, entero idDocente, entero idCurso)
+    // abrimos archivo estudiante
+    objA.abrirModoLectura("DatosEstudiante.txt")
+    entero cl = 0
+    cl = objA.contadorLineas("DatosEstudiante.txt")
+    Estudiante vecE[] = nuevo Estudiante[cl]
+    vecE = objA.leerEstudiante()
+    objA.cerrarModoLectura()
+    // abrimos archivo Docente
+    objA.abrirModoLectura("DatosDocente.txt")
+    cl = 0
+    cl = objA.contadorLineas("DatosDocente.txt")
+    Docente vecD[] = nuevo Docente[cl]
+    vecD = objA.leerDocente()
+    objA.cerrarModoLectura()
+    // abrimos archivo Curso
+    objA.abrirModoLectura("DatosCurso.txt")
+    cl = 0
+    cl = objA.contadorLineas("DatosCurso.txt")
+    Curso vecC[] = nuevo Curso[cl]
+    vecC = objA.leerCurso()
+    objA.cerrarModoLectura()
+    entero cont = 0
+    para (entero i = 0; i < vecE.longitud; i = i + 1) hacer
+      si (vecE[i].obtenerIdEstudiante() == idEstudiante) entonces
+        cont = cont + 1
+        romper
+      FinSi
+    FinPara
+    para (entero i = 0; i < vecD.longitud; i = i + 1) hacer
+      si (vecD[i].obtenerIdDocente() == idDocente) entonces
+        cont = cont + 1
+        romper
+      FinSi
+    FinPara
+    para (entero i = 0; i < vecC.longitud; i = i + 1) hacer
+      si (vecC[i].obtenerIdCurso() == idCurso) entonces
+        cont = cont + 1
+        romper
+      FinSi
+    FinPara
+    retornar cont == 3
+  FinMetodo
+
+  publico booleano buscarBoletin(Archivo objA, entero idEstudiante, entero idDocente, entero idCurso)
+    objA.abrirModoLectura("DatosBoletin.txt")
+    entero cl = 0
+    booleano sw = verdadero
+    cl = objA.contadorLineas("DatosBoletin.txt")
+    Boletin vecB[] = nuevo Boletin[cl]
+    vecB = objA.leerBoletin()
+    objA.cerrarModoLectura()
+    para (entero i = 0; i < vecB.longitud; i = i + 1) hacer
+      si (vecB[i].obtenerIdEstudiante() == idEstudiante y vecB[i].obtenerIdCurso() == idCurso) entonces
+        sw = falso
+      FinSi
+    FinPara
+    retornar sw
+  FinMetodo
+
+  publico vacio grabar(Archivo objA, Boletin objB)
+    objA.abrirModoEscritura("DatosBoletin.txt")
+    objA.escribir(objB.estructuraRegistro())
+    objA.cerrarModoEscritura()
+  FinMetodo
+
+  publico Boletin Consultar(Archivo objArchivo, entero idEstudiante)
+    objArchivo.abrirModoLectura("DatosBoletin.txt")
+    Boletin[] boletines = objArchivo.leerBoletin()
+    objArchivo.cerrarModoLectura()
+
+    para cada (Boletin e en boletines) hacer
+      si (e != nulo y e.obtenerIdEstudiante() == idEstudiante) entonces
+        retornar e
+      FinSi
+    FinPara
+    retornar nulo
+  FinMetodo
+
+  publico vacio ActualizarNota(Archivo objArchivos, entero idEstudiante, entero idCurso)
+    real nota
+    objArchivos.abrirModoLectura("DatosBoletin.txt")
+    entero op
+    si (objArchivos.archivo.existe() == verdadero) entonces
+      entero cantLineas = objArchivos.contadorLineas("DatosBoletin.txt")
+      Boletin vecB[] = nuevo Boletin[cantLineas]
+      Intentar
+        booleano sw = falso
+        Boletin objB = nuevo Boletin()
+        vecB = objArchivos.leerBoletin()
+        entero i = 0
+        mientras (i < cantLineas) hacer
+          si (vecB[i].obtenerIdEstudiante() == idEstudiante y objB.obtenerIdCurso() == idCurso) entonces
+            nota = leerNota("Ingrese La nueva nota del estudiante para el curso: ")
+            vecB[i].asignarNotaFinal(nota)
+            imprimir(" registro actualizado" + vecB[i].estructuraRegistro())
+          FinSi
+          i = i + 1
+        FinMientras
+        si (sw == falso) entonces
+          imprimir("El Boletin No existe")
+        FinSi
+        objArchivos.cerrarModoLectura()
+      Excepcion (Exception e)
+        imprimir("***Archivo leido y cerrado correctamente*****")
+        objArchivos.cerrarModoLectura()
+      FinIntentar
+      grabarActualizacion(vecB, objArchivos)
+    sino
+      imprimir("No existe un archivo para actualizar")
+    FinSi
+  FinMetodo
+
+  publico vacio grabarActualizacion(Boletin[] vecB, Archivo objArchCopy)
+    objArchCopy.cerrarModoLectura()
+    objArchCopy.eliminaArchivo("DatosBoletin.txt")
+    objArchCopy.abrirModoEscritura("DatosBoletin.txt")
+    para (entero i = 0; i < vecB.longitud; i = i + 1) hacer
+      Cadena texto = ""
+      texto = vecB[i].estructuraRegistro()
+      objArchCopy.escribir(texto)
+    FinPara
+    objArchCopy.cerrarModoEscritura()
+  FinMetodo
+
+  publico Cadena Mostrar(Archivo objArch)
+    Cadena cadena = " "
+    Intentar
+      entero cantRegistros = objArch.contadorLineas("DatosBoletin.txt")
+      Boletin vecB[] = nuevo Boletin[cantRegistros]
+      objArch.abrirModoLectura("DatosBoletin.txt")
+      vecB = objArch.leerBoletin()
+      entero i = 0
+      mientras (i <= cantRegistros) hacer
+        cadena = cadena + "[ " + vecB[i].estructuraRegistro() + " ]\n"
+        i = i + 1
+      FinMientras
+      objArch.cerrarModoLectura()
+    Excepcion (Exception e)
+      imprimir("***Archivo leído y cerrado correctamente*****")
+    FinIntentar
+    retornar cadena
+  FinMetodo
+
+  publico Cadena EliminarRegistro(Archivo objArchivos, entero idEstudiante)
+    Intentar
+      objArchivos.abrirModoLectura("DatosBoletin.txt")
+      Boletin[] todos = objArchivos.leerBoletin()
+      objArchivos.cerrarModoLectura()
+
+      si (todos == nulo o todos.longitud == 0) entonces
+        retornar "No hay Boletin registrados para el estudiante."
+      FinSi
+
+      entero contador = 0
+      Cadena eliminado = ""
+      para cada (Boletin b en todos) hacer
+        si (b != nulo y b.obtenerIdEstudiante() != idEstudiante) entonces
+          contador = contador + 1
+        sino si (b != nulo) entonces
+          eliminado = b.estructuraRegistro()
+        FinSi
+      FinPara
+
+      si (eliminado.estaVacio()) entonces
+        retornar "Boletin no encontrado."
+      FinSi
+
+      Boletin[] nuevos = nuevo Boletin[contador]
+      entero indice = 0
+      para cada (Boletin b en todos) hacer
+        si (b != nulo y b.obtenerIdEstudiante() != idEstudiante) entonces
+          nuevos[indice] = b
+          indice = indice + 1
+        FinSi
+      FinPara
+
+      objArchivos.eliminaArchivo("DatosBoletin.txt")
+      para cada (Boletin b en nuevos) hacer
+        si (b != nulo) entonces
+          grabar(objArchivos, b)
+        FinSi
+      FinPara
+
+      retornar "Eliminado: " + eliminado
+    Excepcion (Exception e)
+      retornar "Error al eliminar: " + e.obtenerMensaje()
+    FinIntentar
+  FinMetodo
+
+FinClase

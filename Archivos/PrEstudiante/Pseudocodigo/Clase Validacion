@@ -1,0 +1,89 @@
+
+publico Clase Validacion 
+
+     publico estatico entero leerEntero(Cadena mensaje) // permite validar el idCliente 
+	       
+		entero num = 0;
+        hacer
+	 intentar
+  	  imprimir(mensaje);
+          lea num 
+          Si(num<=0)entonces
+            imprimir("ERROR, el Numero debe ser mayor que cero");
+         FinIntentar
+		Atrapar(Excepcion e)
+		  imprimir("ERROR:"+ e);
+	        Fin Atrapar
+        mientras(num<=0);
+	  retornar num;
+      FinMetodo
+       
+    publico estatico entero leerEdad(Cadena mensaje)
+        entero num = 0;
+        hacer
+	  intentar
+	   imprimir(mensaje);
+           num = sc.nextentero();
+           Si((num<18)||(num>100))entonces
+            imprimir("ERROR, la edad debe estar entre 18 y 100");
+           FinSi 
+	  FinIntentar
+	  Atrapar (Exception e)
+	    imprimir("ERROR:"+ e);
+	  FinAtrapar
+	mientras((num<18)||(num>100));
+      retornar num;  
+    FinMetodo
+	
+    publico estatico Cadena leerCadena(Cadena mensaje)
+      Cadena cadena= "";
+       hacer
+        intentar
+	  imprimir(mensaje);
+          cadena = sc.nextLine();
+	  Si(cadena.equals(""))entonces
+            imprimir("ERROR: debe ingresar informacion");
+          FinSi
+	FinIntentar
+	Atrapar (Exception e)
+	  imprimir("ERROR: " + e);
+	FinAtrapar
+       mientras(cadena.equals(""));
+     retornar cadena;
+    FinMetodo
+    
+    publico estatico entero leerEstrato(Cadena mensaje)
+       entero num = 0;
+       hacer
+        intentar
+	    imprimir(mensaje);
+            num = sc.nextentero();
+	    Si(num<=0||num>=7)entonces
+              imprimir("ERROR, el Numero ingresahacer no pertenece a un estrato");
+            FinSi
+	 FinIntentar
+	 Atrapar (Exception e)
+	    imprimir("ERROR - OJO  " );
+	 FinAtrapar 
+       mientras(num<=0||num>=7);
+      retornar num;
+    FinMetodo
+	
+    publico estatico real leerNota(Cadena mensaje)
+       real num = 0;
+       hacer
+         intentar
+	   imprimir(mensaje);
+           num = sc.nextentero();
+	   Si(num<0||num>5)entonces
+             imprimir("ERROR, el valor ingresahacer esta fuera del rango de una nota");
+           FinSi
+	  FinIntentar	
+	  Atrapar (Exception e)
+	    imprimir("ERROR - OJO  " );
+	  FinAtrapar
+       mientras(num<0||num>5);
+      retornar num;
+    FinMetodo
+FinClase
+        

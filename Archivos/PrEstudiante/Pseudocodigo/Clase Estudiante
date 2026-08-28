@@ -1,0 +1,83 @@
+Clase Estudiante 
+
+  privado entero cod, estrato;
+  privado Cadena nombre, apellido;
+  privado entero edad;
+  privado real notaFinMetodoal;
+
+  // métodos contructores
+ 
+  publico Estudiante()
+  
+  FinMetodo       
+ 
+    // sobrecarga del constructor
+  publico Estudiante(entero cod, Cadena nombre, Cadena apellido,entero estrato, entero edad, real notaFinMetodoal)
+    este.cod = cod;
+    este.estrato = estrato;
+    este.nombre = nombre;
+    este.apellido = apellido;
+    este.edad = edad;
+    este.notaFinal = notaFinal;
+   FinMetodo       
+    
+  publico Estudiante datosEstudiante(entero cod)
+         
+    imprimir("******************** DATOS ESTUDIANTE *********************");
+    //para poder llamar las funciones se debe importar la clase Validacion 
+    nombre = leerCadena("ingrese nombre: ");
+    apellido = leerCadena("ingrese apellido: ");
+    edad = leerEdad("ingrese edad: ");
+    estrato = leerEstrato("ingrese estrato: ");
+    notaFinal = leerNota("ingrese notaFinMetodoal: ");
+    Estudiante est = nuevo Estudiante(cod,nombre,apellido, edad,estrato, notaFinMetodoal);
+    retornar est;
+   FinMetodo
+   publico entero obtenerCod() 
+       retornar cod;
+   FinMetodo
+
+    publico vacio asignarCod(entero cod) 
+        este.cod = cod;
+    FinMetodo
+    publico Cadena obtenerNombre() 
+        retornar nombre;
+    FinMetodo
+
+    publico vacio asignarNombre(Cadena nombre) 
+        este.nombre = nombre;
+    FinMetodo
+    publico Cadena obtenerApellido() 
+        retornar apellido;
+    FinMetodo
+
+    publico vacio asignarApellido(Cadena apellido) 
+        este.apellido = apellido;
+    FinMetodo
+    publico entero obtenerEdad() 
+        retornar edad;
+    FinMetodo
+
+    publico vacio asignarEdad(entero edad) 
+        este.edad = edad;
+    FinMetodo
+    publico entero obtenerEstrato() 
+        retornar estrato;
+    FinMetodo
+
+    publico vacio asignarEstrato(entero estrato) 
+        este.estrato = estrato;
+    FinMetodo
+
+    publico real obtenerNotaFinal() 
+        retornar notaFinMetodoal;
+    FinMetodo
+
+    publico vacio asignarNotaFinal(real notaFinMetodoal) 
+        este.notaFinMetodoal = notaFinMetodoal;
+    FinMetodo
+  
+    publico Cadena estructuraRegistro()
+     retornar + cod +"| "+ nombre +"| "+ apellido +"| "+ edad + "| "+ estrato +"| " + notaFinal;
+  FinMetodo
+FinClase 

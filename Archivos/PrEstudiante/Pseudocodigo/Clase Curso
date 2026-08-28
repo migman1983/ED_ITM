@@ -1,0 +1,75 @@
+Clase Curso
+
+  privado Cadena nombre, programa;
+  privado entero idCurso, creditos;
+  privado Cadena tipo;
+
+  // métodos contructores
+
+  publico Curso()
+
+  FinMetodo
+
+  // sobrecarga del constructor
+  publico Curso(entero idCurso, Cadena nombre, Cadena programa, Cadena tipo, entero creditos)
+    este.idCurso = idCurso;
+    este.nombre = nombre;
+    este.programa = programa;
+    este.tipo = tipo;
+    este.creditos = creditos;
+  FinMetodo
+
+  publico Curso ingresarDatos(entero idCurso)
+    nombre = leerString("Ingrese el nombre del curso: ");
+    programa = leerString("Ingrese el nombre del programa");
+    creditos = leerCreditos("Ingrese el numero de créditos: ");
+    tipo = leerTipoPrograma("Seleccione el Tipo de Porgrama: 1. remoto / 2. virtual / 3. presencial");
+    Curso cur = nuevo Curso(idCurso, nombre, programa, tipo, creditos);
+    retornar cur;
+  FinMetodo
+
+  publico entero obtenerIdCurso()
+    retornar idCurso;
+  FinMetodo
+
+  publico vacio asignarIdCurso(entero idCurso)
+    este.idCurso = idCurso;
+  FinMetodo
+
+  publico Cadena obtenerNombre()
+    retornar nombre;
+  FinMetodo
+
+  publico vacio asignarNombre(Cadena nombre)
+    este.nombre = nombre;
+  FinMetodo
+
+  publico Cadena obtenerPrograma()
+    retornar programa;
+  FinMetodo
+
+  publico vacio asignarPrograma(Cadena programa)
+    este.programa = programa;
+  FinMetodo
+
+  publico Cadena obtenerTipo()
+    retornar tipo;
+  FinMetodo
+
+  publico vacio asignarTipo(Cadena tipo)
+    este.tipo = tipo;
+  FinMetodo
+
+  publico entero obtenerCreditos()
+    retornar creditos;
+  FinMetodo
+
+  publico vacio asignarCreditos(entero creditos)
+    este.creditos = creditos;
+  FinMetodo
+
+  publico Cadena aTexto()
+    retornar idCurso +"| "+ nombre +"| "+ creditos;
+  FinMetodo
+
+FinClase

@@ -1,0 +1,91 @@
+Clase AppEstudiante
+
+  estatico Archivo objArchivo = nuevo Archivo()
+  estatico CRUDEstudiante crudE = nuevo CRUDEstudiante()
+  estatico CRUDDocente crudD = nuevo CRUDDocente()
+  estatico CRUDCurso crudC = nuevo CRUDCurso()
+  estatico CRUDBoletin crudB = nuevo CRUDBoletin()
+
+  publico estatico vacio principal()
+    Menu m = nuevo Menu()
+    entero op
+    imprimir(menuPrincipal())
+    op = leerEntero("Seleccione una opción: ")
+    hacer
+      segun (op) hacer
+        caso 1:
+          m.menuArchivoEstudiante()
+          romper
+        caso 2:
+          m.menuArchivoDocente()
+          romper
+        caso 3:
+          m.menuArchivoCurso()
+          romper
+        caso 4:
+          m.menuArchivoBoletin()
+          romper
+        por_defecto:
+          imprimir("Opcion no encontrada")
+      FinSegun
+    mientras (op < 5)
+  FinMetodo
+
+  publico estatico Cadena menuPrincipal()
+    retornar (" **** MENU Principal ****\n"
+              + "1. Menu Estudiannte\n"
+              + "2. Menu Docente\n"
+              + "3. Menu Curso\n"
+              + "4. Menu Boletin\n"
+              + "5. Salir\n")
+  FinMetodo
+
+  publico estatico Cadena menuArchivoE()
+    retornar (" **** MENU ARCHIVO Estudiante ****\n"
+              + "1. Ingresar Estudiannte\n"
+              + "2. Imprimir todo el Archivo\n"
+              + "3. Consultar Estudiante\n"
+              + "4. Eliminar un Estudiante\n"
+              + "5. actualizar un Estudiante\n"
+              + "6. Cambiar nombre al archivo\n"
+              + "7. Eliminar un archivo\n"
+              + "8. Finalizar Menu\n")
+  FinMetodo
+
+  publico estatico Cadena menuArchivoD()
+    retornar (" **** MENU ARCHIVO Docente ****\n"
+              + "1. Ingresar Docente\n"
+              + "2. Imprimir todo el Archivo\n"
+              + "3. Consultar Docente\n"
+              + "4. Eliminar un Docente\n"
+              + "5. actualizar un Docente\n"
+              + "6. Cambiar nombre al archivo\n"
+              + "7. Eliminar un archivo\n"
+              + "8. Finalizar Menu\n")
+  FinMetodo
+
+  publico estatico Cadena menuArchivoC()
+    retornar (" **** MENU ARCHIVO Curso ****\n"
+              + "1. Ingresar Curso\n"
+              + "2. Imprimir todo el Archivo\n"
+              + "3. Consultar Curso\n"
+              + "4. Eliminar un Curso\n"
+              + "5. actualizar un Curso\n"
+              + "6. Cambiar nombre al archivo\n"
+              + "7. Eliminar un archivo\n"
+              + "8. Finalizar Menu\n")
+  FinMetodo
+
+  publico estatico Cadena menuArchivoB()
+    retornar (" **** MENU ARCHIVO Boletin ****\n"
+              + "1. Ingresar Boletin\n"
+              + "2. Imprimir todo el Archivo\n"
+              + "3. Consultar Boletin\n"
+              + "4. Eliminar un Boletin\n"
+              + "5. actualizar un Boletin\n"
+              + "6. Cambiar nombre al archivo\n"
+              + "7. Eliminar un archivo\n"
+              + "8. Finalizar Menu\n")
+  FinMetodo
+
+FinClase

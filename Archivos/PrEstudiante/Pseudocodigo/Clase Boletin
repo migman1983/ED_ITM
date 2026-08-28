@@ -1,0 +1,62 @@
+Clase Boletin
+
+  privado entero idCurso, idEstudiante, idDocente;
+  privado real notaFinal;
+
+  // métodos contructores
+
+  publico Boletin()
+
+  FinMetodo
+
+  // sobrecarga del constructor
+  publico Boletin(entero idCurso, entero idEstudiante, entero idDocente, real notaFinal)
+    este.idCurso = idCurso;
+    este.idEstudiante = idEstudiante;
+    este.idDocente = idDocente;
+    este.notaFinal = notaFinal;
+  FinMetodo
+
+  publico Boletin ingresarDatos(entero idEstudiante, entero idDocente, entero idCurso)
+    notaFinal = leerNota("Ingrese la nota final del estudiante: ");
+    Boletin bol = nuevo Boletin(idCurso, idEstudiante, idDocente, notaFinal);
+    retornar bol;
+  FinMetodo
+
+  publico entero obtenerIdCurso()
+    retornar idCurso;
+  FinMetodo
+
+  publico vacio asignarIdCurso(entero idCurso)
+    este.idCurso = idCurso;
+  FinMetodo
+
+  publico entero obtenerIdEstudiante()
+    retornar idEstudiante;
+  FinMetodo
+
+  publico vacio asignarIdEstudiante(entero idEstudiante)
+    este.idEstudiante = idEstudiante;
+  FinMetodo
+
+  publico entero obtenerIdDocente()
+    retornar idDocente;
+  FinMetodo
+
+  publico vacio asignarIdDocente(entero idDocente)
+    este.idDocente = idDocente;
+  FinMetodo
+
+  publico real obtenerNotaFinal()
+    retornar notaFinal;
+  FinMetodo
+
+  publico vacio asignarNotaFinal(real notaFinal)
+    este.notaFinal = notaFinal;
+  FinMetodo
+
+  publico Cadena estructuraRegistro()
+    retornar idCurso +"| "+ idEstudiante +"| "+ idDocente +"| "+ notaFinal;
+  FinMetodo
+
+FinClase
