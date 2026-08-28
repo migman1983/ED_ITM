@@ -1,0 +1,31 @@
+Clase Vehiculo
+  publico Cadena Placa
+  publico Cadena modelo
+  publico real capacidad 
+  publico Vehiculo(Cadena placa, Cadena modelo, real capacidad ) 
+   este.placa = placa
+   este.modelo = modelo
+   este.capacidad = capacidad
+  finMetodo
+  publico vacio asignarPlaca(Cadena placa)
+    este.placa = placa
+  finMetodo
+  publico Cadena obtenerPlaca()
+    retornar placa
+  finMetodo
+  publico vacio asignarModelo(Cadena modelo)
+    este.modelo = modelo
+  finMetodo
+  publico Cadena obtenerModelo()
+    retornar modelo
+  finMetodo
+ publico vacio asignarCapacidad(real capacidad)
+    este.capacidad = capacidad
+  finMetodo
+  publico real obtenerCapacidad()
+    retornar capacidad
+  finMetodo
+  publico Cadena convertirCadena()
+    retornar "Vehiculo =  { placa: ", placa, " modelo: ", modelo, "capacidad: ", capacidad, " } "
+  finMetodo
+FinClase

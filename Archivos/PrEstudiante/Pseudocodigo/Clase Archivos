@@ -1,0 +1,162 @@
+clase Archivo 
+    File archivo;//archivo logico
+    FileReader lectura;//objeto para modo lectura del archivo
+    BufferedReader buffer;//objeto que reserva un espacio en memoria donde se guarda la informacion
+    BufferedWriter bufferW;
+    BufferedReader buffernuevo;
+    FileWriter escritura;//objeto para modo escritura del archivo
+    PrintWriter impresion;//objeto para grabar directamente en el texto
+	
+    publico Cadena escribir(Cadena registro)//graba el texto se dice que lo imprime en el archivo
+       Cadena mensaje="grabará un registro";
+       intentar
+        impresion.imprimir(registro);
+       FinIntentar
+        Atrapar(Exception objException)
+         mensaje = objException.obtenerMensaje(); 
+        FinAtrapar 
+      retornar mensaje;
+    FinMetodo
+    
+    publico Estudiante[] leerEstudiante()
+      entero cl = contadorLineas("DatosEstudiante.txt");
+      Estudiante vecE[];
+      vecE = nuevo Estudiante[cl];
+      Cadena registro;
+      Cadena vec[] = nueva Cadena[6];
+       intentar
+         entero i = 0;
+         mientras(cl>0)haga
+          registro = buffer.readLine();
+          cadena separador = convertirLiteral("|");
+          vec = registro.Dividir(separador);
+          entero codE = entero.parsearEntero(vec[0]);
+          Cadena nombre = vec[1];
+          Cadena apellido = vec[2];
+          entero edad = entero.parsearEntero(vec[3]);
+          entero estrato = entero.parsearEntero(vec[4]);
+          real notaFinal = real.parsearReal(vec[5]);
+          Estudiante objE = nuevo Estudiante (codE,nombre,apellido, edad,estrato, notaFinal);
+          vecE[i] = objE;
+          i++;
+          cl--;  
+        FinMientras
+        buffer.cerrar();   
+       FinIntentar
+        Atrapar(Exception objException)
+          objException.obtenerMensaje();          
+        FinAtrapar
+        retornar vecE;
+    FinMetodo
+    
+  publico Cadena abrirModoLectura(Cadena ruta)
+    Cadena mensaje = "El archivo esta en  **Modo lectura**";
+     intentar
+        archivo = nuevo File(ruta);
+        lectura = nuevo FileReader(archivo);
+        buffer  = nuevo BufferedReader(lectura);
+     FinIntentar
+     Atrapar(Exception objException)
+         mensaje = objException.obtenerMensaje();          
+     FinAtrapar
+    retornar mensaje;
+   FinMetodo
+    
+    publico Cadena cerrarModoLectura()
+       Cadena mensaje="¡El archivo en Modo lectura se cierra";
+       intentar
+        lectura.cerrar();
+       FinIntentar
+       Atrapar(Exception objException)
+         mensaje = objException.obtenerMensaje();          
+       FinAtrapar
+     retornar mensaje;
+    FinMetodo
+        
+    publico Cadena abrirModoEscritura(Cadena ruta)
+       Cadena mensaje="¡El archivo se abrirá de Modo escritura!";
+        intentar
+            archivo = nuevo File(ruta);
+            escritura= nuevo FileWriter(archivo,true);
+            impresion = nuevo PrintWriter(escritura);
+        FinIntentar
+        Atrapar(Exception objException)
+          mensaje = objException.obtenerMensaje();          
+        FinAtrapar
+        imprimir("mensaje método abrirModoEscritura: "+ mensaje);
+       retornar mensaje;
+    FinMetodo
+    
+    publico Cadena cerrarModoEscritura()
+        Cadena mensaje="¡El archivo en **Modo escritura** se cierra!";
+        intentar
+          impresion.cerrar();
+          buffer.cerrar();
+         FinIntentar
+        Atrapar(Exception objException)
+         mensaje = objException.obtenerMensaje();          
+        FinAtrapar
+        retornar mensaje;
+    FinMetodo
+
+    publico booleano eliminaArchivo(Cadena ruta)
+       imprimir("cual es el valor de Ruta:"+ruta);
+       intentar
+         archivo = nuevo File(ruta);
+         Si(archivo.exists())entonces
+          imprimir("****Archivo Eliminado****");
+           imprimir("****: "+archivo.getAbsolutePath());
+           archivo.Eliminar();
+           archivo.EliminarAlSalir();
+           retornar true;
+          sino 
+           retornar false;
+         FinSi
+	   FinIntentar 
+	   FinAtrapar(Exception e)
+        imprimir("ERROR: " + e.obtenerMensaje());
+        retornar false;
+       FinAtrapar
+    FinMetodo
+          
+   publico entero contadorLineas(Cadena arch)
+     entero numLineas=0;
+     intentar
+      archivo = nuevo File(arch);
+       Si(archivo.isFile()== false)entonces
+         retornar 0;  
+        Sino
+         lectura = nuevo FileReader(arch);
+         BufferedReader br = nuevo BufferedReader(lectura);
+         mientras (br.LectorLinea()!=null) 
+          numLineas++;
+         Finmientras
+         br.cerrar();
+        retornar numLineas;
+	   FinSi
+     FinIntentar
+     Atrapar (IOException e)
+       e.ImprimirRastreoPaquete();
+     FinAtrapar
+      retornar numLineas;
+    Fin
+     
+   
+   publico vacio renombrarArchivo( Cadena nuevoNombre)
+    
+      intentar
+        Cadena nombreActual = "DatosEstudiante.txt";
+        File oldfile = nuevo File(nombreActual);
+        File nuevofile = nuevo File(nuevoNombre);
+         Si (oldfile.renombrar(nuevofile))entonces
+           imprimir("El archivo fue renombrado");
+          sino 
+            imprimir("no se puede renombrar el archivo");
+         FinSi
+      FinIntentar
+	  Atrapar(Exception e)
+       imprimir("***Archivo leído y cerrado correctamente*****"); 
+      FinAtrapar
+    FinMetodo
+FinClase
+    

@@ -1,0 +1,207 @@
+Clase CRUDCurso
+
+  publico CRUDCurso()
+  FinMetodo
+
+  publico vacio IngresarCurso(Archivo objArchivo)
+    Curso objC = nuevo Curso()
+    entero idCurso = leerEntero("Ingresar Codigo del curso: ")
+
+    si (Buscar(objArchivo, idCurso) == falso) entonces
+      objC = objC.ingresarDatos(idCurso)
+      Grabar(objArchivo, objC)
+    sino
+      imprimir("*****Curso YA existe en el archivo*****")
+    FinSi
+  FinMetodo
+
+  publico vacio Grabar(Archivo objArchivos, Curso objC)
+    objArchivos.abrirModoEscritura("DatosCursos.txt")
+    objArchivos.escribir(objC.aTexto())
+    objArchivos.cerrarModoEscritura()
+  FinMetodo
+
+  publico booleano Buscar(Archivo objArch, entero idCurso)
+    booleano sw = falso
+    entero cod
+    Intentar
+      Curso objC = nuevo Curso()
+      entero tamaño = objArch.contadorLineas("DatosCurso.txt")
+      objArch.abrirModoLectura("DatosCursos.txt")
+      Curso vecC[] = nuevo Curso[tamaño]
+      vecC = objArch.leerCurso()
+      entero i = 0
+      entero cantRegistros = objArch.contadorLineas("DatosCursos.txt")
+      mientras (i <= cantRegistros) hacer
+        objC = vecC[i]
+        cod = objC.obtenerIdCurso()
+        si (cod == idCurso) entonces
+          sw = verdadero
+          romper
+        FinSi
+        i = i + 1
+      FinMientras
+      objArch.cerrarModoLectura()
+    Excepcion (Exception e)
+      imprimir("***Archivo leido y cerrado correctamente*****")
+    FinIntentar
+    retornar sw
+  FinMetodo
+
+  publico Curso Consultar(Archivo objArchivo, entero codCurso)
+    objArchivo.abrirModoLectura("DatosCursos.txt")
+    Curso[] cursos = objArchivo.leerCurso()
+    objArchivo.cerrarModoLectura()
+
+    para cada (Curso c en cursos) hacer
+      si (c != nulo y c.obtenerIdCurso() == codCurso) entonces
+        retornar c
+      FinSi
+    FinPara
+    retornar nulo
+  FinMetodo
+
+  publico vacio Actualizar(Archivo objArchivos, entero idCurso)
+    Cadena nombre, programa, tipo
+    entero cod, creditos
+    objArchivos.abrirModoLectura("DatosCursos.txt")
+    entero op
+    si (objArchivos.archivo.existe() == verdadero) entonces
+      entero cantLineas = objArchivos.contadorLineas("DatosCursos.txt")
+      Curso vecC[] = nuevo Curso[cantLineas]
+      Intentar
+        booleano sw = falso
+        Curso objC = nuevo Curso()
+        vecC = objArchivos.leerCurso()
+        entero i = 0
+        mientras (i < cantLineas) hacer
+          objC = vecC[i]
+          cod = objC.obtenerIdCurso()
+          nombre = objC.obtenerNombre()
+          programa = objC.obtenerPrograma()
+          tipo = objC.obtenerTipo()
+          creditos = objC.obtenerCreditos()
+          si (cod == idCurso) entonces
+            sw = verdadero
+            imprimir("Se actualizará el registro del curso: " + idCurso)
+            hacer
+              op = leerEntero(" 1. creditos █ 2. nombre █ 3. programa █ 4. tipo")
+              segun (op) hacer
+                caso 1:
+                  creditos = leerCreditos("Ingrese la nueva cantidad de creditos del Curso: ")
+                  romper
+                caso 2:
+                  nombre = leerString("Ingrese el nuevo nombre del Curso: ")
+                  romper
+                caso 3:
+                  programa = leerString("Ingrese el nuevo programa al que pertenece el Curso: ")
+                  romper
+                caso 4:
+                  tipo = leerTipoPrograma("Ingrese el nuevo tipo: 1. remoto / 2. virtual / 3. presencial")
+                  romper
+              FinSegun
+            mientras (op < 2)
+            objC = nuevo Curso(idCurso, nombre, programa, tipo, creditos)
+            vecC[i] = objC
+            imprimir(" registro actualizado" + objC.aTexto())
+          sino
+            vecC[i] = objC
+          FinSi
+          i = i + 1
+        FinMientras
+        si (sw == falso) entonces
+          imprimir("El Curso No existe")
+        FinSi
+        objArchivos.cerrarModoLectura()
+      Excepcion (Exception e)
+        imprimir("***Archivo leido y cerrado correctamente*****")
+        objArchivos.cerrarModoLectura()
+      FinIntentar
+      grabarActualizacion(vecC, objArchivos)
+    sino
+      imprimir("No existe un archivo para actualizar")
+    FinSi
+  FinMetodo
+
+  publico vacio grabarActualizacion(Curso[] vecC, Archivo objArchCopy)
+    Curso objC
+    objArchCopy.cerrarModoLectura()
+    objArchCopy.eliminaArchivo("DatosCursos.txt")
+    objArchCopy.abrirModoEscritura("DatosCursos.txt")
+    para (entero i = 0; i < vecC.longitud; i = i + 1) hacer
+      objC = vecC[i]
+      Cadena texto = ""
+      texto = objC.aTexto()
+      objArchCopy.escribir(texto)
+    FinPara
+    objArchCopy.cerrarModoEscritura()
+  FinMetodo
+
+  publico Cadena Mostrar(Archivo objArch)
+    Cadena cadena = " "
+    Curso objC
+    Intentar
+      entero cantRegistros = objArch.contadorLineas("DatosCursos.txt")
+      Curso vecC[] = nuevo Curso[cantRegistros]
+      objArch.abrirModoLectura("DatosCursos.txt")
+      vecC = objArch.leerCurso()
+      entero i = 0
+      mientras (i <= cantRegistros) hacer
+        objC = vecC[i]
+        cadena = cadena + "[ " + objC.aTexto() + " ]\n"
+        i = i + 1
+      FinMientras
+      objArch.cerrarModoLectura()
+    Excepcion (Exception e)
+      imprimir("***Archivo leído y cerrado correctamente*****")
+    FinIntentar
+    retornar cadena
+  FinMetodo
+
+  publico Cadena EliminarRegistro(Archivo objArchivos, entero cod)
+    Intentar
+      objArchivos.abrirModoLectura("DatosCursos.txt")
+      Curso[] todos = objArchivos.leerCurso()
+      objArchivos.cerrarModoLectura()
+
+      si (todos == nulo o todos.longitud == 0) entonces
+        retornar "No hay Estudiante registrados."
+      FinSi
+
+      entero contador = 0
+      Cadena eliminado = ""
+      para cada (Curso c en todos) hacer
+        si (c != nulo y c.obtenerIdCurso() != cod) entonces
+          contador = contador + 1
+        sino si (c != nulo) entonces
+          eliminado = c.aTexto()
+        FinSi
+      FinPara
+
+      si (eliminado.estaVacio()) entonces
+        retornar "Estudiante no encontrado."
+      FinSi
+
+      Curso[] nuevos = nuevo Curso[contador]
+      entero indice = 0
+      para cada (Curso c en todos) hacer
+        si (c != nulo y c.obtenerIdCurso() != cod) entonces
+          nuevos[indice] = c
+          indice = indice + 1
+        FinSi
+      FinPara
+
+      objArchivos.eliminaArchivo("DatosCursos.txt")
+      para cada (Curso c en nuevos) hacer
+        si (c != nulo) entonces
+          Grabar(objArchivos, c)
+        FinSi
+      FinPara
+
+      retornar "Eliminado: " + eliminado
+    Excepcion (Exception e)
+      retornar "Error al eliminar: " + e.obtenerMensaje()
+    FinIntentar
+  FinMetodo
+
+FinClase

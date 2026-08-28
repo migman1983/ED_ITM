@@ -1,0 +1,24 @@
+Clase Conductor extiende Empleado
+  publico Cadena licencia
+  publico Cadena categoria
+  publico Conductor(Cadena cedula, Cadena nombre, real sueldo, Cadena licencia, Cadena categoria)
+    super(cedula, nombre, sueldo)
+    este.licencia = licencia
+    este.categoria = categoria
+  finMetodo
+  publico vacio asignarLicencia(Cadena licencia)
+    este.licencia = licencia
+  finMetodo
+  publico Cadena obtenerLicencia()
+    retornar licencia
+  finMetodo
+  publico vacio asignarCategoria(Cadena categoria)
+    este.categoria = categoria
+  finMetodo
+  publico Cadena obtenerCategoria()
+    retornar categoria
+  finMetodo
+  publico Cadena convertirCadena()
+    retornar "Conductor = { licencia: ", licencia, " categoria: ", categoria, " } "
+  finMetodo
+FinClase

@@ -1,0 +1,31 @@
+Clase Cliente
+  publico Cadena cedula
+  publico Cadena nombre
+  publico entero telefono
+  publico Cliente(Cadena cedula, Cadena nombre, entero telefono)
+    este.cedula = cedula
+    este.nombre = nombre
+    este.telefono = telefono
+  finMetodo
+  publico vacio asignarCedula(Cadena cedula)
+    este.cedula = cedula
+  finMetodo
+  publico Cadena obtenerCedula()
+    retornar cedula
+  finMetodo
+  publico vacio asignarNombre(Cadena nombre)
+    este.nombre = nombre
+  finMetodo
+  publico Cadena obtenerNombre()
+    retornar nombre
+  finMetodo
+  publico vacio asignarTelefono(entero telefono)
+    este.telefono = telefono
+  finMetodo
+  publico entero obtenerTelefono()
+    retornar telefono
+  finMetodo
+  publico Cadena convertirCadena()
+    retornar "Cliente = { cedula: ", cedula, " nombre: ", nombre, " telefono: ", telefono, " } "
+  finMetodo
+FinClase

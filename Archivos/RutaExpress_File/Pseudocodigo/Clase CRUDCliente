@@ -1,0 +1,80 @@
+Clase CRUDCliente
+
+   publico CRUDCliente()
+   FinMetodo
+
+   publico vacio IngresarRegistroCliente(Archivo arch, Cadena cc)
+
+     /* 1.1 validar que la cedula no se encuentre en el archivo:
+         tenemos que recorrer el archivo para llevarlo a un vector tipo Cliente
+         recorrer el vector para identificar que la cedula ingresada no se encuentre
+         registrada en el archivo */
+        entero cl =  arch.contadorLineas("DatosClientes.txt")
+        arch.abrirModoLectura("DatosClientes.txt")
+        Cliente[] vecC = new Cliente[cl]
+        vecC = arch.leerCliente()
+        arch.cerrarModoLectura()
+        entero i = 0
+        booleano sw =  falso
+        mientras(i < cl)haga
+          si(cedula == vecC[i].obtenerCedula())entonces
+             sw = verdadero
+             romper
+          finSi
+          i++
+        finMientras
+        si(!sw)||(cl == 0)entonces 
+         //  1. abrir archivo mode Escritura
+           arch.abrirArchivoModoEscritura("DatosClientes.txt")
+         // 2. crear el objeto que vamos a guardar
+           Cliente c = nuevo Cliente()
+           c = c.ingresarDatos(cc)
+         // 3. escribir en el archivo
+            String registro = c.convertirCadena()
+           arch.escribir(registro)
+        // 4. cerrar el archivo en modo EScritura
+           arch.cerrarModoEscritura()
+        sino
+          imprimir("la cedula ya se encuentra registrada")
+   FinMetodo
+publico vacio consultarCliente(Archivo arch, Cadena cedula)
+ //1. abrir archivo en modo lectura
+   arch.abrirModoLectura("DatosClientes.txt")
+ //2. contar las lineas del archivo y almacenarlo en una variable
+   entero cl = arch.contadorLineas("DatosClientes.txt")
+ //3.  Crear el vector que va a almacenar los registros que hay en el archivo
+    Cliente[] vecC = nuevo Cliente[cl]  
+ //4. Pasar los registros del archivo al vector
+    vecC = arch.leerClientes()
+   //4.1 cerramos el archivo en modo lectura
+    arch.cerrarModoLectura()
+ //5. recorrer el vector para identificar si la cedula existe
+    boolean sw = verdadero
+   para(i=0; i < vecC.tamaño; i++)haga
+    si(cedula == vecC[i].obtenerCedula())entonces
+       imprimir("usuario existente")
+       imprimir ("Datos = {cedula: ", cedula, " nombre: ", vecC[i].obtenerNombre(), " telefono: ", vecC[i].obtenerTelefono(), "} "
+       boolean sw = falso
+       romper
+   finSi
+ finPara
+    si(sw)entonces
+     imprimir("usuario no existe")
+    finSi
+finMetodo
+
+publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
+ 1. abrimos archivo de clientes en modo lectura
+ 2. recorrer el archivo para contar los registros del archivo
+ 3. crear vector tipo Cliente que su tamaño sea de acuerdo a la cantidad registros encontrados
+ 4. asignarle al vector los registros identificados en el archivo y cerrar archivo en modo lectura
+ 5. recorrer el vector para encontrar la cedula y realizar la actualización. para eso se
+    necesita una estructura ciclica y dentro de la estrcutura se compara las cedulas y si 
+    se encuentra un match entre la cedula consultada con la registrada en el vector, se debería
+    pedir el dato a actualizar (nombre o telefono) y actualizar el objeto en la posición que se 
+    encuentra en el vector    
+ 6.Eliminar el archivo
+ 7. abrir archivo en modo escritura
+ 8. volver a crear el archivo con la información que se encuentra en el vector
+ 9. cerrar archivo en modo escritura
+finMetodo

@@ -1,0 +1,34 @@
+publico clase OrdenEnvio 
+    privado cadena codigo;
+    privado fecha fechaEmision;
+    privado cadena estado;
+ 
+ publico OrdenEnvio(cadena codigo, Date fechaEmision, cadena estado ) 
+        este.codigo = codigo;
+        este.fechaEmision = fechaEmision;
+        este.estado = estado;
+  
+    finMetodo
+
+    publico cadena getCodigo()  
+        retornar codigo;     
+    finMetodo
+
+    publico vacio setCodigo(String codigo)  
+        este.codigo = codigo; 
+
+    publico fecha getFechaEmision()  
+        retornar fechaEmision; 
+    finMetodo
+
+    publico vacio setFechaEmision(fecha fechaEmision)  
+        este.fechaEmision = fechaEmision; 
+
+    publico cadena getEstado()  
+        retornar estado; 
+    finMetodo
+
+    publico vacio setEstado(String estado)  
+        este.estado = estado; 
+    finMetodo
+finClase

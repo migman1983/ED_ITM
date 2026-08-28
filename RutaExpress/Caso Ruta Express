@@ -24,3 +24,4 @@ Los Clientes (quienes poseen NIT/DNI, nombre y teléfono) registran y son propie
     ○	Asociación (especificando las multiplicidades correspondientes).
     ○	Composición (Relación todo-parte con dependencia de ciclo de vida).
     3.	Indique la multiplicidad/cardinalidad en cada extremo de las relaciones (1, 0..1, 1..*, *).
+

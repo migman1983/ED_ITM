@@ -1,0 +1,184 @@
+Clase Menu
+
+  publico estatico vacio menuArchivoEstudiante()
+    entero opE, idEstudiante
+    Cadena nombreNuevo = ""
+    hacer
+      opE = leerEntero(menuArchivoE())
+      segun (opE) hacer
+        caso 1:
+          imprimir("*******************************************\n")
+          idEstudiante = leerEntero("Digite el ID del Estudiante a registrar: ")
+          crudE.IngresarEstudiante(objArchivo, idEstudiante)
+          romper
+        caso 2:
+          imprimir("*******************************************\n")
+          imprimir("Los Registros del Archivo Estudiante son: \n" + crudE.Mostrar(objArchivo))
+          romper
+        caso 3:
+          imprimir("*******************************************\n")
+          idEstudiante = leerEntero("Digite el IDEstudiante del cliente a consultar: ")
+          imprimir("El cliente consultado es:\n " + crudE.Consultar(objArchivo, idEstudiante).estructuraRegistro())
+          romper
+        caso 4:
+          idEstudiante = leerEntero("ID a eliminar: ")
+          imprimir(crudE.Eliminar(objArchivo, idEstudiante))
+          romper
+        caso 5:
+          idEstudiante = leerEntero("ID a actualizar: ")
+          crudE.Actualizar(objArchivo, idEstudiante)
+          romper
+        caso 6:
+          imprimir("*******************************************\n")
+          imprimir("Ingrese el nuevo nombre del archivo: ")
+          nombreNuevo = leerConsolaLinea()
+          objArchivo.renombrarArchivo(nombreNuevo + ".txt")
+          romper
+        caso 7:
+          si (nombreNuevo.estaVacio()) entonces
+            objArchivo.eliminaArchivo("datosEstudiante.txt")
+          sino
+            objArchivo.eliminaArchivo(nombreNuevo)
+          FinSi
+          romper
+      FinSegun
+    mientras (opE < 7)
+  FinMetodo
+
+  publico estatico vacio menuArchivoDocente()
+    entero opE, idDocente
+    Cadena nombreNuevo = ""
+    hacer
+      opE = leerEntero(menuArchivoD())
+      segun (opE) hacer
+        caso 1:
+          imprimir("*******************************************\n")
+          crudD.IngresarDocente(objArchivo)
+          romper
+        caso 2:
+          imprimir("*******************************************\n")
+          imprimir("Los Registros del Archivo Docente son: \n" + crudD.Mostrar(objArchivo))
+          romper
+        caso 3:
+          imprimir("*******************************************\n")
+          idDocente = leerEntero("Digite el IDDocente del cliente a consultar: ")
+          imprimir("El cliente consultado es:\n " + crudD.Consultar(objArchivo, idDocente).aTexto())
+          romper
+        caso 4:
+          idDocente = leerEntero("ID a eliminar: ")
+          imprimir(crudD.EliminarRegistro(objArchivo, idDocente))
+          romper
+        caso 5:
+          idDocente = leerEntero("ID a actualizar: ")
+          crudD.Actualizar(objArchivo, idDocente)
+          romper
+        caso 6:
+          imprimir("*******************************************\n")
+          imprimir("Ingrese el nuevo nombre del archivo: ")
+          nombreNuevo = leerConsolaLinea()
+          objArchivo.renombrarArchivo(nombreNuevo + ".txt")
+          romper
+        caso 7:
+          si (nombreNuevo.estaVacio()) entonces
+            objArchivo.eliminaArchivo("datosDocente.txt")
+          sino
+            objArchivo.eliminaArchivo(nombreNuevo)
+          FinSi
+          romper
+      FinSegun
+    mientras (opE < 7)
+  FinMetodo
+
+  publico estatico vacio menuArchivoCurso()
+    entero opE, idCurso
+    Cadena nombreNuevo = ""
+    hacer
+      opE = leerEntero(menuArchivoC())
+      segun (opE) hacer
+        caso 1:
+          imprimir("*******************************************\n")
+          crudC.IngresarCurso(objArchivo)
+          romper
+        caso 2:
+          imprimir("*******************************************\n")
+          imprimir("Los Registros del Archivo Curso son: \n" + crudC.Mostrar(objArchivo))
+          romper
+        caso 3:
+          imprimir("*******************************************\n")
+          idCurso = leerEntero("Digite el IDCurso del ccurso a consultar: ")
+          imprimir("El cliente consultado es:\n " + crudC.Consultar(objArchivo, idCurso).aTexto())
+          romper
+        caso 4:
+          idCurso = leerEntero("ID a eliminar: ")
+          imprimir(crudC.EliminarRegistro(objArchivo, idCurso))
+          romper
+        caso 5:
+          idCurso = leerEntero("ID a actualizar: ")
+          crudC.Actualizar(objArchivo, idCurso)
+          romper
+        caso 6:
+          imprimir("*******************************************\n")
+          imprimir("Ingrese el nuevo nombre del archivo: ")
+          nombreNuevo = leerConsolaLinea()
+          objArchivo.renombrarArchivo(nombreNuevo + ".txt")
+          romper
+        caso 7:
+          si (nombreNuevo.estaVacio()) entonces
+            objArchivo.eliminaArchivo("datosCurso.txt")
+          sino
+            objArchivo.eliminaArchivo(nombreNuevo)
+          FinSi
+          romper
+      FinSegun
+    mientras (opE < 7)
+  FinMetodo
+
+  publico estatico vacio menuArchivoBoletin()
+    entero opE, idCurso, idEstudiante, idDocente
+    Cadena nombreNuevo = ""
+    hacer
+      opE = leerEntero(menuArchivoB())
+      segun (opE) hacer
+        caso 1:
+          imprimir("*******************************************\n")
+          idEstudiante = leerEntero("Digite el ID del Estudiante a registrar: ")
+          idDocente = leerEntero("Digite el ID del Docente a registrar: ")
+          idCurso = leerEntero("Digite el ID del Curso a registrar: ")
+          crudB.ingresar(objArchivo, idEstudiante, idDocente, idCurso)
+          romper
+        caso 2:
+          imprimir("*******************************************\n")
+          imprimir("Los Registros del Archivo Curso son: \n" + crudB.Mostrar(objArchivo))
+          romper
+        caso 3:
+          imprimir("*******************************************\n")
+          idCurso = leerEntero("Digite el IDCurso del cliente a consultar: ")
+          imprimir("El cliente consultado es:\n " + crudB.Consultar(objArchivo, idCurso).aTexto())
+          romper
+        caso 4:
+          idCurso = leerEntero("ID a eliminar: ")
+          imprimir(crudB.EliminarRegistro(objArchivo, idCurso))
+          romper
+        caso 5:
+          idEstudiante = leerEntero("ID de estudiante para actualizar su norta: ")
+          idCurso = leerEntero("ID de curso para actualizar su nota: ")
+          crudB.ActualizarNota(objArchivo, idEstudiante, idCurso)
+          romper
+        caso 6:
+          imprimir("*******************************************\n")
+          imprimir("Ingrese el nuevo nombre del archivo: ")
+          nombreNuevo = leerConsolaLinea()
+          objArchivo.renombrarArchivo(nombreNuevo + ".txt")
+          romper
+        caso 7:
+          si (nombreNuevo.estaVacio()) entonces
+            objArchivo.eliminaArchivo("datosBoletin.txt")
+          sino
+            objArchivo.eliminaArchivo(nombreNuevo)
+          FinSi
+          romper
+      FinSegun
+    mientras (opE < 7)
+  FinMetodo
+
+FinClase

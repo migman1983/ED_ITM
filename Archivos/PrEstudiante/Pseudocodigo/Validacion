@@ -1,0 +1,171 @@
+Clase Validacion
+
+  publico estatico entero leerEntero(Cadena mensaje) // me permite validar el idCliente
+    entero num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num <= 0) entonces
+          imprimir("ERROR, el Numero debe ser mayor que cero")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (num <= 0)
+    retornar num
+  FinMetodo
+
+  publico estatico Cadena leerTitulo(Cadena mensaje)
+    entero p = 0
+    Cadena programa = ""
+    hacer
+      Intentar
+        imprimir(mensaje)
+        p = leerConsolaEntero()
+        segun (p) hacer
+          caso 1:
+            programa = "especialista"
+            romper
+          caso 2:
+            programa = "magister"
+            romper
+          caso 3:
+            programa = "doctor"
+            romper
+        FinSegun
+        si (p < 1 o p > 3) entonces
+          imprimir("ERROR, opción no valida")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (p < 1 o p > 3)
+    retornar programa
+  FinMetodo
+
+  publico estatico Cadena leerTipoPrograma(Cadena mensaje)
+    entero t = 0
+    Cadena titulo = ""
+    hacer
+      Intentar
+        imprimir(mensaje)
+        t = leerConsolaEntero()
+        segun (t) hacer
+          caso 1:
+            titulo = "remoto"
+            romper
+          caso 2:
+            titulo = "virtual"
+            romper
+          caso 3:
+            titulo = "presencial"
+            romper
+        FinSegun
+        si (t < 1 o t > 3) entonces
+          imprimir("ERROR, opción no valida")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (t < 1 o t > 3)
+    retornar titulo
+  FinMetodo
+
+  publico estatico entero leerCreditos(Cadena mensaje)
+    entero num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num < 2 o num > 5) entonces
+          imprimir("ERROR, los creditos deben estar entre 2 y 5")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (num < 2 o num > 5)
+    retornar num
+  FinMetodo
+
+  publico estatico entero leerExperienciaDocente(Cadena mensaje)
+    entero num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num < 20 o num > 5) entonces
+          imprimir("ERROR, la edad debe estar entre 18 y 100")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (num < 20 o num > 5)
+    retornar num
+  FinMetodo
+
+  publico estatico entero leerEdadDocente(Cadena mensaje)
+    entero num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num < 38) entonces
+          imprimir("ERROR, la edad debe ser mayor a 30")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR:" + e)
+      FinIntentar
+    mientras (num < 30)
+    retornar num
+  FinMetodo
+
+  publico estatico Cadena leerString(Cadena mensaje)
+    Cadena cadena = ""
+    hacer
+      Intentar
+        imprimir(mensaje)
+        cadena = leerConsolaLinea()
+        si (cadena == "") entonces
+          imprimir("ERROR: debe ingresar informacion")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR: " + e)
+      FinIntentar
+    mientras (cadena == "")
+    retornar cadena
+  FinMetodo
+
+  publico estatico entero leerEstrato(Cadena mensaje)
+    entero num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num <= 0 o num >= 7) entonces
+          imprimir("ERROR, el Numero ingresado no pertenece a un estrato")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR - OJO  ")
+      FinIntentar
+    mientras (num <= 0 o num >= 7)
+    retornar num
+  FinMetodo
+
+  publico estatico real leerNota(Cadena mensaje)
+    real num = 0
+    hacer
+      Intentar
+        imprimir(mensaje)
+        num = leerConsolaEntero()
+        si (num < 0 o num > 5) entonces
+          imprimir("ERROR, el valor ingresado esta fuera del rango de una nota")
+        FinSi
+      Excepcion (Exception e)
+        imprimir("ERROR - OJO  ")
+      FinIntentar
+    mientras (num < 0 o num > 5)
+    retornar num
+  FinMetodo
+
+FinClase

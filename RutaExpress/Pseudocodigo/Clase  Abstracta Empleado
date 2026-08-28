@@ -1,0 +1,31 @@
+clase abstracta Empleado
+   publico Cadena cedula
+   publico Cadena nombre
+   publico real sueldo
+
+  publico Empleado(Cadena cedula, Cadena nombre, real sueldo)
+    este.cedula = cedula
+    este.nombre = nombre
+    este.sueldo = sueldo
+  FinMetodo
+  publico vacio asignarCedula(Cadena cedula)
+    este.cedula =  cedula
+  finMetodo
+  publico Cadena obtenerCedula()
+    retornar cedula
+  finMetodo
+  publico vacio asignarNombre(Cadena nombre)
+    este.nombre =  nombre
+  finMetodo
+  publico Cadena obtenerNombre()
+    retornar Nombre
+  finMetodo
+  publico vacio asignarSueldo(real sueldo)
+    este.sueldo =  sueldo
+  finMetodo
+  publico real obtenerSueldo()
+    retornar sueldo
+  finMetodo
+  publico Cadena retornarCadena()
+    retornar "Empleado: { cedula: ", cedula, "nombre: ", nombre ," sueldo: ",sueldo, " }"
+ finMetodo

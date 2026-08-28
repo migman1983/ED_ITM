@@ -1,0 +1,16 @@
+Clase Administrativo extiende Empleado
+  publico Cadena areaTrabajo
+  publico Administrativo(Cadena cedula, Cadena nombre, real sueldo, Cadena areaTrabajo)
+    super(cedula, nombre, sueldo)
+    este.areaTrabajo = areaTrabajo
+  finMetodo
+  publico vacio asignarAreaTrabajo(Cadena areaTrabajo)
+    este.areaTrabajo = areaTrabajo
+  finMetodo
+  publico Cadena obtenerAreaTrabajo()
+    retornar areaTrabajo
+  finMetodo
+  publico Cadena convertirCadena()
+    retornar "Administrativo = { areaTrabajo: ", areaTrabajo, " } "
+  finMetodo
+FinClase
