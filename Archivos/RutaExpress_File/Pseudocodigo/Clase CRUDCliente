@@ -65,16 +65,64 @@ finMetodo
 
 publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
  1. abrimos archivo de clientes en modo lectura
+    arch.abrirModoLectura("DatosClientes.txt")
  2. recorrer el archivo para contar los registros del archivo
+   entero cl = arch.contadorLineas("DatosClientes.txt")
  3. crear vector tipo Cliente que su tamaño sea de acuerdo a la cantidad registros encontrados
+    Clientes[] vecC = nuevo Cliente[cl]
  4. asignarle al vector los registros identificados en el archivo y cerrar archivo en modo lectura
+    vecC = arch.leerClientes()
  5. recorrer el vector para encontrar la cedula y realizar la actualización. para eso se
     necesita una estructura ciclica y dentro de la estrcutura se compara las cedulas y si 
     se encuentra un match entre la cedula consultada con la registrada en el vector, se debería
     pedir el dato a actualizar (nombre o telefono) y actualizar el objeto en la posición que se 
-    encuentra en el vector    
- 6.Eliminar el archivo
+    encuentra en el vector
+     entero i = 0
+     entero opcion = 0
+     booleano sw = falso
+     mientras (i<cl)haga
+       si(cedula == vecC[i].obtenerCedula())entonces
+         imprima("seleccione el dato a actualizar: ")
+         imprima(" 1. nombre")
+         imprima(" 2. telefono")
+         lea opcion    
+         segun(opcion)haga
+            caso 1:
+               Cadena nombre
+               imprima("ingrese el nuevo nombre del Cliente:")
+               lea nombre
+               vecC[i].asignarNombre(nombre)
+               romper
+            caso 2:
+               Cadena telefono
+               imprima("ingrese el nuevo telefono del Cliente:")
+               lea telefono
+               vecC[i].asignarTelefono(telefono)
+               romper
+            en otro caso:
+                imprima("la opción no es valida. no se actualizará el registro")
+         fin segun
+         sw = verdadero
+         romper
+        finSi       
+       /* de que manera podríamos "obligar" al usuario que ingrese un valor valido en la opción para que pueda actualizarse 
+          un registro */
+         i++
+     fin Mientras
+     
+ 6.Cerrar modo Escritura y Eliminar el archivo
+    arch.cerrarModoLectura()
+    arch.eliminarArchivo("DatosClientes.txt")
+   
  7. abrir archivo en modo escritura
+   arch.abrirModoEscritura("DatosClientes.txt")
  8. volver a crear el archivo con la información que se encuentra en el vector
+    para(Clientes c: Clientes)haga
+     arch.escribir(vecC[c].convertirCadena())
+    finPara      
  9. cerrar archivo en modo escritura
+    arch.cerrarModoEscritura()
 finMetodo
+
+ojo para el martes el método de eliminar un registro por cédula!!!
+
