@@ -138,26 +138,27 @@ publico vacio eliminarRegistro(Archivo arch, Cadena cedula
       finSi
 
       entero i = 0
-      entero pos = -1
-      caracter confirma
+      entero sw = falso
       mientras(i < cl)haga
          si(cedula == vecC[i].obtenerCedula())entonces
-            pos = i
-            romper
+           sw = verdadero
+           imprima("usuario existente")
+           imprima("Datos = {cedula: ", vecC[i].obtenerCedula(),
+                  " nombre: ", vecC[i].obtenerNombre(),
+                  " telefono: ", vecC[i].obtenerTelefono(), "}")
+           romper
          finSi
          i++
       finMientras
-      si(pos == -1)entonces
-         imprima("el cliente con cedula ", cedula, " no existe")
-         retornar
+      si(!sw)entonces
+            imprima("usuario no existe")
       finSi
-
       arch.eliminarArchivo("DatosClientes.txt")
 
 
       arch.abrirModoEscritura("DatosClientes.txt")
       para(entero j = 0; j < cl; j++)haga
-         si(j != pos)entonces
+         si(j != i)entonces
             arch.escribir(vecC[j].convertirCadena())
          finSi
       finPara
