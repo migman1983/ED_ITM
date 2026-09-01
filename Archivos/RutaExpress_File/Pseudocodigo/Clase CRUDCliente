@@ -186,5 +186,61 @@ publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
     arch.cerrarModoEscritura()
 finMetodo
 
-ojo para el martes el método de eliminar un registro por cédula!!!
+publico vacio eliminarRegistro(Archivo arch, Cadena cedula)
+ 1. abrimos archivo de clientes en modo lectura
+    arch.abrirModoLectura("DatosClientes.txt")
+ 2. recorrer el archivo para contar los registros del archivo
+    entero cl = arch.contadorLineas("DatosClientes.txt")
+ 3. crear vector tipo Cliente que su tamaño sea de acuerdo a la cantidad de registros encontrados
+    Cliente[] vecC = nuevo Cliente[cl]
+ 4. asignarle al vector los registros identificados en el archivo y cerrar archivo en modo lectura
+    vecC = arch.leerClientes()
+    arch.cerrarModoLectura()
+ 5. recorrer el vector para encontrar la cedula y guardar su posición
+    entero i = 0
+    entero posicion = -1
+    booleano sw = falso
+    mientras(i < cl)haga
+      si(cedula == vecC[i].obtenerCedula())entonces
+         sw = verdadero
+         posicion = i
+         romper
+      finSi
+      i++
+    finMientras
+
+ 6. validar si la cedula fue encontrada
+    si(!sw)entonces
+       imprima("la cedula no se encuentra registrada")
+    sino
+      // 6.1 crear un nuevo vector de tamaño (cl - 1) sin el cliente eliminado
+        Cliente[] vecNuevo = nuevo Cliente[cl - 1]
+        entero j = 0
+        entero k = 0
+        mientras(j < cl)haga
+          si(j != posicion)entonces
+             vecNuevo[k] = vecC[j]
+             k++
+          finSi
+          j++
+        finMientras
+
+      // 6.2 eliminar el archivo original
+        arch.eliminarArchivo("DatosClientes.txt")
+
+      // 6.3 abrir archivo en modo escritura
+        arch.abrirModoEscritura("DatosClientes.txt")
+
+      // 6.4 volver a crear el archivo con la información del vector actualizado (sin el registro eliminado)
+        entero m = 0
+        mientras(m < (cl - 1))haga
+          arch.escribir(vecNuevo[m].convertirCadena())
+          m++
+        finMientras
+
+      // 6.5 cerrar archivo en modo escritura
+        arch.cerrarModoEscritura()
+        imprima("registro eliminado con éxito")
+    finSi
+finMetodo
 
