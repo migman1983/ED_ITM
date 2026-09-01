@@ -85,7 +85,7 @@ publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
          imprima("seleccione el dato a actualizar: ")
          imprima(" 1. nombre")
          imprima(" 2. telefono")
-         lea opcion    
+         lea opcion  
          segun(opcion)haga
             caso 1:
                Cadena nombre
@@ -124,5 +124,45 @@ publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
     arch.cerrarModoEscritura()
 finMetodo
 
-ojo para el martes el método de eliminar un registro por cédula!!!
-compañeros los amo demasiado
+
+publico vacio eliminarRegistro(Archivo arch, Cadena cedula
+      arch.abrirModoLectura("DatosClientes.txt")
+      entero cl = arch.contadorLineas("DatosClientes.txt")
+      Cliente[] vecC = nuevo Cliente[cl]
+      vecC = arch.leerClientes()
+      arch.cerrarModoLectura()
+
+      si(cl == 0)entonces
+         imprima("no hay registros para eliminar")
+         retornar
+      finSi
+
+      entero i = 0
+      entero pos = -1
+      caracter confirma
+      mientras(i < cl)haga
+         si(cedula == vecC[i].obtenerCedula())entonces
+            pos = i
+            romper
+         finSi
+         i++
+      finMientras
+      si(pos == -1)entonces
+         imprima("el cliente con cedula ", cedula, " no existe")
+         retornar
+      finSi
+
+      arch.eliminarArchivo("DatosClientes.txt")
+
+
+      arch.abrirModoEscritura("DatosClientes.txt")
+      para(entero j = 0; j < cl; j++)haga
+         si(j != pos)entonces
+            arch.escribir(vecC[j].convertirCadena())
+         finSi
+      finPara
+      arch.cerrarModoEscritura()
+
+      imprima("registro eliminado correctamente")
+
+finMetodo
