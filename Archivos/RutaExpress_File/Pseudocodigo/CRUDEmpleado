@@ -1,0 +1,257 @@
+//clase CRUD
+clase CRUDEmpleado
+
+  //Método constructor vacío
+  publico vacio CRUDEmpleado()
+  FinMetodo
+
+
+//Método Create  (Ingresar un nuevo registro de empleado)
+publico vacio ingresarRegistroEmpleado(Archivo arch, cadena cce)
+
+  /*Validar que la cédula no se encuentre ya en el archivo: recorrer el arichivo , llevarlo a un vector de tipo Empleado,
+   y recorrer ese vector para confirmar que la cédula ingresada no este ya registrada*/
+  //DatosEmpleados.txt es el nombre del archivo 
+  /*Cuenta cuantas líneas (registros/filas)  tiene el archivo actualmente. Ese número me dice el total 
+  de clientes que ya existen*/
+  entero emp= arch.contadorLineas("DatosEmpleados.txt")
+
+ //Abro el archivo en modo lectura `para poder cargar los datos existentes
+    arch.abrirModoLectura("DatosEmpleados.txt")
+
+  //Creo vector de tamaño exacto (cl), según la cantidad de registros
+      Empleado[] vecE= new Empleados[cl]
+  
+ //Paso todos los registros del archivo al vector
+       vecE= arch.leerEmpleado()
+
+ //Como ya cargue todos los datos en memoria, no necesito el archivo abierto
+       arch.cerrarModoLectura()
+
+  //Recorro el vector comparando la cédula recibida contra cada registro.
+ /*Recorrer el vector comparando la cédula que quiere ingresar el usuario contra la cédula de cada empleado 
+ya guardado. Si encuentro una igual prendo la bandera Switch a VERDADERO y uso ROMPER para salir del ciclo inmediatamente,
+no tiene sendido seguir buscando si ya la encontre*/
+  //Vbles de control para el recorrido
+  entero i=0
+  booleano sw = falso //SW= falso significa "cédula no encontrada"
+
+ //Recorro el vector comparando la cédula recibida contra cada registro.
+ mientras(i < cl) haga
+  si(cedula == vecE[i].obtenercce()) entonces
+     sw = verdadero      //SW = verdadero significa "cédula de empleado encontrada", ya existe un empleado con esa cédula
+     romper              //no sigo buscando, uso ROMPER para salir del ciclo inmediatamente, no tiene sendido seguir buscando si ya la encontre
+  finsi
+  i=i+1
+ finmientras
+ 
+//Condicional: "Si NO se encontró la cédula (!SW) o el archivo está vacío (emp=0), entonces si puedo insertar el nuevo registro
+ si(!sw || (cl == 0)) entonces
+
+/*1. Abrir el archivo en modo escritura para agregar e nuevo registro.
+arch.abrirArchivoModoEscritura("DatosEmpleados.txt)   
+
+/*2. Creo el objeto empleado y lo lleno con los datos recibidos (cc) cc=cedula ciudadanía empleado
+Empleado e= nuevo Empleado()
+e= e.ingresarDatos(cce)
+
+/*3.  Convierto el objeto "e" a una cadena de texto (formato para guardar en el .txt, los atribuos)/*
+cadena registro= e.convertirCadena()
+//Lo escribo como una nueva línea en el archivo
+arch.escribir(registro)
+
+//4. Cierro el archivo en modo escritura
+arch.cerrarModoEscritura()
+
+sino
+//Si la cédula ya existía, no se inserta nada y se le avisa al usuario
+  imprimir("La cédula ya se encuentra registrada")
+finsi
+finMetodo
+
+
+  //Método READ, consultar un empleado por su cédula (se consulta es por el atributo clave)
+  publico vacio ConsultarEmpleado(Archivo arch, cadena cedula)
+  
+  //1. abro archivo en modo lectura.
+  arch.abrirModoLectura("Datos Empleados.txt")
+  
+ //2. Cuento las líneas del archivo (cuantos registros hay)
+ entero cl= arch.contadorLineas("DatosEmpleados.txt")
+
+ //3. Creo el vector que va a almacenar los registros del archivo.
+ Empleado[] vecE= new Empleados[cl]
+
+//4. paso los archivos del registro al vector.
+vecE= arch.leerEmpleados()
+
+//4.1 cierro el archivo en modo lectura, ya que ya tengo los datos en memoria
+arch.cerrarModoLectura()
+
+/*5. Recorro el vector para identificar si la cédula existe
+booleano sw = verdadero      //asumo "no encontrado" hasta que se demuestre lo contrario          --------------------
+
+para(i=0; i < cl; i++)haga
+      si(cce == vecE[i].obtenercce())entonces
+        // si encontramos coincidencia, mostramos los datos completos
+        imprimir("empleado existente")
+        imprimir("Datos = {cedula: ", cce, " nombre: ", vecE[i].obtenerNombre(), " sueldo: ", vecE[i].obtenerSueldo(), "} ")
+        sw = falso   // ya se encontró, apago la bandera
+        romper       // no sigo recorriendo, ya no hace falta
+      finSi
+    finPara
+
+    // si termino todo el recorrido y sw sigue en verdadero, es porque nunca se encontró la cédula
+    si(sw)entonces
+      imprimir("empleado no existe")
+    finSi
+  FinMetodo
+
+
+  // UPDATE - Actualizar nombre o sueldo de un Empleado
+   publico vacio actualizarRegistro(Archivo arch, Cadena cce)
+
+    // 1. abro archivo en modo lectura
+    arch.abrirModoLectura("DatosEmpleados.txt")
+    // 2. cuento los registros del archivo
+    entero cl = arch.contadorLineas("DatosEmpleados.txt")
+    // 3. creo vector del tamaño según la cantidad de registros
+    Empleado[] vecE = nuevo Empleado[cl]
+    // 4. asigno al vector los registros leídos del archivo
+    vecE = arch.leerEmpleados()
+
+    // 5. recorrer el vector para encontrar la cédula y actualizar el dato
+    entero i = 0
+    entero opcion = 0
+    booleano sw = falso
+
+    mientras(i < cl)haga
+      si(cce == vecE[i].obtenerCedulaEmP())entonces
+
+        // MUESTRO el menú de campos que se pueden actualizar
+        imprima("seleccione el dato a actualizar: ")
+        imprima(" 1. nombre")
+        imprima(" 2. sueldo")
+        lea opcion
+
+        /*según la opción elegida, pido el nuevo valor  y lo asigno directamente sobre el objeto EN EL VECTOR
+        (todavía no se ha tocado el archivo físico)*/
+        segun(opcion)haga
+          caso 1:
+            Cadena nombre
+            imprima("ingrese el nuevo nombre del Empleado:")
+            lea nombre
+            vecE[i].setNombre(nombre)
+            romper
+          caso 2:
+            real sueldo
+            imprima("ingrese el nuevo sueldo del Empleado:")
+            lea sueldo
+            vecE[i].setSueldo(sueldo)
+            romper
+          en otro caso:
+            // si el usuario ingresa una opción inválida, no se actualiza nada
+            imprima("la opcion no es valida. no se actualizara el registro")
+        fin segun
+
+        sw = verdadero   // marca que sí se encontró y actualizó
+        romper           // ya no sigue buscando
+      finSi
+      i++
+    finMientras
+
+    // solo se reescrube el archivo si de verdad se encontró la cédula
+    si(sw)entonces
+
+      /6. se cierra el modo lectura y elimino el archivo físico,
+     porque no existe forma de editar una sola línea de un .txt*/
+      arch.cerrarModoLectura()
+      arch.eliminarArchivo("DatosEmpleados.txt")
+
+      // 7. se vuelve a abrir el archivo, ahora en modo escritura
+      arch.abrirModoEscritura("DatosEmpleados.txt")
+
+      /* 8. se recorre TODO el vector (ya con el dato actualizado)
+       y se reescribe cada registro como una línea nueva*/
+      para(Empleado e: vecE)haga
+        arch.escribir(e.convertirCadena())
+      finPara
+
+      // 9. se cierra el archivo en modo escritura
+      arch.cerrarModoEscritura()
+
+    sino
+      // si nunca se encontró la cédula, avisa y no se toca el archivo
+      arch.cerrarModoLectura()
+      imprima("la cedula no existe, no se puede actualizar")
+    finSi
+  FinMetodo
+
+
+   // DELETE - Eliminar un Empleado por cédula
+    publico vacio eliminarRegistro(Archivo arch, Cadena cce)
+    // 1-4. mismo patrón: se carga todo el archivo a un vector en memoria
+    arch.abrirModoLectura("DatosEmpleados.txt")
+    entero cl= arch.contadorLineas("DatosEmpleados.txt")
+    Empleado[] vecE = nuevo Empleado[cl]
+    vecE = arch.leerEmpleados()
+    arch.cerrarModoLectura()
+
+    /*5. se recorre el vector para encontrar en qué POSICIÓN
+    está el registro que se quiere eliminar*/
+    entero i = 0
+    entero pos = -1     // -1 indica "todavía no encontrado"
+    booleano sw = falso
+
+    mientras(i < cl)haga
+      si(cce == vecE[i].obtenerCedula())entonces
+        pos = i           // se guarda la posición exacta
+        sw = verdadero
+        romper
+      finSi
+      i++
+    finMientras
+
+    // solo se elimina si de verdad se encontró la cédula
+    si(sw)entonces
+
+      /*6. creo un vector nuevo, UN ESPACIO más pequeño,
+      porque vamos a excluir el registro eliminado*/
+      Empleado[] vecNuevo = nuevo Empleado[cl-1]
+      entero j = 0
+
+      /*copio al vector nuevo todos los registros EXCEPTO
+      el que está en la posición que quiero eliminar*/
+      para(i=0; i<cl ; i++)haga
+        si(i <> pos)entonces
+          vecNuevo[j] = vecE[i]
+          j++
+        finSi
+      finPara
+
+      // 7. elimino el archivo físico actual
+      arch.eliminarArchivo("DatosEmpleados.txt")
+
+      // 8. lo vuelvo a crear en modo escritura
+      arch.abrirModoEscritura("DatosEmpleados.txt")
+
+      /*9. reescribo el archivo, pero ahora con el vector NUEVO
+      (que ya no incluye el registro eliminado)*/
+      para(Empleado e: vecNuevo)haga
+        arch.escribir(e.convertirCadena())
+      finPara
+
+      // 10. cierro el archivo en modo escritura
+      arch.cerrarModoEscritura()
+
+      imprima("el registro con cedula " + cce + " fue eliminado correctamente")
+
+    sino
+      // si nunca se encontró la cédula, se avisa y no se toca el archivo
+      imprima("la cedula no existe, no se puede eliminar")
+    finSi
+  FinMetodo
+FinClase
+ 
+  
+
