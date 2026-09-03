@@ -1,0 +1,185 @@
+Clase CRUDPaquete
+
+   publico CRUDPaquete()
+   FinMetodo
+publico vacio IngresarRegistroPaquete(Archivo arch, Cadena CodigoPaquete, real Peso, Cadena Descripcion, real ValorDeclarado)
+//1. Contar cuántos registros hay actualmente en el archivo
+entero cl = arch.contadorLineas("DatosPaquete.txt")
+//2. Abrir el archivo en modo lectura.
+arch.abrirModoLectura("DatosPaquete.txt")
+//3. Crear un vector de tipo Paquete del tamaño de la cantidad de registros
+Paquete[] vecP = new Paquete[cl]
+vecP = arch.leerPaquete()
+//4. Cerrar el archivo en modo lectura.
+arch.cerrarModoLectura("DatosCodigoPaquete.txt")
+//5. Recorrer el vector comparando el codigo recibido
+        entero i = 0
+        booleano sw =  falso
+        mientras(i < cl)haga
+          si(CodigoPaquete == vecP[i].obtenerCodigoPaquete))entonces
+             sw = verdadero
+             romper
+          finSi
+          i++
+        finMientras
+        si(!sw)||(cl == 0)entonces 
+         //  1. abrir archivo mode Escritura
+           arch.abrirModoEscritura("DatosPaquete.txt")
+         // 2. crear el objeto que vamos a guardar
+           Paquete p = nuevo Paquete()
+           p = p.ingresarDatos(CodigoPaquete)
+         // 3. escribir en el archivo
+            String registro = p.convertirCadena()
+           arch.escribir(registro)
+        // 4. cerrar el archivo en modo EScritura
+           arch.cerrarModoEscritura()
+        sino
+          imprimir("el codigo del paquete ya se encuentra registrado")
+   FinMetodo
+
+publico vacio consultarPaquete(Archivo arch, Cadena CodigoPaquete)
+ //1. abrir archivo en modo lectura
+   arch.abrirModoLectura("DatosPaquete.txt")
+ //2. contar las lineas del archivo y almacenarlo en una variable
+   entero cl = arch.contadorLineas("DatosPaquete.txt")
+ //3.  Crear el vector que va a almacenar los registros que hay en el archivo
+    Paquete[] vecP = nuevo Paquete[cl]  
+ //4. Pasar los registros del archivo al vector
+    vecP = arch.leerPaquete()
+   //4.1 cerramos el archivo en modo lectura
+    arch.cerrarModoLectura()
+ //5. recorrer el vector para identificar si la cedula existe
+    boolean sw = verdadero
+   para(i=0; i < vecP.tamaño; i++)haga
+    si(CodigoPaquete == vecP[i].obtenerCodigoPaquete())entonces
+       imprimir("Paquete existente")
+       imprimir imprimir("Datos = {CodigoPaquete: ", CodigoPaquete, " Peso: ", vecP[i].getPeso(), " ValorDeclarado: ", vecP[i].getValorDeclarado(), " Descripcion: ", vecP[i].getDescripcion(), "}")
+       boolean sw = falso
+       romper
+   finSi
+ finPara
+    si(sw)entonces
+     imprimir("Paquete no existe")
+    finSi
+finMetodo
+
+publico vacio actualizarRegistro(Archivo arch, entero CodigoPaquete)
+ 1. abrimos archivo de clientes en modo lectura
+    arch.abrirModoLectura("DatosPaquete.txt")
+ 2. recorrer el archivo para contar los registros del archivo
+   entero cl = arch.contadorLineas("DatosPaquete.txt")
+ 3. crear vector tipo Cliente que su tamaño sea de acuerdo a la cantidad registros encontrados
+    Paquete[] vecP = nuevo Paquete[cl]
+ 4. asignarle al vector los registros identificados en el archivo y cerrar archivo en modo lectura
+    vecP = arch.leerPaquete()
+    arch.cerrarModoLectura()
+5. recorrer el vector para encontrar el codigo del paquete y realizar la actualización.
+     entero i = 0
+     entero opcion = 0
+     booleano sw = falso
+     mientras (i < cl)haga
+       si(CodigoPaquete == vecP[i].obtenerCodigoPaquete())entonces
+         imprima("seleccione el dato a actualizar: ")
+         imprima(" 1. Peso")
+         imprima(" 2. Descripcion")
+         imprima(" 3. ValorDeclarado")
+         lea opcion    
+         segun(opcion)haga
+            caso 1:
+               Real peso
+               imprima("ingrese el nuevo peso del paquete: ")
+               lea peso
+               vecP[i].asignarPeso(peso)
+               romper
+            caso 2:
+               Cadena descripcion
+               imprima("ingrese la nueva descripcion del paquete:")
+               lea descripcion
+               vecP[i].asignarDescripcion(descripcion)
+               romper
+            caso 3:
+               Real valorDeclarado
+               imprima("ingrese el nuevo valor declarado del paquete:")
+               lea valorDeclarado
+               vecP[i].asignarValorDeclarado(valorDeclarado)
+               romper
+            en otro caso:
+                imprima("la opción no es valida. No se actualizará el paquete")
+         fin segun
+         sw = verdadero
+         romper
+        finSi       
+        i++
+     fin Mientras
+     
+ 6.Cerrar modo Escritura y Eliminar el archivo
+    arch.cerrarModoLectura()
+    arch.eliminarArchivo("DatosCodigoPaquete.txt")
+   
+ 7. abrir archivo en modo escritura
+   arch.abrirModoEscritura("DatosCodigoPaquete.txt")
+ 8. volver a crear el archivo con la información que se encuentra en el vector
+    para(Paquete p: Paquete)haga
+     arch.escribir(vecP[p].convertirCadena())
+    finPara      
+ 9. cerrar archivo en modo escritura
+    arch.cerrarModoEscritura()
+finMetodo
+
+publico vacio eliminarRegistro(Archivo arch, entero CodigoPaquete)
+ 1. abrimos archivo de clientes en modo lectura
+    arch.abrirModoLectura("DatosPaquete.txt.txt")
+ 2. recorrer el archivo para contar los registros del archivo
+    entero cl = arch.contadorLineas("DatosPaquete.txt")
+ 3. crear vector tipo Cliente que su tamaño sea de acuerdo a la cantidad de registros encontrados
+    Paquete[] vecP = nuevo Paquete[cl]
+ 4. asignarle al vector los registros identificados en el archivo y cerrar archivo en modo lectura
+    vecP = arch.leerPaquete()
+    arch.cerrarModoLectura()
+ 5. recorrer el vector para encontrar el codigo del paquete y guardar su posición
+    entero i = 0
+    entero posicion = -1
+    booleano sw = falso
+    mientras(i < cl)haga
+      si(CodigoPaquete == vecP[i].obtenerCodigoPaquete())entonces
+         sw = verdadero
+         posicion = i
+         romper
+      finSi
+      i++
+    finMientras
+
+ 6. validar si la cedula fue encontrada
+    si(!sw)entonces
+       imprima("El codigo del paquete no se encuentra registrado")
+    sino
+      // 6.1 crear un nuevo vector de tamaño (cl - 1) sin el cliente eliminado
+        Paquete[] vecNuevo = nuevo Paquete[cl - 1]
+        entero j = 0
+        entero k = 0
+        mientras(j < cl)haga
+          si(j != posicion)entonces
+             vecNuevo[k] = vecP[j]
+             k++
+          finSi
+          j++
+        finMientras
+
+      // 6.2 eliminar el archivo original
+        arch.eliminarArchivo("DatosPaquete.txt")
+
+      // 6.3 abrir archivo en modo escritura
+        arch.abrirModoEscritura("DatosPaquete.txt")
+
+      // 6.4 volver a crear el archivo con la información del vector actualizado (sin el registro eliminado)
+        entero m = 0
+        mientras(m < (cl - 1))haga
+          arch.escribir(vecNuevo[m].convertirCadena())
+          m++
+        finMientras
+
+      // 6.5 cerrar archivo en modo escritura
+        arch.cerrarModoEscritura()
+        imprima("codigo eliminado con éxito")
+    finSi
+finMetodo
