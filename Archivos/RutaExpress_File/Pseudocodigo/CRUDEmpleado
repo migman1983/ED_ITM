@@ -38,7 +38,7 @@ clase CRUDEmpleado
 
     //Recorro el vector comparando la cédula recibida contra cada registro.
      mientras(i < cl) haga
-         si(cedula == vecE[i].obtenercce()) entonces
+         si(cce == vecE[i].obtenercce()) entonces
          sw = verdadero      //SW = verdadero significa "cédula de empleado encontrada", ya existe un empleado con esa cédula
      romper              //no sigo buscando, uso ROMPER para salir del ciclo inmediatamente, no tiene sendido seguir buscando si ya la encontre
         finsi
@@ -51,7 +51,7 @@ clase CRUDEmpleado
     /*1. Abrir el archivo en modo escritura para agregar e nuevo registro.
     arch.abrirArchivoModoEscritura("DatosEmpleados.txt)   
 
-    /*2. Creo el objeto empleado y lo lleno con los datos recibidos (cc) cc=cedula ciudadanía empleado
+    /*2. Creo el objeto empleado y lo lleno con los datos recibidos (cce) cc=cedula ciudadanía empleado
     Empleado e= nuevo Empleado()
     e= e.ingresarDatos(cce)
 
