@@ -96,7 +96,7 @@ publico vacio ConsultarEmpleado(Archivo arch, cadena cedula)
         // si encontramos coincidencia, mostramos los datos completos
         imprimir("empleado existente")
         imprimir("Datos = {cedula: ", cce, " nombre: ", vecE[i].obtenerNombre(), " sueldo: ", vecE[i].obtenerSueldo(), "} ")
-        sw = falso   // ya se encontró, apago la bandera
+        booleano sw = falso   // ya se encontró, apago la bandera
   romper       // no sigo recorriendo, ya no hace falta
     finSi
  finPara
