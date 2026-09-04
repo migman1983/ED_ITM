@@ -14,7 +14,7 @@ clase CRUDEmpleado
   //DatosEmpleados.txt es el nombre del archivo 
   /*Cuenta cuantas líneas (registros/filas)  tiene el archivo actualmente. Ese número me dice el total 
   de clientes que ya existen*/
-   entero emp= arch.contadorLineas("DatosEmpleados.txt")
+   entero cl= arch.contadorLineas("DatosEmpleados.txt")
 
     //Abro el archivo en modo lectura `para poder cargar los datos existentes
     arch.abrirModoLectura("DatosEmpleados.txt")
