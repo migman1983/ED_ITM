@@ -1,0 +1,211 @@
+//* - codigoUnico: entero
+- fechaEmision: Cadena
+- estadoActual: cadena
+
++ setCodigoUnico(entero codigoUnico): vacio
++ getCodigoUnico(): entero
++ setFechaEmision(cadena fechaEmision): vacio
++ getFechaEmision(): cadena
++ setEstadoActual(cadena estadoActual): vacio
++ getEstadoActual(): cadena //*
+
+Clase CRUDOrdenEnvio
+
+   publico CRUDOrdenEnvio()
+   FinMetodo
+
+   publico vacio IngresarRegistroOrden(Archivo arch, entero codigo, Cadena fecha, Cadena estado)
+     //1. contar cuántos registros hay actualmente en el archivo
+       entero cl = arch.contadorLineas("DatosOrdenEnvio.txt")
+     //2. abrir el archivo en modo lectura
+       arch.abrirModoLectura("DatosOrdenEnvio.txt")
+     //3. crear el vector y cargarlo con los registros existentes
+       OrdenEnvio[] vecO = nuevo OrdenEnvio[cl]
+       vecO = arch.leerOrdenes()
+     //4. cerrar el archivo en modo lectura
+       arch.cerrarModoLectura()
+     //5. recorrer el vector para validar que el codigoUnico no exista ya
+       entero i = 0
+       booleano sw = falso
+       mientras(i < cl)haga
+         si(codigo == vecO[i].getCodigoUnico())entonces
+            sw = verdadero
+            romper
+         finSi
+         i++
+       finMientras
+     //6. si no existe (o el archivo está vacío), se registra la nueva orden
+       si(!sw)||(cl == 0)entonces
+          //6.1 abrir archivo en modo escritura
+            arch.abrirModoEscritura("DatosOrdenEnvio.txt")
+          //6.2 crear el objeto OrdenEnvio y asignarle los datos
+            OrdenEnvio o = nuevo OrdenEnvio()
+            o.setCodigoUnico(codigo)
+            o.setFechaEmision(fecha)
+            o.setEstadoActual(estado)
+          //6.3 escribir el registro en el archivo
+            Cadena registro = o.convertirCadena()
+            arch.escribir(registro)
+          //6.4 cerrar el archivo en modo escritura
+            arch.cerrarModoEscritura()
+            imprima("orden registrada con éxito")
+       sino
+          imprima("el código único ya se encuentra registrado")
+       finSi
+   FinMetodo
+
+   publico vacio consultarOrden(Archivo arch, entero codigo)
+     //1. abrir archivo en modo lectura
+       arch.abrirModoLectura("DatosOrdenEnvio.txt")
+     //2. contar las líneas del archivo
+       entero cl = arch.contadorLineas("DatosOrdenEnvio.txt")
+     //3. crear el vector que va a almacenar los registros
+       OrdenEnvio[] vecO = nuevo OrdenEnvio[cl]
+     //4. pasar los registros del archivo al vector
+       vecO = arch.leerOrdenes()
+     //4.1 cerrar el archivo en modo lectura
+       arch.cerrarModoLectura()
+     //5. recorrer el vector para buscar el codigoUnico
+       entero i = 0
+       booleano sw = verdadero
+       mientras(i < cl)haga
+         si(codigo == vecO[i].getCodigoUnico())entonces
+            imprima("orden encontrada")
+            imprima("Datos = {codigo: ", codigo, " fechaEmision: ", vecO[i].getFechaEmision(), " estadoActual: ", vecO[i].getEstadoActual(), "}")
+            sw = falso
+            romper
+         finSi
+         i++
+       finMientras
+     //6. si nunca se encontró, avisar
+       si(sw)entonces
+          imprima("la orden no existe")
+       finSi
+   FinMetodo
+
+   publico vacio actualizarOrden(Archivo arch, entero codigo)
+     //1. abrir archivo en modo lectura
+       arch.abrirModoLectura("DatosOrdenEnvio.txt")
+     //2. contar los registros del archivo
+       entero cl = arch.contadorLineas("DatosOrdenEnvio.txt")
+     //3. crear el vector según la cantidad de registros
+       OrdenEnvio[] vecO = nuevo OrdenEnvio[cl]
+     //4. cargar el vector y cerrar el archivo en modo lectura
+       vecO = arch.leerOrdenes()
+       arch.cerrarModoLectura()
+     //5. recorrer el vector para encontrar el codigoUnico y actualizar
+       entero i = 0
+       entero opcion = 0
+       booleano sw = falso
+       mientras(i < cl)haga
+         si(codigo == vecO[i].getCodigoUnico())entonces
+            hacer
+              imprima("seleccione el dato a actualizar:")
+              imprima(" 1. fechaEmision")
+              imprima(" 2. estadoActual")
+              lea opcion
+              si(opcion != 1 && opcion != 2)entonces
+                 imprima("opción inválida, intente de nuevo")
+              finSi
+            mientras(opcion != 1 && opcion != 2)
+
+            segun(opcion)haga
+               caso 1:
+                  Cadena nuevaFecha
+                  imprima("ingrese la nueva fecha de emisión:")
+                  lea nuevaFecha
+                  vecO[i].setFechaEmision(nuevaFecha)
+                  romper
+               caso 2:
+                  Cadena nuevoEstado
+                  imprima("ingrese el nuevo estado (ej: en transito, entregado, cancelado):")
+                  lea nuevoEstado
+                  vecO[i].setEstadoActual(nuevoEstado)
+                  romper
+            finSegun
+
+            sw = verdadero
+            romper
+         finSi
+         i++
+       finMientras
+
+     //6. validar si se encontró o no
+       si(!sw)entonces
+          imprima("el código único no se encuentra registrado")
+       sino
+          //6.1 eliminar el archivo original
+            arch.eliminarArchivo("DatosOrdenEnvio.txt")
+          //6.2 abrir el archivo en modo escritura
+            arch.abrirModoEscritura("DatosOrdenEnvio.txt")
+          //6.3 reescribir el archivo con la información actualizada del vector
+            entero j = 0
+            mientras(j < cl)haga
+              arch.escribir(vecO[j].convertirCadena())
+              j++
+            finMientras
+          //6.4 cerrar el archivo en modo escritura
+            arch.cerrarModoEscritura()
+            imprima("orden actualizada con éxito")
+       finSi
+   FinMetodo
+
+   publico vacio eliminarOrden(Archivo arch, entero codigo)
+     //1. abrir archivo en modo lectura
+       arch.abrirModoLectura("DatosOrdenEnvio.txt")
+     //2. contar los registros del archivo
+       entero cl = arch.contadorLineas("DatosOrdenEnvio.txt")
+     //3. crear el vector según la cantidad de registros
+       OrdenEnvio[] vecO = nuevo OrdenEnvio[cl]
+     //4. cargar el vector y cerrar el archivo en modo lectura
+       vecO = arch.leerOrdenes()
+       arch.cerrarModoLectura()
+     //5. recorrer el vector para encontrar la posición del codigoUnico
+       entero i = 0
+       entero posicion = -1
+       booleano sw = falso
+       mientras(i < cl)haga
+         si(codigo == vecO[i].getCodigoUnico())entonces
+            sw = verdadero
+            posicion = i
+            romper
+         finSi
+         i++
+       finMientras
+
+     //6. validar si se encontró o no
+       si(!sw)entonces
+          imprima("el código único no se encuentra registrado")
+       sino
+          //6.1 crear un vector nuevo de tamaño (cl - 1) sin la orden eliminada
+            OrdenEnvio[] vecNuevo = nuevo OrdenEnvio[cl - 1]
+            entero j = 0
+            entero k = 0
+            mientras(j < cl)haga
+              si(j != posicion)entonces
+                 vecNuevo[k] = vecO[j]
+                 k++
+              finSi
+              j++
+            finMientras
+
+          //6.2 eliminar el archivo original
+            arch.eliminarArchivo("DatosOrdenEnvio.txt")
+
+          //6.3 abrir el archivo en modo escritura
+            arch.abrirModoEscritura("DatosOrdenEnvio.txt")
+
+          //6.4 reescribir el archivo con el vector actualizado (sin la orden eliminada)
+            entero m = 0
+            mientras(m < (cl - 1))haga
+              arch.escribir(vecNuevo[m].convertirCadena())
+              m++
+            finMientras
+
+          //6.5 cerrar el archivo en modo escritura
+            arch.cerrarModoEscritura()
+            imprima("orden eliminada con éxito")
+       finSi
+   FinMetodo
+
+FinClase
