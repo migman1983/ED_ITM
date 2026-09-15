@@ -1,1 +1,49 @@
+publico clase ProyeccionDolar
 
+Público Metodo Principal ()
+    
+    Real valorInicial                        
+    Entero n                                
+    Lea valorInicial                        
+    Lea n                                   
+
+    Real valorFinal = diaEstandar(valorInicial, n)
+   
+      Imprimir("El valor final del dólar tras " + n + " días es: " + valorFinal)
+
+Fin Método
+
+
+Público Real diaEstandar(Real valor, Entero diasRestantes)
+    
+    Si (diasRestantes <= 0) Entonces             // Caso base
+        Retornar valor                            
+    Fin Si                                      
+
+    valor = valor + (valor * 0.02)
+        
+    Imprimir("El nuevo valor del día estándar es: " + valor)
+  
+    Retornar diaAjuste(valor, diasRestantes - 1)
+    // Caso recursivo indirecto: invoco al método del Día de Ajuste
+    // para procesar el día siguiente, restando 1 a los días restantes
+
+Fin Método
+
+
+Público Real diaAjuste (Real valor, Entero diasRestantes)
+    // Método que aplica la regla del "Día de Ajuste" y cede el turno al "Día Estándar"
+
+    Si (diasRestantes <= 0) Entonces             // Caso base                           
+        Retornar valor                           
+    Fin Si                                        
+    valor = valor + (valor * 0.015) + 5
+    
+    Imprimir("El nuevo valor del día ajuste es: " + valor)
+    //Muestro el valor calculado en este día, antes de seguir con el siguiente
+
+    Retornar diaEstandar(valor, diasRestantes - 1)
+    // Caso recursivo indirecto: se invoca nuevamente al método del Día Estándar
+    // para procesar el día siguiente, restando 1 a los días restantes
+
+Fin Método
