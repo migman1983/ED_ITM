@@ -1,0 +1,25 @@
+libros ={codigo, nombre, anioPublicacion, genero, numPag, valor, codEditorial}
+
+Clase Libro
+    privado entero codigo, anioPublicacion, numPag, codEditorial
+    privado Cadena Nombre,genero
+    privado real valor
+
+   publico Libro(entero codigo, 
+                 cadena nombre, 
+                 entero anioPublicacion,
+                 cadena genero,
+                 entero numPag,
+                 entero codEditorial,
+                 real valor)
+   Fin Metodo
+
+   publico Libro ()
+   fin Metodo
+   
+   // crear método setters and getters
+
+   publico Cadena convertirCadena()
+       retornar codigo, ",", nombre, ",", anioPublicacion,",", genero,",",numPag,",",codEditorial,",",valor
+   FinMetodo
+   
