@@ -1,0 +1,15 @@
+Clase Editorial
+   publico entero codigo
+   publico cadena  nombre
+
+  publico Editorial(entero codigo, cadena nombre)
+     este.codigo = codigo
+     este.nombre = nombre
+  Fin Metodo
+  publico Editorial()
+  fin Metodo
+ // setters and getters 
+ publico Cadena convertirCadena()
+   retornar codigo,",",nombre
+ fin Metodo
+finClase

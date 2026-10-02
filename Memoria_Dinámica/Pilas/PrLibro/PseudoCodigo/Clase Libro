@@ -12,6 +12,14 @@ Clase Libro
                  entero numPag,
                  entero codEditorial,
                  real valor)
+        este.codigo =  codigo
+        este.nombre = nombre
+        este.anioPublicacion = anioPublicacion
+        este.genero = genero
+        este.numPag = numPag
+        este.codEditorial = codEditorial
+        este.valor = valor
+      
    Fin Metodo
 
    publico Libro ()
