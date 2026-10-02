@@ -1,0 +1,151 @@
+Clase ManejoPila
+
+    publico Pila ingresarPila(Pila objPila)
+        entero op
+        entero cod
+
+        imprimir("Desea ingresar un estudiante a la pila: 1. Si   2. No")
+        lea op
+
+        mientras(op==1)haga
+            imprimir("Ingrese el código del nuevo estudiante:")
+            lea cod
+
+            si(Buscar(objPila,cod)==falso)entonces
+                Estudiante objE = nuevo Estudiante()
+                objE = objE.leerDatos(cod)
+                objPila.Push(objE)
+            sino
+                imprimir("Estudiante ya existe en la pila")
+            Fin_Si
+
+            imprimir("Desea ingresar otro estudiante a la pila? 1. Si   2. No")
+            lea op
+        Fin_Mientras
+
+        retornar objPila
+    FinMetodo
+
+
+    publico cadena Imprimir(Pila objPila)
+        Pila pilaAux = nuevo Pila(objPila.obtenerMaxsize())
+        cadena texto = ""
+        Estudiante info
+
+        mientras(objPila.IsEmpty()==falso)haga
+            info = (Estudiante)objPila.Pop()
+            texto = texto + info.aTexto() + "\n"
+            pilaAux.Push(info)
+        Fin_Mientras
+
+        retornoPilaAux(objPila,pilaAux)
+
+        si(texto=="")entonces
+            texto = "La pila está vacía"
+        Fin_Si
+
+        retornar texto
+    FinMetodo
+
+
+    publico vacio retornoPilaAux(Pila objPila, Pila objPilaAux)
+        mientras(objPilaAux.IsEmpty()==falso)haga
+            objPila.Push(objPilaAux.Pop())
+        Fin_Mientras
+    FinMetodo
+
+
+    publico booleano Buscar(Pila objPila, entero cod)
+        Pila pilaAux = nuevo Pila(objPila.obtenerMaxsize())
+        booleano resp = falso
+        Estudiante datoE
+
+        mientras(objPila.IsEmpty()==falso)haga
+            datoE = (Estudiante)objPila.Pop()
+
+            si(datoE.obtenerCodigo()==cod)entonces
+                resp = verdadero
+            Fin_Si
+
+            pilaAux.Push(datoE)
+        Fin_Mientras
+
+        retornoPilaAux(objPila,pilaAux)
+
+        retornar resp
+    FinMetodo
+
+
+    publico Objeto Eliminar(Pila objPila, entero cod)
+        Pila pilaAux = nuevo Pila(objPila.obtenerMaxsize())
+        Objeto aux = nulo
+        Estudiante info
+
+        mientras(objPila.IsEmpty()==falso)haga
+            info = (Estudiante)objPila.Pop()
+
+            si(info.obtenerCodigo()==cod)entonces
+                aux = info
+            sino
+                pilaAux.Push(info)
+            Fin_Si
+        Fin_Mientras
+
+        retornoPilaAux(objPila,pilaAux)
+
+        retornar aux
+    FinMetodo
+
+
+    publico Objeto Consultar(Pila objPila, entero cod)
+        Pila pilaAux = nuevo Pila(objPila.obtenerMaxsize())
+        Objeto aux = nulo
+        Estudiante info
+
+        mientras(objPila.IsEmpty()==falso)haga
+            info = (Estudiante)objPila.Pop()
+
+            si(info.obtenerCodigo()==cod)entonces
+                aux = info
+            Fin_Si
+
+            pilaAux.Push(info)
+        Fin_Mientras
+
+        retornoPilaAux(objPila,pilaAux)
+
+        retornar aux
+    FinMetodo
+
+
+    publico vacio actualizarNotaDef(Pila objPila, entero cod)
+        Pila pilaAux = nuevo Pila(objPila.obtenerMaxsize())
+        real notaDef
+        booleano encontrado = falso
+        Estudiante info
+
+        mientras(objPila.IsEmpty()==falso)haga
+            info = (Estudiante)objPila.Pop()
+
+            si(info.obtenerCodigo()==cod)entonces
+                encontrado = verdadero
+
+                imprimir("Ingrese la nueva nota definitiva del estudiante:")
+                lea notaDef
+
+                info.asignarNotaDef(notaDef)
+
+                imprimir("La nota del estudiante fue actualizada exitosamente")
+            Fin_Si
+
+            pilaAux.Push(info)
+        Fin_Mientras
+
+        retornoPilaAux(objPila,pilaAux)
+
+        si(encontrado==falso)entonces
+            imprimir("El código del estudiante no existe en la pila")
+        Fin_Si
+    FinMetodo
+
+FinClase

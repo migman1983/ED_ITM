@@ -1,0 +1,19 @@
+Elaborar un proyecto en pseudocodigo que permita apilar libros ={codigo, nombre, anioPublicacion, genero, numPag, valor, codEditorial}.Para poder almacenar enla pila se
+debe validar de que el codigo del libroa a apilar no exista en la pila de libros, también que el codEditorial exista en el archivo Editoral.csv, el archivo debe almacenar 
+el codigo de la editorial y el nombre de la editorial 
+
+La pila debe ser creada desde el método principal y desde este mismo método se deberían realizar las siguientes acciones:
+ * Consultar los libros publicados en un año que ingrese el usuario+
+ * Identificar cuál es el libro con mas valor
+ * Cantidad de libros de un género consultado por el usuario
+ * promedio de Páginas de los libros de una editorial 
+
+Nota este proyecto debe contar con las siguientes clases
+  + Clase Libro
+  * Clase Editorial
+  * Clase Archivo
+  * Clase crudEditorial
+  + Clase Pila
+  + Clase ManejoPilaLibro
+  + Clase appPilaLibro
+  

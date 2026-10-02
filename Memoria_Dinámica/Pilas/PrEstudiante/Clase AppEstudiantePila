@@ -1,0 +1,120 @@
+Clase Principal
+
+    publico estatico vacio main()
+        Pila pila = nuevo Pila(10)
+        ManejoPila manejo = nuevo ManejoPila()
+
+        entero opcion
+        entero codigo
+        Objeto resultado
+
+        Hacer
+            imprimir("")
+            imprimir("========================================")
+            imprimir("          GESTIÓN DE PILA")
+            imprimir("========================================")
+            imprimir("1. Ingresar estudiante")
+            imprimir("2. Mostrar estudiantes")
+            imprimir("3. Consultar estudiante")
+            imprimir("4. Buscar estudiante")
+            imprimir("5. Eliminar estudiante")
+            imprimir("6. Actualizar nota definitiva")
+            imprimir("7. Ver elemento en el tope")
+            imprimir("8. Retirar elemento de la pila")
+            imprimir("9. Mostrar estado de la pila")
+            imprimir("0. Salir")
+            imprimir("========================================")
+            imprimir("Seleccione una opción:")
+            lea opcion
+            segun (opcion) hacer
+                caso 1:
+                    pila = manejo.ingresarPila(pila)
+                    romper
+                caso 2:
+                    imprimir("ESTUDIANTES EN LA PILA")
+                    imprimir("-----------------------")
+                    imprimir(manejo.Imprimir(pila))
+                    romper
+                caso 3:
+                    imprimir("Ingrese el código del estudiante a consultar:")
+                    lea codigo
+                    resultado = manejo.Consultar(pila,codigo)
+                    si(resultado==nulo)entonces
+                        imprimir("El estudiante no existe en la pila")
+                    sino
+                        imprimir("Estudiante encontrado:")
+                        imprimir(resultado)
+                    Fin_Si
+                    romper
+                caso 4:
+                    imprimir("Ingrese el código del estudiante a buscar:")
+                    lea codigo
+                    si(manejo.Buscar(pila,codigo))entonces
+                        imprimir("El estudiante existe en la pila")
+                    sino
+                        imprimir("El estudiante NO existe en la pila")
+                    Fin_Si
+                    romper
+                caso 5:
+                    imprimir("Ingrese el código del estudiante a eliminar:")
+                    lea codigo
+                    resultado = manejo.Eliminar(pila,codigo)
+                    si(resultado==nulo)entonces
+                        imprimir("No se encontró el estudiante")
+                    sino
+                        imprimir("Estudiante eliminado correctamente:")
+                        imprimir(resultado)
+                    Fin_Si
+                    romper
+                caso 6:
+                    imprimir("Ingrese el código del estudiante:")
+                    lea codigo
+                    manejo.actualizarNotaDef(pila,codigo)
+                    romper
+                caso 7:
+                    si(pila.IsEmpty())entonces
+                        imprimir("La pila está vacía")
+                    sino
+                        resultado = pila.Peek()
+                        imprimir("Elemento en el tope de la pila:")
+                        imprimir(resultado)
+                    Fin_Si
+                    romper
+                caso 8:
+                    si(pila.IsEmpty())entonces
+                        imprimir("La pila está vacía")
+                    sino
+                        resultado = pila.Pop()
+                        imprimir("Elemento retirado de la pila:")
+                        imprimir(resultado)
+                    Fin_Si
+                    romper
+                caso 9:
+                    imprimir("")
+                    imprimir("ESTADO DE LA PILA")
+                    imprimir("-----------------")
+                    imprimir("Capacidad máxima:")
+                    imprimir(pila.obtenerMaxsize())
+                    imprimir("Cantidad de elementos:")
+                    imprimir(pila.obtenerSize())
+                    si(pila.IsEmpty())entonces
+                        imprimir("Estado: VACÍA")
+                    sino
+                        si(pila.IsFull())entonces
+                            imprimir("Estado: LLENA")
+                        sino
+                            imprimir("Estado: DISPONIBLE")
+                        Fin_Si
+                    Fin_Si
+                    romper
+                caso 0:
+                    imprimir("Programa finalizado")
+                    romper
+                por defecto:
+                    imprimir("Opción no válida. Intente nuevamente")
+            FinSegun
+        Mientras(opcion==0)haga
+
+    FinMetodo
+
+FinClase

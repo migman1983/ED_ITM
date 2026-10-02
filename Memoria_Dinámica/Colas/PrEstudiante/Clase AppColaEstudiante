@@ -1,0 +1,124 @@
+Clase Principal
+
+    publico estatico vacio Principal()
+        Cola cola = nuevo Cola(10)
+        ManejoCola manejo = nuevo ManejoCola()
+        entero opcion
+        entero codigo
+        Objeto resultado
+
+        Hacer
+            imprimir("")
+            imprimir("========================================")
+            imprimir("       GESTIÓN DE COLA DE ESTUDIANTES")
+            imprimir("========================================")
+            imprimir("1. Ingresar estudiantes")
+            imprimir("2. Mostrar estudiantes")
+            imprimir("3. Consultar estudiante")
+            imprimir("4. Buscar estudiante")
+            imprimir("5. Eliminar estudiante")
+            imprimir("6. Actualizar nota definitiva")
+            imprimir("7. Ver primero de la cola")
+            imprimir("8. Atender estudiante")
+            imprimir("9. Mostrar estado de la cola")
+            imprimir("0. Salir")
+            imprimir("========================================")
+            imprimir("Seleccione una opción:")
+            leer opcion
+            segun opcion hacer
+                caso 1:
+                    cola = manejo.IngresarDatos(cola)
+                    romper
+                caso 2:
+                    si(cola.IsEmpty()) entonces
+                        imprimir("La cola está vacía.")
+                    sino
+                        imprimir("ESTUDIANTES EN LA COLA")
+                        imprimir("-----------------------")
+                        imprimir(manejo.Imprimir(cola))
+                    FinSi
+                    romper
+                caso 3:
+                    imprimir("Ingrese el código del estudiante a consultar:")
+                    leer codigo
+                    resultado = manejo.Consultar(cola, codigo)
+                    si(resultado == nulo) entonces
+                        imprimir("El estudiante no existe en la cola.")
+                    sino
+                        imprimir("Estudiante encontrado:")
+                        imprimir(resultado)
+                    FinSi
+                    romper
+                caso 4:
+                    imprimir("Ingrese el código del estudiante a buscar:")
+                    leer codigo
+                    si(manejo.Buscar(cola, codigo)) entonces
+                        imprimir("El estudiante existe en la cola.")
+                    sino
+                        imprimir("El estudiante NO existe en la cola.")
+                    FinSi
+                    romper
+                caso 5:
+                    imprimir("Ingrese el código del estudiante a eliminar:")
+                    leer codigo
+                    resultado = manejo.Eliminar(cola, codigo)
+                    si(resultado == nulo) entonces
+                        imprimir("No se encontró el estudiante.")
+                    sino
+                        imprimir("Estudiante eliminado correctamente:")
+                        imprimir(resultado)
+                    FinSi
+                    romper
+                caso 6:
+                    imprimir("Ingrese el código del estudiante:")
+                    leer codigo
+                    manejo.actualizarNotaDef(cola, codigo)
+                    romper
+                caso 7:
+                    si(cola.IsEmpty()) entonces
+                        imprimir("La cola está vacía.")
+                    sino
+                        resultado = cola.Peek()
+                        imprimir("Primer estudiante de la cola:")
+                        imprimir(resultado)
+                    FinSi
+                    romper
+                caso 8:
+                    si(cola.IsEmpty()) entonces
+                        imprimir("La cola está vacía.")
+                    sino
+                        resultado = cola.Pop()
+                        imprimir("Estudiante atendido:")
+                        imprimir(resultado)
+                    FinSi
+                    romper
+                caso 9:
+                    imprimir("")
+                    imprimir("ESTADO DE LA COLA")
+                    imprimir("-----------------")
+                    imprimir("Capacidad máxima: ")
+                    imprimir(cola.obtenerMaxsize())
+                    imprimir("Cantidad de estudiantes: ")
+                    imprimir(cola.obtenerSize())
+                    si(cola.IsEmpty()) entonces
+                        imprimir("Estado: VACÍA")
+                    sino
+                        si(cola.IsFull()) entonces
+                            imprimir("Estado: LLENA")
+                        sino
+                            imprimir("Estado: DISPONIBLE")
+                        FinSi
+                    FinSi
+                    romper
+                caso 0:
+                    imprimir("Programa finalizado.")
+                    romper
+
+                por defecto:
+                    imprimir("Opción no válida.")
+            FinSegun
+         Mientras(opcion == 0)haga
+
+    FinMetodo
+
+FinClase

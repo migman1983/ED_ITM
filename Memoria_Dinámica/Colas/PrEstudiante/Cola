@@ -1,0 +1,101 @@
+clase Cola
+
+   privado entero maxsize
+   privado entero size
+   privado  nodo Final,Front,q
+
+   publico Cola()
+
+   FinMetodo
+
+   publico Cola(entero n)
+      maxsize=n
+      Final=nulo
+      Front=nulo
+      size=0
+   FinMetodo
+
+   publico booleano IsEmpty()
+     retornar obtenerSize()<= 0
+   FinMetodo
+
+   publico booleano IsFull()
+     retornar obtenerSize()>= obtenerMaxsize()
+   FinMetodo
+
+   publico vacio Push(Objeto d)
+     si (IsFull()==falso)entonces
+       asignarSize(obtenerSize() + 1)
+       q=nuevo nodo(d)
+       si(Front==nulo)entonces
+         asignarFront(q)
+         asignarFinal(q)
+        sino
+         obtenerFinal().asignarSig(q)
+         asignarFinal(q)
+       FinSi
+      sino
+       Imprimir("*****Pila LLena DESBORDAMIENTO DE PILA*****")
+     FinSi
+   FinMetodo
+
+   publico Objeto Pop()
+    Objeto d=nulo
+    si (IsEmpty()==falso)entonces
+      asignarSize(obtenerSize() - 1)
+      si(Front==Final)
+         d = obtenerFront().obtenerDato()
+         asignarFront(nulo)
+         asignarFinal(nulo)
+       sino
+         d =obtenerFront().obtenerDato()
+         q=obtenerFront()
+         asignarFront(obtenerFront().obtenerSig())
+         q =(nulo)
+      FinSi
+    sino
+      Imprimir("*****Pila Vacia SUBDESBORDAMIENTO DE PILA*****")
+    FinSi
+    retornar d
+   FinMetodo
+
+   publico Objeto Peek()
+     Objeto dato = nulo
+     Si (IsEmpty()==falso)entonces
+       dato=obtenerFront().obtenerDato()
+     FinSi
+     retornar dato
+   FinMetodo
+
+   public nodo obtenerFront()
+       retornar Front
+    FinMetodo
+
+    public vacio asignarFront(nodo Front)
+       este.Front = Front
+    FinMetodo
+    public nodo obtenerFinal()
+       retornar Final
+    FinMetodo
+
+    public vacio asignarFinal(nodo Final)
+       este.Final = Final
+    FinMetodo
+
+    public entero obtenerMaxsize()
+       retornar maxsize
+    FinMetodo
+
+    public vacio asignarMaxsize(entero maxsize)
+       este.maxsize = maxsize
+    FinMetodo
+
+    public entero obtenerSize()
+       retornar size
+    FinMetodo
+
+    public vacio asignarSize(entero size)
+       este.size = size
+    FinMetodo
+
+FinClase

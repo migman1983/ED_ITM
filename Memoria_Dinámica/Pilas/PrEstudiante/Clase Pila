@@ -1,0 +1,99 @@
+Clase Pila
+    privado entero maxsize
+    privado entero size
+    privado nodo top
+    privado nodo topAux
+
+    //constructores
+    publico Pila()
+
+    finMetodo
+
+    publico Pila(entero n)
+        maxsize=n
+        top=nulo
+        size=0
+    finMetodo
+
+
+    publico booleano IsEmpty()
+     retornar obtenerSize() <= 0
+    finMetodo
+
+
+    publico booleano IsFull()
+      si(obtenerSize() >= obtenerMaxsize())entonces
+        imprima("*****DESBORDAMIENTO DE PILA*****\n")
+        retornar verdadero
+       sino
+         retornar falso
+      fin_Si
+    finMetodo
+
+
+    publico vacio Push(objeto d)
+        si(IsFull()==falso)entonces
+          asignarSize(obtenerSize() + 1)
+          topAux=new nodo(d)
+          topAux.asignarSig(obtenerTop())
+          asignarTop(topAux)
+         sino
+          imprima("*****DESBORDAMIENTO DE PILA*****\n")
+        fin_Si
+    finMetodo
+
+    publico objeto Peek()
+       objeto dato=nulo
+       si(IsEmpty()==falso)entonces
+        dato=obtenerTop().obtenerDato()
+       fin_Si
+      retornar dato
+    finMetodo
+
+
+    publico objeto Pop()
+      objeto d = nulo
+      si(IsEmpty()==falso)
+        si (obtenerTop().obtenerSig() == nulo)entonces
+             d = obtenerTop().obtenerDato()
+             asignarTop( nulo)
+          sino
+            d =obtenerTop().obtenerDato()
+            topAux=obtenerTop()
+            asignarTop(obtenerTop().obtenerSig())
+            topAux=(nulo)
+        fin_Si
+             asignarSize(obtenerSize()- 1)
+
+       sino
+        imprima("*****SUBDESBORDAMIENTO DE PILA*****\n")
+             finMetodo
+      fin_Si
+      retornar d
+    finMetodo
+
+
+    publico nodo obtenerTop()
+       retornar top
+    finMetodo
+
+    publico vacio asignarTop(nodo top)
+      este.top = top
+    finMetodo
+
+    publico entero obtenerMaxsize()
+      retornar maxsize
+    finMetodo
+
+    publico vacio asignarMaxsize(entero maxsize)
+      este.maxsize = maxsize
+    finMetodo
+
+    publico entero obtenerSize()
+      retornar size
+    finMetodo
+
+    publico vacio asignarSize(entero size)
+      este.size = size
+    finMetodo
+Fin_Clase

@@ -1,0 +1,49 @@
+clase Nodo
+
+   privado dato
+   privado Nodo sig
+   privado Nodo ant
+
+   publico vacio Nodo()
+      este.dato = nulo
+      este.sig = nulo
+      este.ant = nulo
+   FinMetodo
+
+   publico vacio Nodo(d)
+      este.dato = d
+      este.sig = nulo
+      este.ant = nulo
+   FinMetodo
+
+   publico vacio Nodo(li, d, ld)
+      este.dato = d
+      este.sig = ld
+      este.ant = li
+   FinMetodo
+
+   publico dato obtenerDato()
+      retornar este.dato
+   FinMetodo
+
+   publico vacio asignarDato(dato)
+      este.dato = dato
+   FinMetodo
+
+   publico Nodo obtenerAnt()
+      retornar este.ant
+   FinMetodo
+
+   publico vacio asignarAnt(ant)
+      este.ant = ant
+   FinMetodo
+
+   publico Nodo obtenerSig()
+      retornar este.sig
+   FinMetodo
+
+   publico vacio asignarSig(sig)
+      este.sig = sig
+   FinMetodo
+
+FinClase
