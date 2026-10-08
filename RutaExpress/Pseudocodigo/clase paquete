@@ -1,0 +1,36 @@
+clase paquete
+
+	publico cadena Peso
+	publico cadena Descripción
+	publico real valor
+
+	publico paquete (cadena peso, cadena Descripción, real valor)
+		este.peso = peso
+ 		este.Descripcion = Descripción
+		este.valor = valor
+	FinMetodo
+
+	publico vacio asignarpeso (cadena peso)
+		este.peso = peso
+	finmetodo
+	publico cadena obtenerpeso ()
+		retornar peso
+	finmetodo
+
+	publico vacio asignarDescripcion (cadena Descripcion)
+		este.Descripcion = Descripcion
+	finmetodo
+	publico cadena obtenerDescripcion ()
+		retornar Descripcion
+	finmetodo
+
+	publico vacio asignarvalor (real valor)
+		este.valor = valor
+	finmetodo
+	 publico real obtenervalor ()
+		retornar valor
+	finmetodo
+	publico Cadena retornarCadena()
+       retornar "paquete: { peso: ", peso, "Descripcion: ", Descripcion ," valor: ",valor, " }"
+    finMetodo
+FinClase
