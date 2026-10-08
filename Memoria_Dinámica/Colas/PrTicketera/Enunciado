@@ -1,0 +1,17 @@
+Una plataforma de eventos masivos requiere automatizar la fila de espera virtual para la venta de boletos de un concierto de alta demanda. 
+Los fanáticos ingresan a una sala de espera interactiva donde se asignan las entradas estrictamente en orden de llegada 
+
+Definición de Atributos y Estructuras
+Antes de implementar las operaciones, ten en cuenta la estructura de datos a utilizar:
+
+Atributos de la clase Cliente (Dato del Nodo):
+
+idComprador: Texto o Entero 
+
+nombre: Texto 
+
+cantidadBoletos: Entero 
+
+montoTotal: Real/Decimal 
+
+Nota: Recordar que ya tenemos la clase Cola y la Clase Nodo. Debes crear la clase ManejoCola
