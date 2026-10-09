@@ -1,0 +1,160 @@
+clase ManejoCola
+
+   privado Cola filaEspera
+   privado entero totalAtendidos
+   privado real recaudoTotal
+   privado entero boletosVendidos
+
+   publico ManejoCola(entero capacidad)
+      filaEspera = nuevo Cola(capacidad)
+      totalAtendidos = 0
+      recaudoTotal = 0.0
+      boletosVendidos = 0
+   FinMetodo
+
+   // 1. Un fanático ingresa a la sala de espera (al final de la fila)
+   publico vacio ingresarCliente(Cliente c)
+      si (c == nulo) entonces
+         Imprimir("*****Cliente invalido*****")
+      sino
+         si (existeCliente(c.obtenerIdComprador()) == verdadero) entonces
+            Imprimir("*****El comprador ya esta en la fila de espera*****")
+         sino
+            si (filaEspera.IsFull() == verdadero) entonces
+               Imprimir("*****Sala de espera llena, intente mas tarde*****")
+            sino
+               filaEspera.Push(c)
+               Imprimir("Cliente " + c.obtenerNombre() + " ingreso a la fila")
+               Imprimir("Posicion en la fila: " + filaEspera.obtenerSize())
+            FinSi
+         FinSi
+      FinSi
+   FinMetodo
+
+   // 2. Se atiende al primero en llegar (FIFO)
+   publico Cliente atenderCliente()
+      Cliente c = nulo
+      si (filaEspera.IsEmpty() == verdadero) entonces
+         Imprimir("*****No hay clientes en la fila de espera*****")
+      sino
+         c = filaEspera.Pop()
+         totalAtendidos = totalAtendidos + 1
+         boletosVendidos = boletosVendidos + c.obtenerCantidadBoletos()
+         recaudoTotal = recaudoTotal + c.obtenerMontoTotal()
+         Imprimir("Atendiendo a: " + c.obtenerNombre())
+         Imprimir("Boletos comprados: " + c.obtenerCantidadBoletos())
+         Imprimir("Monto a pagar: " + c.obtenerMontoTotal())
+      FinSi
+      retornar c
+   FinMetodo
+
+   // 3. Consultar quien sigue sin sacarlo de la fila
+   publico Cliente verSiguiente()
+      Cliente c = nulo
+      si (filaEspera.IsEmpty() == verdadero) entonces
+         Imprimir("*****No hay clientes en la fila*****")
+      sino
+         c = filaEspera.Peek()
+         Imprimir("Siguiente en ser atendido: " + c.obtenerNombre())
+      FinSi
+      retornar c
+   FinMetodo
+
+   // 4. Mostrar toda la fila sin perder el orden
+   publico vacio mostrarFila()
+      Cola auxiliar = nuevo Cola(filaEspera.obtenerMaxsize())
+      Cliente c
+      entero posicion = 1
+
+      si (filaEspera.IsEmpty() == verdadero) entonces
+         Imprimir("La fila de espera esta vacia")
+      sino
+         Imprimir("===== FILA DE ESPERA =====")
+         mientras (filaEspera.IsEmpty() == falso) hacer
+            c = filaEspera.Pop()
+            Imprimir(posicion + ". ID: " + c.obtenerIdComprador() +
+                     " | Nombre: " + c.obtenerNombre() +
+                     " | Boletos: " + c.obtenerCantidadBoletos() +
+                     " | Monto: " + c.obtenerMontoTotal())
+            auxiliar.Push(c)
+            posicion = posicion + 1
+         FinMientras
+         // Restaurar la fila original
+         mientras (auxiliar.IsEmpty() == falso) hacer
+            filaEspera.Push(auxiliar.Pop())
+         FinMientras
+      FinSi
+   FinMetodo
+
+   // 5. Buscar si un comprador ya esta en la fila
+   publico booleano existeCliente(texto id)
+      Cola auxiliar = nuevo Cola(filaEspera.obtenerMaxsize())
+      Cliente c
+      booleano encontrado = falso
+
+      mientras (filaEspera.IsEmpty() == falso) hacer
+         c = filaEspera.Pop()
+         si (c.obtenerIdComprador() == id) entonces
+            encontrado = verdadero
+         FinSi
+         auxiliar.Push(c)
+      FinMientras
+      mientras (auxiliar.IsEmpty() == falso) hacer
+         filaEspera.Push(auxiliar.Pop())
+      FinMientras
+      retornar encontrado
+   FinMetodo
+
+   // 6. Consultar la posicion de un comprador en la fila
+   publico entero consultarPosicion(texto id)
+      Cola auxiliar = nuevo Cola(filaEspera.obtenerMaxsize())
+      Cliente c
+      entero posicion = 0
+      entero contador = 1
+
+      mientras (filaEspera.IsEmpty() == falso) hacer
+         c = filaEspera.Pop()
+         si (c.obtenerIdComprador() == id y posicion == 0) entonces
+            posicion = contador
+         FinSi
+         auxiliar.Push(c)
+         contador = contador + 1
+      FinMientras
+      mientras (auxiliar.IsEmpty() == falso) hacer
+         filaEspera.Push(auxiliar.Pop())
+      FinMientras
+
+      si (posicion == 0) entonces
+         Imprimir("El comprador no se encuentra en la fila")
+      FinSi
+      retornar posicion
+   FinMetodo
+
+   // 7. Cantidad de clientes en espera
+   publico entero clientesEnEspera()
+      retornar filaEspera.obtenerSize()
+   FinMetodo
+
+   // 8. Resumen de ventas
+   publico vacio mostrarResumen()
+      Imprimir("===== RESUMEN DE VENTAS =====")
+      Imprimir("Clientes atendidos: " + totalAtendidos)
+      Imprimir("Boletos vendidos: " + boletosVendidos)
+      Imprimir("Total recaudado: " + recaudoTotal)
+      Imprimir("Clientes en espera: " + filaEspera.obtenerSize())
+   FinMetodo
+
+   // Getters
+   publico entero obtenerTotalAtendidos()
+      retornar totalAtendidos
+   FinMetodo
+
+   publico real obtenerRecaudoTotal()
+      retornar recaudoTotal
+   FinMetodo
+
+   publico entero obtenerBoletosVendidos()
+      retornar boletosVendidos
+   FinMetodo
+
+FinClase
