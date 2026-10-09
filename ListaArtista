@@ -1,0 +1,58 @@
+package playlist;
+
+public class ListaArtista {
+    private Nodo cabeza;
+
+    public ListaArtista() {
+        this.cabeza = null;
+    }
+
+    public void agregar(Cancion cancion) {
+        Nodo nuevo = new Nodo(cancion);
+        if (cabeza == null) {
+            cabeza = nuevo;
+            return;
+        }
+        Nodo actual = cabeza;
+        while (actual.getSiguiente() != null) {
+            actual = actual.getSiguiente();
+        }
+        actual.setSiguiente(nuevo);
+    }
+
+    public int duracionTotalArtista(String artista) {
+        return duracionTotalArtistaRec(cabeza, artista);
+    }
+
+    private int duracionTotalArtistaRec(Nodo nodo, String artista) {
+        if (nodo == null || !nodo.getCancion().getArtista().equalsIgnoreCase(artista)) {
+            return 0;
+        }
+        return nodo.getCancion().getDuracionSegundos()
+                + duracionTotalArtistaRec(nodo.getSiguiente(), artista);
+    }
+
+    public int actualizarNombreArtista(String nombreActual, String nombreNuevo) {
+        return actualizarNombreArtistaRec(cabeza, nombreActual, nombreNuevo);
+    }
+
+    private int actualizarNombreArtistaRec(Nodo nodo, String nombreActual, String nombreNuevo) {
+        if (nodo == null) {
+            return 0;
+        }
+        int actualizadas = 0;
+        if (nodo.getCancion().getArtista().equalsIgnoreCase(nombreActual)) {
+            nodo.getCancion().setArtista(nombreNuevo);
+            actualizadas = 1;
+        }
+        return actualizadas + actualizarNombreArtistaRec(nodo.getSiguiente(), nombreActual, nombreNuevo);
+    }
+
+    public void imprimir() {
+        Nodo actual = cabeza;
+        while (actual != null) {
+            System.out.println(actual.getCancion());
+            actual = actual.getSiguiente();
+        }
+    }
+}
