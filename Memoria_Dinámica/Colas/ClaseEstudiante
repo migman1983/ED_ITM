@@ -1,0 +1,24 @@
+Clase Estudiante
+  privado entero numId
+  privado cadena nombre
+  privado cadena apellido
+  privado entero diaInscripcion
+  privado entero mesInscripcion
+  privado entero anioInscripcion
+  privado entero edad
+  privado entero estrato
+  privado cedena correoElectronico
+  privado cadena tel
+
+  publico Estudiante(
+    entero numId
+    cadena nombre
+    cadena apellido
+    entero diaInscripcion
+    entero mesInscripcion
+    entero anioInscripcion
+    entero edad
+    entero estrato
+    cedena correoElectronico
+    cadena tel
+  )
