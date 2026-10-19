@@ -1,0 +1,47 @@
+Publico clase Cliente
+ privado cadena idComprador
+ privado cadena nombre
+ privado entero cantidadBoletos
+ privado real montoTotal
+
+publico Cliente(cadena idComprador,cadena nombre,entero cantidadBoletos,real montoTotal)
+ este.idComprador = idComprador
+ este.nombre = nombre
+ este.cantidadBoletos = cantidadBoletos
+ este.montoTotal = montoTotal
+FinMetodo
+
+publico vacio asignarIdComprador(cadena idComprador)
+ este.idComprador = idComprador
+FinMetodo
+
+publico cadena obtenerIdComprador()
+ retornar este.idComprador
+FinMetodo
+
+publico vacio asignarNombre(cadena nombre)
+ este.nombre = nombre
+FinMetodo
+
+publico cadena obtenerNombre()
+ retornar este.nombre
+FinMetodo
+
+publico vacio asignarCantidadBoletos(entero cantidadBoletos)
+ este.cantidadBoletos = cantidadBoletos
+FinMetodo
+
+publico entero obtenerCantidadBoletos()
+ retornar este.cantidadBoletos
+FinMetodo
+
+publico vacio asignarMontoTotal(real montoTotal)
+ este.montoTotal = montoTotal
+FinMetodo
+
+publico real obtenerMontoTotal()
+ retornar este.montoTotal
+FinMetodo
+
+// fALTA EL METODO QUE CONVIERTE A CADENA LOS DATOS QUE MANEJAN LOS ATRIBUTOS DE LA CLASE 
+

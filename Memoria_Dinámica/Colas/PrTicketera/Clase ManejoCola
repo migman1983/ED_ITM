@@ -1,0 +1,21 @@
+publico clase ManejoCola
+
+Cola cola = nuevo Cola (10)
+// OK, PERO NO SE VALIDA QUE UN CLIENTE SEA ÚNICO EN LA COLA
+publico vacio ingresarCliente(Cliente cliente)
+ si cola.isfull() entonces
+  imprimir ("Cola llena,vuelva a intentar luego")
+ sino 
+  cola.push(cliente)
+FinMetodo
+// AJUSTAR LA LÓGICA DE LA CLASE CLIENTE PARA QUE ESTE MÉTODO TENGA 
+publico vacio asignarEntradas()
+ si cola.isEmpty()
+  imprimir("No se puede asignar,la cola esta vacioa")
+ sino
+  Cliente c= cola.pop()
+// aca simplemente estás mostrando la cantidad de boletas y el nombre del cliente, pero no
+   le estás asignando un valor a ello, para esto deberías utilizar los setters para que la cantidad de 
+   boletas y el monto puedan tener un valor para este objeto
+imprimir("{c.obtenerCantidadBoletos} entradas han sido asignadas al cliente {c.obtenerNombre})
+FinMetodo
