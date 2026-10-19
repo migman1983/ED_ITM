@@ -1,0 +1,25 @@
+Una empresa necesita simular una mesa de ayuda. Los tickets no solo viven en la memoria RAM, sino que deben cargarse desde un archivo de texto llamado TicketsIngresados.txt, el archivo cuenta con la siguiente información (idTicket, codIncidencia, estado, fecha de reporte)
+
+Los tickets que deben ser atendidos según su orden de extracción del archivo deben actualizar su estado de en espera a atentido o en proceso. cada vez que un ticket sea atendido se debe actualizar su estado en el archivo. 
+
+los tickets que estan en el archivo y que su estado es atendido deben pasar por un proceso de auditoría. se debe revisar que los tickets atendido esten entre el rango de 1 a 50. si cumple con esa condición debería pasar a un archivo llamado auditados.txt. que debe contener la información del ticket. los otros tickets que no cumplan la condición deberían mantenerse para psoteriores revisiones.
+
+Crear 4 métodos e indicar en que clase lo crearían :
+
+extracciónInformaciónTicketsEspera que retorna una cola (1 punto)
+extracciónInformaciónTicketsAtendidos que retorna una pila (1 punto)
+AtencionTickets: recibe la cola, atiende los tickets y actualiza el archivo TicketsIngresados.txt (1 punto)
+AudioriaTickets: recibe la pila y crea archivo auditados.txt y retorna pila con tickets que no cumplen la condición (1 punto)
+crear los objetos en la clase principal e invocar los métodos creados para dar solución al problema planteado
+
+Las clases que se tienen en este proyecto son:
+
+Nodo
+Pila
+manejoPila
+Cola
+ManejoCola
+Tickets 
+Archivo
+CRUDTickets
+Principal (AppMesaAyuda)
