@@ -1,0 +1,282 @@
+package RutaExpress;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CRUDConductor {
+
+    private static final String ARCHIVO = "DatosConductores.txt";
+
+    public CRUDConductor() {
+    }
+
+    // CREAR CONDUCTOR
+    public boolean crearConductor(
+            String cedula,
+            String nombre,
+            double sueldo,
+            String licencia,
+            String categoria) {
+
+        if (buscarConductor(cedula) != null) {
+            System.out.println("La cédula ya existe.");
+            return false;
+        }
+
+        try (PrintWriter writer = new PrintWriter(
+                new FileWriter(ARCHIVO, true))) {
+
+            writer.println(
+                    cedula + "|" +
+                    nombre + "|" +
+                    sueldo + "|" +
+                    licencia + "|" +
+                    categoria
+            );
+
+            System.out.println(
+                    "Conductor creado correctamente.");
+
+            return true;
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al crear conductor: "
+                    + e.getMessage());
+
+            return false;
+        }
+    }
+
+    // LEER ARCHIVO - Buscar conductor por cédula
+    public String buscarConductor(String cedula) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return null;
+        }
+
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(archivo))) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 5 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    return linea;
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al buscar conductor: "
+                    + e.getMessage());
+        }
+
+        return null;
+    }
+
+    // LEER - Listar todos los conductores
+    public List<String> listarConductores() {
+
+        List<String> conductores = new ArrayList<>();
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return conductores;
+        }
+
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(archivo))) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                if (!linea.trim().isEmpty()) {
+                    conductores.add(linea);
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al listar conductores: "
+                    + e.getMessage());
+        }
+
+        return conductores;
+    }
+
+    // ACTUALIZACION
+    public boolean actualizarConductor(
+            String cedula,
+            String nuevoNombre,
+            double nuevoSueldo,
+            String nuevaLicencia,
+            String nuevaCategoria) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe.");
+            return false;
+        }
+
+        File temporal = new File("temp_conductores.txt");
+
+        boolean encontrado = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(archivo));
+
+            PrintWriter writer = new PrintWriter(
+                    new FileWriter(temporal))
+        ) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 5 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    writer.println(
+                            cedula + "|" +
+                            nuevoNombre + "|" +
+                            nuevoSueldo + "|" +
+                            nuevaLicencia + "|" +
+                            nuevaCategoria
+                    );
+
+                    encontrado = true;
+
+                } else {
+                    writer.println(linea);
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al actualizar conductor: "
+                    + e.getMessage());
+
+            return false;
+        }
+
+        if (encontrado) {
+
+            if (archivo.delete()) {
+
+                if (!temporal.renameTo(archivo)) {
+                    System.out.println(
+                            "No se pudo reemplazar el archivo.");
+                    return false;
+                }
+
+            } else {
+
+                System.out.println(
+                        "No se pudo eliminar el archivo original.");
+
+                return false;
+            }
+
+            System.out.println(
+                    "Conductor actualizado correctamente.");
+
+            return true;
+        }
+
+        temporal.delete();
+
+        System.out.println("Conductor no encontrado.");
+
+        return false;
+    }
+
+    // DELETE
+    public boolean eliminarConductor(String cedula) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return false;
+        }
+
+        File temporal = new File("temp_conductores.txt");
+
+        boolean eliminado = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(archivo));
+
+            PrintWriter writer = new PrintWriter(
+                    new FileWriter(temporal))
+        ) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 5 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    eliminado = true;
+
+                } else {
+                    writer.println(linea);
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al eliminar conductor: "
+                    + e.getMessage());
+
+            return false;
+        }
+
+        if (eliminado) {
+
+            if (archivo.delete()) {
+
+                if (!temporal.renameTo(archivo)) {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+            System.out.println(
+                    "Conductor eliminado correctamente.");
+
+            return true;
+        }
+
+        temporal.delete();
+
+        System.out.println("Conductor no encontrado.");
+
+        return false;
+    }
+}

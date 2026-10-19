@@ -1,0 +1,43 @@
+Clase Principal
+
+    publico estatico vacio principal()
+
+        entero capacidad = 50
+        entero totalArchivo = 0
+
+        Pila objPila = nuevo Pila(1000)
+        Cola objCola = nuevo Cola(capacidad)
+
+        ManejoPila mp = nuevo ManejoPila()
+        ManejoCola mc = nuevo ManejoCola()
+
+        ArchivoTexto archivo =
+            nuevo ArchivoTexto("InscritosSistemas.txt")
+
+        mientras(archivo.hayMasRegistros())haga
+
+            archivo.leerEstudiante()
+            totalArchivo = totalArchivo + 1
+
+        Fin_Mientras
+
+        archivo.cerrar()
+
+        objPila = mp.CargarPila(
+            objPila,
+            "InscritosSistemas.txt"
+        )
+
+        imprimir("Estudiantes inscritos en junio cargados en la pila")
+
+        objCola = mc.CompletarCupo(
+            objCola,
+            objPila,
+            totalArchivo
+        )
+
+        mc.ContarInscritosValidos(objCola)
+
+    FinMetodo
+
+FinClase

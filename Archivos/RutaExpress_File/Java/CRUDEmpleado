@@ -1,0 +1,248 @@
+package RutaExpress;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CRUDEmpleado {
+
+    private static final String ARCHIVO = "DatosEmpleados.txt";
+
+    public CRUDEmpleado() {
+    }
+
+    // CREATE
+    public boolean crearEmpleado(String cedula, String nombre, double sueldo) {
+
+        if (buscarEmpleado(cedula) != null) {
+            System.out.println("La cédula ya existe.");
+            return false;
+        }
+
+        try (PrintWriter writer = new PrintWriter(
+                new FileWriter(ARCHIVO, true))) {
+
+            writer.println(cedula + "|" + nombre + "|" + sueldo);
+
+            System.out.println("Empleado creado correctamente.");
+            return true;
+
+        } catch (IOException e) {
+            System.out.println("Error al crear empleado: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // READ - Buscar un empleado por cédula
+    public String buscarEmpleado(String cedula) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return null;
+        }
+
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(archivo))) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 3 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    return linea;
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al buscar empleado: "
+                    + e.getMessage());
+        }
+
+        return null;
+    }
+
+    // READ - Mostrar todos los empleados
+    public List<String> listarEmpleados() {
+
+        List<String> empleados = new ArrayList<>();
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return empleados;
+        }
+
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(archivo))) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+                if (!linea.trim().isEmpty()) {
+                    empleados.add(linea);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al listar empleados: "
+                    + e.getMessage());
+        }
+
+        return empleados;
+    }
+
+    // UPDATE
+    public boolean actualizarEmpleado(
+            String cedula,
+            String nuevoNombre,
+            double nuevoSueldo) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe.");
+            return false;
+        }
+
+        File temporal = new File("temp_empleados.txt");
+
+        boolean encontrado = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(archivo));
+
+            PrintWriter writer = new PrintWriter(
+                    new FileWriter(temporal))
+        ) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 3 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    writer.println(
+                            cedula + "|" +
+                            nuevoNombre + "|" +
+                            nuevoSueldo
+                    );
+
+                    encontrado = true;
+
+                } else {
+                    writer.println(linea);
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al actualizar empleado: "
+                    + e.getMessage());
+
+            return false;
+        }
+
+        if (encontrado) {
+
+            if (archivo.delete()) {
+
+                if (!temporal.renameTo(archivo)) {
+                    System.out.println(
+                            "No se pudo reemplazar el archivo.");
+                    return false;
+                }
+
+            } else {
+                System.out.println(
+                        "No se pudo eliminar el archivo original.");
+                return false;
+            }
+
+            System.out.println("Empleado actualizado correctamente.");
+            return true;
+        }
+
+        temporal.delete();
+
+        System.out.println("Empleado no encontrado.");
+        return false;
+    }
+
+    // DELETE
+    public boolean eliminarEmpleado(String cedula) {
+
+        File archivo = new File(ARCHIVO);
+
+        if (!archivo.exists()) {
+            return false;
+        }
+
+        File temporal = new File("temp_empleados.txt");
+
+        boolean eliminado = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(archivo));
+
+            PrintWriter writer = new PrintWriter(
+                    new FileWriter(temporal))
+        ) {
+
+            String linea;
+
+            while ((linea = reader.readLine()) != null) {
+
+                String[] datos = linea.split("\\|");
+
+                if (datos.length >= 3 &&
+                    datos[0].equalsIgnoreCase(cedula)) {
+
+                    eliminado = true;
+
+                } else {
+                    writer.println(linea);
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error al eliminar empleado: "
+                    + e.getMessage());
+
+            return false;
+        }
+
+        if (eliminado) {
+
+            if (archivo.delete()) {
+
+                if (!temporal.renameTo(archivo)) {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+            System.out.println("Empleado eliminado correctamente.");
+            return true;
+        }
+
+        temporal.delete();
+
+        System.out.println("Empleado no encontrado.");
+        return false;
+    }
+}

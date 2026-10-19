@@ -1,0 +1,378 @@
+1.1 Abrir un archivo en modo lectura
+Se utiliza para leer registros sin modificar el contenido.
+publico vacio consultarArchivo(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ entero cantidad = objA.contadorLineas("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ mostrar(vector[i].toString())
+ finPara
+finMetodo
+
+1.2 Abrir un archivo en modo escritura
+Puede crear un archivo o sobrescribir uno existente, según la implementación.
+publico vacio escribirArchivo(Archivo objA, Inscritos estudiante)
+ objA.abrirModoEscritura("InscritosSistemas.txt")
+ objA.escribir(estudiante.toString())
+ objA.cerrarModoEscritura()
+finMetodo
+
+
+1.3 Agregar registros sin borrar los anteriores
+Esta operación se conoce como añadir o append. El método siguiente es ilustrativo.
+publico vacio agregarRegistro(Archivo objA, Inscritos estudiante)
+ objA.abrirModoEscrituraAgregar("InscritosSistemas.txt")
+ objA.escribir(estudiante.toString())
+ objA.cerrarModoEscritura()
+finMetodo
+
+1.4 Eliminar un archivo
+publico vacio eliminarArchivo(Archivo objA)
+ si(objA.existeArchivo("InscritosSistemas.txt")) entonces
+ objA.eliminarArchivo("InscritosSistemas.txt")
+ mostrar("Archivo eliminado")
+ sino
+ mostrar("El archivo no existe")
+ finSi
+finMetodo
+Si la clase no tiene existeArchivo(), valida la existencia con el mecanismo disponible.
+
+1.5 Renombrar un archivo
+publico vacio renombrarArchivo(Archivo objA)
+ cadena nombreActual = "InscritosSistemas.txt"
+ cadena nombreNuevo = "InscritosHistoricos.txt"
+ // Cerrar el archivo antes de renombrarlo.
+ objA.renombrarArchivo(nombreActual, nombreNuevo)
+ mostrar("Proceso de renombrado realizado")
+finMetodo
+Verifica que el nombre de destino no exista y comprueba si el método informa el éxito o el fallo.
+
+1.6 Copiar un archivo a otro
+publico vacio copiarArchivo(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ objA.abrirModoEscritura("CopiaInscritos.txt")
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ objA.escribir(vector[i].toString())
+ finPara
+ objA.cerrarModoEscritura()
+finMetodo
+
+2. Pilas
+Una pila sigue LIFO: Last In, First Out. Las operaciones habituales son push (apilar), pop (desapilar) e
+isEmpty (consultar si está vacía).
+
+
+2.1 Crear una pila y llenarla desde un archivo
+publico Pila crearPila(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ Pila pila = nueva Pila(vector.tamaño)
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ pila.push(vector[i])
+ finPara
+ devolver pila
+finMetodo
+
+2.2 Desapilar usando una pila auxiliar
+Esta versión vacía la pila original. La auxiliar se usa como almacenamiento temporal y también se vacía al
+final.
+publico vacio vaciarPila(Pila pila)
+ Pila auxiliar = nueva Pila()
+ mientras(pila.isEmpty() == falso) haga
+ auxiliar.push(pila.pop())
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ auxiliar.pop()
+ finMientras
+ mostrar("Pila vaciada")
+finMetodo
+
+2.3 Consultar una pila sin perder los datos
+publico vacio consultarPila(Pila pila)
+ Pila auxiliar = nueva Pila()
+ mientras(pila.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)pila.pop()
+ mostrar(estudiante.toString())
+ auxiliar.push(estudiante)
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ pila.push(auxiliar.pop())
+ finMientras
+finMetodo
+
+La segunda pasada restaura la pila original y su orden.
+
+
+2.4 Buscar un elemento en una pila
+publico logico buscarPila(Pila pila, entero id)
+ Pila auxiliar = nueva Pila()
+ logico encontrado = falso
+ mientras(pila.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)pila.pop()
+ si(estudiante.obtenerNumID() == id) entonces
+ encontrado = verdadero
+ finSi
+ auxiliar.push(estudiante)
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ pila.push(auxiliar.pop())
+ finMientras
+ devolver encontrado
+finMetodo
+
+2.5 Eliminar un estudiante de una pila
+publico logico eliminarDePila(Pila pila, entero id)
+ Pila auxiliar = nueva Pila()
+ logico eliminado = falso
+ mientras(pila.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)pila.pop()
+ si(estudiante.obtenerNumID() == id) y
+ (eliminado == falso) entonces
+ eliminado = verdadero
+ sino
+ auxiliar.push(estudiante)
+ finSi
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ pila.push(auxiliar.pop())
+ finMientras
+ devolver eliminado
+finMetodo
+
+Elimina solo la primera coincidencia desde la cima de la pila y conserva los demás elementos.
+
+2.6 Eliminar o vaciar una pila completa
+publico vacio eliminarPila(Pila pila)
+ mientras(pila.isEmpty() == falso) haga
+ pila.pop()
+ finMientras
+ mostrar("Pila sin elementos")
+finMetodo
+En una pila enlazada, pop debe actualizar la cima y gestionar correctamente el nodo retirado.
+
+3. Colas
+Una cola sigue FIFO: First In, First Out. Los elementos salen en el mismo orden en que entraron.
+
+3.1 Crear una cola desde un archivo
+publico Cola crearCola(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ Cola cola = nueva Cola()
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ cola.push(vector[i])
+ finPara
+ devolver cola
+finMetodo
+
+3.2 Eliminar un estudiante usando una cola auxiliar
+publico logico eliminarDeCola(Cola cola, entero id)
+ Cola auxiliar = nueva Cola()
+ logico eliminado = falso
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ si(estudiante.obtenerNumID() == id) y
+ (eliminado == falso) entonces
+ eliminado = verdadero
+ sino
+ auxiliar.push(estudiante)
+ finSi
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ cola.push(auxiliar.pop())
+ finMientras
+ devolver eliminado
+finMetodo
+
+Se elimina solo la primera coincidencia y se mantiene el orden FIFO de los demás elementos.
+3.3 Consultar una cola sin perder los datos
+publico vacio consultarCola(Cola cola)
+ Cola auxiliar = nueva Cola()
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ mostrar(estudiante.toString())
+ auxiliar.push(estudiante)
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ cola.push(auxiliar.pop())
+ finMientras
+finMetodo
+
+
+3.4 Vaciar una cola
+publico vacio vaciarCola(Cola cola)
+ mientras(cola.isEmpty() == falso) haga
+ cola.pop()
+ finMientras
+ mostrar("Cola vaciada")
+finMetodo
+
+3.5 Transferir todos los elementos de una cola a otra
+publico vacio transferirCola(Cola origen, Cola destino)
+ mientras(origen.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)origen.pop()
+ destino.push(estudiante)
+ finMientras
+finMetodo
+
+4. Conexiones e interacciones entre archivos, pilas y
+colas
+4.1 Archivo → Pila → Archivo
+Ejemplo: filtrar estudiantes inscritos en junio y escribirlos en un archivo nuevo.
+publico vacio archivoPilaArchivo(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ Pila pila = nueva Pila()
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ si(vector[i].obtenerMes() == 6) entonces
+ pila.push(vector[i])
+ finSi
+ finPara
+ objA.abrirModoEscritura("InscritosJunio.txt")
+ mientras(pila.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)pila.pop()
+ objA.escribir(estudiante.toString())
+ finMientras
+ objA.cerrarModoEscritura()
+finMetodo
+La salida se escribe en orden inverso al orden de inserción en la pila.
+
+
+4.2 Archivo → Cola → Archivo
+publico vacio archivoColaArchivo(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ Cola cola = nueva Cola()
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ cola.push(vector[i])
+ finPara
+ objA.abrirModoEscritura("Admitidos.txt")
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ si(estudiante.obtenerEdad() <= 20) y
+ (estudiante.obtenerEstrato() <= 3) entonces
+ objA.escribir(estudiante.toString())
+ finSi
+ finMientras
+ objA.cerrarModoEscritura()
+finMetodo
+
+4.3 Cola → Pila → Cola (invertir el orden)
+publico vacio invertirCola(Cola cola)
+ Pila auxiliar = nueva Pila()
+ mientras(cola.isEmpty() == falso) haga
+ auxiliar.push(cola.pop())
+ finMientras
+ mientras(auxiliar.isEmpty() == falso) haga
+ cola.push(auxiliar.pop())
+ finMientras
+finMetodo
+La pila invierte el orden de extracción; al reinsertar los elementos en la cola, la cola queda invertida.
+
+4.4 Pila → Cola
+publico Cola pasarPilaACola(Pila pila)
+ Cola cola = nueva Cola()
+ mientras(pila.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)pila.pop()
+ cola.push(estudiante)
+ finMientras
+ devolver cola
+finMetodo
+
+4.5 Cola → Archivo con control de cupos
+publico vacio procesarInscripciones(Archivo objA, Cola cola)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ entero cantidad = objA.contadorLineas("InscritosSistemas.txt")
+ objA.cerrarModoLectura()
+ Cola rechazados = nueva Cola()
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ si(cantidad < 50) y
+ (estudiante.obtenerEdad() <= 20) y
+ (estudiante.obtenerEstrato() <= 3) entonces
+ objA.abrirModoEscrituraAgregar("InscritosSistemas.txt")
+ objA.escribir(estudiante.toString())
+ objA.cerrarModoEscritura()
+ cantidad++
+ sino
+ rechazados.push(estudiante)
+ finSi
+ finMientras
+ mostrar("Total de estudiantes: ", cantidad)
+ mostrar("Pendientes o rechazados: ", rechazados)
+finMetodo
+
+En un programa real, conviene usar dos colas auxiliares distintas: una para quienes no cumplen requisitos y otra para
+quienes cumplen, pero no entran por falta de cupo.
+4.6 Archivo → Pila → Cola → Archivo
+publico vacio procesarTresEstructuras(Archivo objA)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ Pila pila = nueva Pila()
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ si(vector[i].obtenerMes() == 6) entonces
+ pila.push(vector[i])
+ finSi
+ finPara
+ Cola cola = nueva Cola()
+ mientras(pila.isEmpty() == falso) haga
+ cola.push(pila.pop())
+ finMientras
+ objA.abrirModoEscritura("ResultadoJunio.txt")
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ objA.escribir(estudiante.toString())
+ finMientras
+ objA.cerrarModoEscritura()
+finMetodo
+
+5. Otras bases útiles para ejercicios
+5.1 Filtrar elementos de una cola y conservar los que no cumplen
+publico Cola filtrarCola(Cola cola)
+ Cola resultado = nueva Cola()
+ mientras(cola.isEmpty() == falso) haga
+ Inscritos estudiante = (Inscritos)cola.pop()
+ si(estudiante.obtenerEstrato() <= 3) entonces
+ resultado.push(estudiante)
+ sino
+ // Conservarlo en la cola original auxiliar si se necesita.
+ finSi
+ finMientras
+ devolver resultado
+finMetodo
+Si también debes conservar los que no cumplen, crea otra cola, por ejemplo colaNoCumplen, y agrégalos allí.
+
+5.2 Reconstruir un archivo sin un registro
+Para eliminar un estudiante del archivo, no basta con borrar un elemento del vector: debes crear un archivo
+temporal con todos los registros que se conservarán y luego reemplazar el archivo original.
+publico logico eliminarDelArchivo(Archivo objA, entero id)
+ objA.abrirArchivoModoLectura("InscritosSistemas.txt")
+ Inscritos[] vector = objA.leerInscritos()
+ objA.cerrarModoLectura()
+ logico encontrado = falso
+ objA.abrirModoEscritura("Temporal.txt")
+ para(entero i = 0; i < vector.tamaño; i++) haga
+ si(vector[i].obtenerNumID() == id) y
+ (encontrado == falso) entonces
+ encontrado = verdadero
+ sino
+ objA.escribir(vector[i].toString())
+ finSi
+ finPara
+ objA.cerrarModoEscritura()
+ si(encontrado) entonces
+ objA.reemplazarArchivo("InscritosSistemas.txt", "Temporal.txt")
+ sino
+ objA.eliminarArchivo("Temporal.txt")
+ finSi
+ devolver encontrado
+finMetodo
+reemplazarArchivo() representa una operación que debe existir o implementarse en la clase Archivo. También puedes
+renombrar el original y luego renombrar el temporal, controlando posibles errores.
