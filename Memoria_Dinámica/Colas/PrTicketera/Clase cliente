@@ -1,0 +1,48 @@
+clase Cliente
+   privado texto idComprador
+   privado texto nombre
+   privado entero cantidadBoletos
+   privado real montoTotal
+
+   publico Cliente()
+      este.idComprador = ""
+      este.nombre = ""
+      este.cantidadBoletos = 0
+      este.montoTotal = 0
+   FinMetodo
+
+   publico Cliente(texto id, texto nom, entero cant, real monto)
+      este.idComprador = id
+      este.nombre = nom
+      este.cantidadBoletos = cant
+      este.montoTotal = monto
+   FinMetodo
+
+   publico texto obtenerIdComprador()
+      retornar idComprador
+   FinMetodo
+   publico vacio asignarIdComprador(texto id)
+      este.idComprador = id
+   FinMetodo
+
+   publico texto obtenerNombre()
+      retornar nombre
+   FinMetodo
+   publico vacio asignarNombre(texto nombre)
+      este.nombre = nombre
+   FinMetodo
+
+   publico entero obtenerCantidadBoletos()
+      retornar cantidadBoletos
+   FinMetodo
+   publico vacio asignarCantidadBoletos(entero cant)
+      este.cantidadBoletos = cant
+   FinMetodo
+
+   publico real obtenerMontoTotal()
+      retornar montoTotal
+   FinMetodo
+   publico vacio asignarMontoTotal(real monto)
+      este.montoTotal = monto
+   FinMetodo
+FinClase
