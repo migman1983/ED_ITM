@@ -4,7 +4,7 @@ package prejemploarchivos;
 public class AppArchivos {
 
 
-    public static void main(String[] args) 
+    public static void main(String[] args) ;
     {
         Demostracion d = new Demostracion();
         System.out.println("************** BufferedWriter ***************");
