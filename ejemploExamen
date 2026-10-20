@@ -1,0 +1,70 @@
+consultar el archivo que se llama InscritosSistemas.txt
+en el archivo los estudiantes tienen la siguiente información
+numID, nombre, apellido, diaInscripcion, mesInscripcion, anioInscripcion, edad, estrato, correoElectronico y Tel
+
+se deben pasar a una pila todos los estudiantes cuya fecha de inscripción este entre el 1 y el 30 de junio
+
+En la cola hay una cantidad de estudiantes que pueden quedar inscritos si cumplen con la condición
+de que la edad no sea mayor a 20 años y que el estrato sea igual o inferior a 3
+
+si en el archivo de InscritosSistemas.txt hay menos de 50 estudiantes completar el archivo con los que se encuentran en la pila, sin que sobrepasen el cupo de 50 
+
+ya se cuenta con la clase Incritos, Cola, Pila, Archivo y Nodo
+
+* La cola ya está creada con los datos del estudiante
+* La pila se define o se crea a partir de los elementos que se encuentren en el archivo
+
+
+publico vacio Inscripciones(Archivo objA, Cola c)
+  objA.abrirArchivoModoLectura("inscritosSistemas.txt")
+  entero cl = objA.contadorLineas("inscritosSistemas.txt")
+  Inscritos vecInscritos = nuevo Inscritos[cl]
+  vecInscritos = objA.leerInscritos()
+  objA.eliminarArchivo("inscritosSistemas.txt")
+  objA.abrirModoEscritura("inscritosSistemas.txt")
+  entero contTamanioPila = 0
+  para(entero i = 0; i < vecInscritos.tamaño;i++)haga
+    Si(vecInscritos[i].obtenerMes() == 6)entonces
+      contTamanioPila++
+     sino
+      objA.escribir(vec[i].toString())
+    finSi
+  finPara
+   Pila pilaInscritos = nueva Pila(contTamanioPila)
+   para(entero i = 0; i < vecInscritos.tamaño;i++)haga
+    Si(vecInscritos[i].obtenerMes() == 6)entonces
+        pilaInscritos.push(vecInscritos[i]
+    finSi
+   finPara
+    Inscrito i = nuevo Inscrito()
+    Cola cAux = nueva Cola()
+   mientras(c.isEmpty==falso)haga
+     i = (Inscrito)c.pop()
+     objA.cerrarModoEscritura()
+     objA.abrirModoLectura("inscritosSistemas.txt")
+     entero cantRegistros = objA.contadorLineas("inscritosSistemas.txt")
+     objA.cerrarModoLectura()
+     si(i.obtenerEstrato()<=3) y (i.obtenerEdad()<20) y (cantRegistros < 50)entonces
+          objA.abrirModoEscritura("inscritosSistemas.txt")        
+          objA.escribir(i.toString())
+      sino
+        cAux.push(i)
+     finSi
+     si(cantRegistros>=50)entonces
+      escribir("Archivo lleno persona no queda Inscrita")
+     finSi
+   finMientras
+   devolverAuxiliar(cAux, c)
+   objA.cerrarModoEscritura()
+   si(cantRegistros < 50)entonces
+    mientras(pilaInscritos.isEmpty() == falso) y (cantRegistros < 50)entonces
+      i = (Inscrito)pilaInscritos.pop()
+      objA.abrirModoEscritura("inscritosSistemas.txt")
+      objA.escribir(i.toString())
+      objA.cerrarModoEscritura()
+      objA.abrirModoLectura("inscritosSistemas.txt") 
+      entero cantRegistros = objA.contadorLineas("inscritosSistemas.txt")
+      objA.cerrarModoLectura()
+    finMientras 
+ 
+ finMetodo
