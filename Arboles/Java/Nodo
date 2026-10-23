@@ -1,0 +1,59 @@
+package pkg_arboles;
+
+public class Nodo
+{
+    private Object dato;
+    private Nodo sig;   // hijo derecho
+    private Nodo ant;   // hijo izquierdo
+
+    // constructor vacío
+    public Nodo()
+    {
+    }
+
+    // constructor que recibe el dato y deja las ligas en null
+    public Nodo(Object d)
+    {
+        dato = d;
+        sig = null;
+        ant = null;
+    }
+
+    // constructor para nodo doble
+    public Nodo(Nodo li, Object d, Nodo ld)
+    {
+        dato = d;
+        sig = ld;
+        ant = li;
+    }
+
+    public Object obtenerDato()
+    {
+        return dato;
+    }
+
+    public void asignarDato(Object dato)
+    {
+        this.dato = dato;
+    }
+
+    public Nodo obtenerSig()
+    {
+        return sig;
+    }
+
+    public void asignarSig(Nodo der)
+    {
+        sig = der;
+    }
+
+    public Nodo obtenerAnt()
+    {
+        return ant;
+    }
+
+    public void asignarAnt(Nodo izq)
+    {
+        ant = izq;
+    }
+}

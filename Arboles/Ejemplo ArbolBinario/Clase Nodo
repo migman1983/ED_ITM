@@ -1,0 +1,49 @@
+lase nodo
+    privado dato es Objeto
+    privado sig es nodo
+    privado ant es nodo
+
+    //constructor vacio
+    publico nodo()
+    fin método nodo
+
+    /*constructor que recibe el dato y crea el nodo con su información
+      y coloca las ligas en null*/
+    publico nodo(d es Objeto)
+        dato=d
+        sig=null
+        ant=null
+    fin método nodo
+
+    //solo para nodo doble
+    publico nodo(li es nodo, d es Objeto, ld es nodo)
+        dato=d
+        sig=ld
+        ant=li
+    fin método nodo
+
+    publico Objeto obtenerDato()
+        retornar dato
+    fin obtenerDato
+
+    publico vacio asignarDato(dato es Objeto)
+        este.dato = dato
+    fin asignarDato
+
+    publico nodo obtenerSig()
+        retornar sig
+    fin obtenerSig
+
+    publico vacio asignarSig(der es nodo)
+        sig = der
+    fin asignarSig
+
+    publico nodo obtenerAnt()
+        retornar ant
+    fin obtenerAnt
+
+    publico vacio asignarAnt(izq es nodo)
+        ant = izq
+    fin asignarAnt
+fin clase nodo
+

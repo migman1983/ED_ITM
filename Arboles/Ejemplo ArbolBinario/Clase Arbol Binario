@@ -1,0 +1,116 @@
+publico clase ArbolBinario
+    privado raiz es nodo
+
+    //auxiliares
+    Objeto info
+    nodo aux
+    recorrido es cadena //acumulador de los recorridos
+
+    publico ArbolBinario()
+        raiz=null
+        recorrido=""
+    fin ArbolBinario
+
+    publico vacio CrearRaiz()
+        imprimir "Digite dato para la raiz:"
+        lea info
+        asignarRaiz(nuevo nodo(null,info,null))
+    fin CrearRaiz
+
+    publico vacio IngresarHijo(q es nodo)
+        imprimir "Digite dato para el hijo de:"+q.obtenerDato()
+        lea info
+        aux=nuevo nodo(null,info,null)
+    fin IngresarHijo
+
+    publico logico IsEmpty()
+        si (raiz=null) entonces //"ARBOL VACIO!!!"
+            retornar verdadero
+        sino
+            retornar falso
+        fin si
+    fin IsEmpty
+
+    publico vacio InsertarNodos(q es nodo)
+        resp es cadena
+        imprimir "Ingresar hijo izquierdo (Anterior) de "+q.obtenerDato()+" ¿ si / no ? "
+        lea resp
+        si (resp="si") entonces
+            IngresarHijo(q)
+            q.asignarAnt(aux)
+        fin si
+        imprimir "Ingresar hijo derecho (Siguiente) de "+q.obtenerDato()+" ¿ si / no ? "
+        lea resp
+        si (resp="si") entonces
+            IngresarHijo(q)
+            q.asignarSig(aux)
+        fin si
+    fin InsertarNodos
+
+    //metodo recursivo para crear el arbol
+    publico vacio Crear(q es nodo)
+        //caso base o caso degenerado
+        si (q<>null) entonces
+            InsertarNodos(q)
+            //llamada recursiva por la izquierda
+            Crear(q.obtenerAnt())
+            //llamada recursiva por la derecha
+            Crear(q.obtenerSig())
+        fin si
+    fin Crear
+
+    publico nodo obtenerRaiz()
+        retornar raiz
+    fin obtenerRaiz
+
+    publico vacio asignarRaiz(raiz es nodo)
+        este.raiz = raiz
+    fin asignarRaiz
+
+    //raiz - izquierdo - derecho
+    privado vacio preorden(q es nodo)
+        si (q<>null) entonces
+            recorrido=recorrido+q.obtenerDato()+" "
+            preorden(q.obtenerAnt())
+            preorden(q.obtenerSig())
+        fin si
+    fin preorden
+
+    publico cadena preorden()
+        recorrido=""
+        preorden(raiz)
+        retornar recorrido
+    fin preorden
+
+
+    //izquierdo - raiz - derecho
+    privado vacio inorden(q es nodo)
+        si (q<>null) entonces
+            inorden(q.obtenerAnt())
+            recorrido=recorrido+q.obtenerDato()+" "
+            inorden(q.obtenerSig())
+        fin si
+    fin inorden
+
+    publico cadena inorden()
+        recorrido=""
+        inorden(raiz)
+        retornar recorrido
+    fin inorden
+    
+
+    //izquierdo - derecho - raiz
+    privado vacio posorden(q es nodo)
+        si (q<>null) entonces
+            posorden(q.obtenerAnt())
+            posorden(q.obtenerSig())
+            recorrido=recorrido+q.obtenerDato()+" "
+        fin si
+    fin posorden
+
+publico cadena posorden()
+        recorrido=""
+        posorden(raiz)
+        retornar recorrido
+    fin posorden
+fin clase ArbolBinario

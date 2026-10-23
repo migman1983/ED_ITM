@@ -1,0 +1,25 @@
+package pkg_arboles;
+
+public class Arboles
+{
+    public static void main(String[] args)
+    {
+        ArbolBinario arbol = new ArbolBinario();
+        arbol.crearRaiz();
+
+        if (arbol.isEmpty())
+        {
+            System.out.println("El árbol está vacío");
+        }
+        else
+        {
+            arbol.crear(arbol.obtenerRaiz());
+
+            System.out.println();
+            System.out.println("Árbol creado correctamente.");
+            System.out.println("Preorden : " + arbol.preorden());
+            System.out.println("Inorden  : " + arbol.inorden());
+            System.out.println("Posorden : " + arbol.posorden());
+        }
+    }
+}
