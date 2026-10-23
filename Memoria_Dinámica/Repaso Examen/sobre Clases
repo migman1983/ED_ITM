@@ -1,0 +1,65 @@
+Archivos
+---------
+
+Clase archivos que cuenta con los siguientes métodos:
+
+abrirModoLectura(cadena ruta)
+abrirModoEscritura(cadena ruta)
+cerrarModoEscritura()
+cerrarModoLectura()
+contadorLineas(cadena ruta)
+eliminarArchivo(cadena ruta)
+renombrarArchivo(cadena ruta)
+escribir(cadena registro)
+leer()  retorna un vector de tipo objeto y debe ser ajustado de acuerdo al objeto   
+           que estemos trabajando
+
+
+
+con archivo podemos hacer 3 acciones:
+leer Registros
+crear Registros
+actualizar Registros
+Eliminar Registros
+
+
+Pilas
+-------
+Clase Pila tiene los siguientes métodos:
+
+push()
+pop()
+peek()
+isEmpty()
+isFull()
+
+Las pilas se trabajan con nodos, los nodos almacenan objetos
+Las pilas tienen un tamaño máximo
+Las pilas tienen un orden LIFO(Last In First Out)
+
+con las pilas podemos:
+recorrerlas desapilando y llevando a una pilaAux. para que recorrerlas:
+búsqueda
+eliminación
+actualización
+
+Cola
+-------
+Clase Cola tiene los siguientes métodos:
+
+push()
+pop()
+peek()
+isEmpty()
+isFull()
+6. Front()
+
+Las colas se trabajan con nodos, los nodos almacenan objetos
+Las colas tienen un tamaño máximo
+Las colas tienen un orden FIFO(First In First Out)
+
+con las colas podemos:
+recorrerlas desesncolando y llevando a una colaAux. para que recorrerlas:
+  búsqueda
+  eliminación
+  actualización
