@@ -1,0 +1,47 @@
+Clase ManejoCola
+
+    publico entero ContarInscritosValidos(Cola objCola)
+
+        Cola colaAux = nuevo Cola(50)
+
+        entero contador = 0
+        Estudiante est
+
+        mientras(objCola.IsEmpty()==falso)haga
+
+            est = objCola.Dequeue()
+
+            si(est.obtenerEdad()<=28
+               Y est.obtenerEstrato()<=3)entonces
+
+                contador = contador + 1
+
+            Fin_Si
+
+            colaAux.Enqueue(est)
+
+        Fin_Mientras
+
+        RetornarCola(objCola,colaAux)
+
+        imprimir("Estudiantes que cumplen las condiciones: ", contador)
+
+        retornar contador
+
+    FinMetodo
+
+
+    publico vacio RetornarCola(
+        Cola objCola,
+        Cola colaAux
+    )
+
+        mientras(colaAux.IsEmpty()==falso)haga
+
+            objCola.Enqueue(colaAux.Dequeue())
+
+        Fin_Mientras
+
+    FinMetodo
+
+FinClase

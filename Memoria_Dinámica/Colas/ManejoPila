@@ -1,0 +1,30 @@
+Clase ManejoPila
+
+    publico Pila CargarPila(
+        Pila objPila,
+        cadena nombreArchivo
+    )
+
+        ArchivoTexto archivo = nuevo ArchivoTexto(nombreArchivo)
+
+        mientras(archivo.hayMasRegistros())haga
+
+            Estudiante est = archivo.leerEstudiante()
+
+            si(est.obtenerMesInscripcion()==6
+               Y est.obtenerDiaInscripcion()>=1
+               Y est.obtenerDiaInscripcion()<=30)entonces
+
+                objPila.Push(est)
+
+            Fin_Si
+
+        Fin_Mientras
+
+        archivo.cerrar()
+
+        retornar objPila
+
+    FinMetodo
+
+FinClase

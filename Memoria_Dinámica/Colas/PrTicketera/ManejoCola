@@ -1,0 +1,65 @@
+clase ManejoCola
+
+   privado Cola filaEspera
+   
+
+   publico ManejoCola(entero capacidad)
+      filaEspera = nuevo Cola(capacidad)
+      
+   FinMetodo
+
+   
+    publico vacio ingresarCliente(Cliente c)
+      si (c == nulo) entonces
+         Imprimir("*****Cliente invalido*****")
+      sino
+         si (existeCliente(c.obtenerIdComprador()) == verdadero) entonces
+            Imprimir("*****El comprador ya esta en la fila de espera*****")
+         sino
+            si (filaEspera.IsFull() == verdadero) entonces
+               Imprimir("*****Sala de espera llena, intente mas tarde*****")
+            sino
+               filaEspera.Push(c)
+               Imprimir("Cliente " + c.obtenerNombre() + " ingreso a la fila")
+               Imprimir("Posicion en la fila: " + filaEspera.obtenerSize())
+            FinSi
+         FinSi
+      FinSi
+   FinMetodo
+
+   
+   publico Cliente verSiguiente()
+      Cliente c = nulo
+      si (filaEspera.IsEmpty() == verdadero) entonces
+         Imprimir("*****No hay clientes en la fila*****")
+      sino
+         c = filaEspera.Peek()
+         Imprimir("Siguiente en ser atendido: " + c.obtenerNombre())
+      FinSi
+      retornar c
+   FinMetodo
+
+   publico vacio mostrarFila()
+      Cola auxiliar = nuevo Cola(filaEspera.obtenerMaxsize())
+      Cliente c
+      entero posicion = 1
+
+      si (filaEspera.IsEmpty() == verdadero) entonces
+         Imprimir("La fila de espera esta vacia")
+      sino
+         Imprimir("===== FILA DE ESPERA =====")
+         mientras (filaEspera.IsEmpty() == falso) hacer
+            c = filaEspera.Pop()
+            Imprimir(posicion + ". ID: " + c.obtenerIdComprador() +
+                     " | Nombre: " + c.obtenerNombre() +
+                     " | Boletos: " + c.obtenerCantidadBoletos() +
+                     " | Monto: " + c.obtenerMontoTotal())
+            auxiliar.Push(c)
+            posicion = posicion + 1
+         FinMientras
+         
+         mientras (auxiliar.IsEmpty() == falso) hacer
+            filaEspera.Push(auxiliar.Pop())
+         FinMientras
+      FinSi
+   FinMetodo
