@@ -63,6 +63,47 @@ publico vacio consultarCliente(Archivo arch, Cadena cedula)
     finSi
 finMetodo
 
+//Metodo para eliminar un cliente por cedula
+publico vacio eliminarClientePorCedula(Archivo arch, Cadena cedula) {
+    arch.abrirModoLectura("DatosClientes.txt");
+    entero cl = arch.contadorLineas("DatosClientes.txt");
+    Cliente[] vecC = nuevo Cliente[cl];
+    vecC = arch.leerClientes();
+    arch.cerrarModoLectura();
+    booleano encontrado = falso;
+    entero pos = -1;
+    para (entero i = 0; i < cl; i++) {
+        si (vecC[i].obtenerCedula().equals(cedula)) {
+            encontrado = verdadero;
+            pos = i;
+            romper;
+        }
+    }
+    si (!encontrado) {
+        imprimir("No se encontró un cliente con la cédula: " + cedula);
+        retornar;
+    }
+    imprimir("Cliente encontrado: " + vecC[pos].obtenerNombre());
+    imprimir("¿Está seguro que desea eliminarlo? (S/N): ");
+    Cadena confirmacion;
+    leer confirmacion;
+
+    si (!confirmacion.equalsIgnoreCase("S")) {
+        imprimir("Eliminación cancelada.");
+        retornar;
+    }
+    arch.abrirArchivoModoEscritura("DatosClientes.txt");
+    para (entero i = 0; i < cl; i++) {
+        si (i != pos) { // copiar todos menos el eliminado
+            arch.escribir(vecC[i].convertirCadena());
+        }
+    }
+    arch.cerrarModoEscritura();
+
+    imprimir("Cliente eliminado correctamente.");
+}
+finmetodo
+
 publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
  1. abrimos archivo de clientes en modo lectura
     arch.abrirModoLectura("DatosClientes.txt")
@@ -80,35 +121,56 @@ publico vacio actualizarRegistro(Archivo arch, Cadena cedula)
      entero i = 0
      entero opcion = 0
      booleano sw = falso
-     mientras (i<cl)haga
-       si(cedula == vecC[i].obtenerCedula())entonces
-         imprima("seleccione el dato a actualizar: ")
-         imprima(" 1. nombre")
-         imprima(" 2. telefono")
-         lea opcion    
-         segun(opcion)haga
-            caso 1:
-               Cadena nombre
-               imprima("ingrese el nuevo nombre del Cliente:")
-               lea nombre
-               vecC[i].asignarNombre(nombre)
-               romper
-            caso 2:
-               Cadena telefono
-               imprima("ingrese el nuevo telefono del Cliente:")
-               lea telefono
-               vecC[i].asignarTelefono(telefono)
-               romper
-            en otro caso:
-                imprima("la opción no es valida. no se actualizará el registro")
-         fin segun
-         sw = verdadero
-         romper
-        finSi       
+    Mientras (i < 3) Hacer
+    Repetir
+        Escribir "Ingrese una opción:"
+        Escribir "1 = Cambiar nombre"
+        Escribir "2 = Cambiar teléfono"
+        Leer opcion
+         //validacion para obligar al usuario a ingresar un valor valido para la actualizacion
+        Si opcion < 1 O opcion > 2 Entonces
+            Escribir "Opción inválida, debe ser 1 o 2."
+        FinSi
+    Hasta Que opcion >= 1 Y opcion <= 2
+    Segun opcion Hacer
+        Caso 1:
+            Definir nombre Como Cadena
+            Repetir
+                Escribir "Ingrese el nuevo nombre del Cliente: "
+                Leer nombre
+                Si nombre = "" Entonces
+                    Escribir "El nombre no puede estar vacío."
+                FinSi
+            Hasta Que nombre <> ""
+            vecC[i].asignarNombre(nombre)
+        Caso 2:
+            Definir telefono Como Cadena
+            Repetir
+                Escribir "Ingrese el nuevo teléfono del Cliente (solo números): "
+                Leer telefono
+                valido <- Verdadero
+                Si telefono = "" Entonces
+                    Escribir "El teléfono no puede estar vacío."
+                    valido <- Falso
+                Sino
+                    Para j <- 1 Hasta Longitud(telefono) Hacer
+                        Si Subcadena(telefono, j, j) < "0" O Subcadena(telefono, j, j) > "9" Entonces
+                            Escribir "El teléfono solo debe contener números."
+                            valido <- Falso
+                            Romper
+                        FinSi
+                    FinPara
+                FinSi
+            Hasta Que valido = Verdadero
+            vecC[i].asignarTelefono(telefono)
+    FinSegun
+
+    sw <- Verdadero
+    Romper    
        /* de que manera podríamos "obligar" al usuario que ingrese un valor valido en la opción para que pueda actualizarse 
           un registro */
          i++
-     fin Mientras
+   fin Mientras
      
  6.Cerrar modo Escritura y Eliminar el archivo
     arch.cerrarModoLectura()

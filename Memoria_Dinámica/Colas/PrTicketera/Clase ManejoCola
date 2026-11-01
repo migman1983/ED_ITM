@@ -1,0 +1,108 @@
+clase ManejoCola
+
+   publico vacio ingresarCliente(Cola c, Cliente cli)
+      si (c.IsFull() == falso) entonces
+         c.Push(cli)
+         Imprimir("Cliente " + cli.obtenerNombre() + " ingresó a la fila")
+      sino
+         Imprimir("La sala de espera está llena")
+      FinSi
+   FinMetodo
+
+   publico Cliente atenderCliente(Cola c)
+      Cliente cli = nulo
+      si (c.IsEmpty() == falso) entonces
+         cli = c.Pop()
+         Imprimir("Atendiendo a " + cli.obtenerNombre())
+      sino
+         Imprimir("No hay clientes en la fila")
+      FinSi
+      retornar cli
+   FinMetodo
+
+   publico Cliente verSiguiente(Cola c)
+      retornar c.Peek()
+   FinMetodo
+
+   publico entero cantidadEnFila(Cola c)
+      retornar c.obtenerSize()
+   FinMetodo
+
+   publico vacio mostrarFila(Cola c)
+      Cola aux = nuevo Cola(c.obtenerMaxsize())
+      Cliente cli
+      entero pos = 1
+
+      si (c.IsEmpty()) entonces
+         Imprimir("La fila está vacía")
+      FinSi
+
+      mientras (c.IsEmpty() == falso) hacer
+         cli = c.Pop()
+         Imprimir(pos + ". " + cli.obtenerIdComprador() + " - " + cli.obtenerNombre() + " - Boletos: " + cli.obtenerCantidadBoletos() + " - Total: " + cli.obtenerMontoTotal())
+         aux.Push(cli)
+         pos = pos + 1
+      FinMientras
+
+      mientras (aux.IsEmpty() == falso) hacer
+         c.Push(aux.Pop())
+      FinMientras
+   FinMetodo
+
+   publico entero totalBoletosVendidos(Cola c)
+      Cola aux = nuevo Cola(c.obtenerMaxsize())
+      Cliente cli
+      entero total = 0
+
+      mientras (c.IsEmpty() == falso) hacer
+         cli = c.Pop()
+         total = total + cli.obtenerCantidadBoletos()
+         aux.Push(cli)
+      FinMientras
+
+      mientras (aux.IsEmpty() == falso) hacer
+         c.Push(aux.Pop())
+      FinMientras
+
+      retornar total
+   FinMetodo
+
+   publico real montoTotalRecaudado(Cola c)
+      Cola aux = nuevo Cola(c.obtenerMaxsize())
+      Cliente cli
+      real total = 0
+
+      mientras (c.IsEmpty() == falso) hacer
+         cli = c.Pop()
+         total = total + cli.obtenerMontoTotal()
+         aux.Push(cli)
+      FinMientras
+
+      mientras (aux.IsEmpty() == falso) hacer
+         c.Push(aux.Pop())
+      FinMientras
+
+      retornar total
+   FinMetodo
+
+   publico Cliente buscarCliente(Cola c, texto id)
+      Cola aux = nuevo Cola(c.obtenerMaxsize())
+      Cliente cli
+      Cliente encontrado = nulo
+
+      mientras (c.IsEmpty() == falso) hacer
+         cli = c.Pop()
+         si (cli.obtenerIdComprador() == id) entonces
+            encontrado = cli
+         FinSi
+         aux.Push(cli)
+      FinMientras
+
+      mientras (aux.IsEmpty() == falso) hacer
+         c.Push(aux.Pop())
+      FinMientras
+
+      retornar encontrado
+   FinMetodo
+
+FinClase
