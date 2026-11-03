@@ -1,0 +1,19 @@
+
+publico clase Arboles
+   publico estatico vacio principal()
+    finMetodo
+        ArbolBinario arbol = nuevo ArbolBinario();
+        arbol.crearRaiz();
+
+        si(arbol.isEmpty())entonces
+           Imprimir("El árbol está vacío");
+          sino
+            arbol.crear(arbol.obtenerRaiz());
+            System.out.println();
+            System.out.println("Árbol creado correctamente.");
+            System.out.println("Preorden : " + arbol.preorden());
+            System.out.println("Inorden  : " + arbol.inorden());
+            System.out.println("Posorden : " + arbol.posorden());
+        finSi
+    finMetodo
+finClase

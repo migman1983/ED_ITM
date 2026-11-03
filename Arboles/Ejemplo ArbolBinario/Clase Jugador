@@ -1,0 +1,101 @@
+
+publico clase Jugador 
+{
+  privado Cadena nombre, posicion;
+  privado Entero pj, golesAnotados, ta, tr, asistencias;
+    publico Jugador() 
+    {
+        
+    }
+
+    publico Jugador(Cadena nombre, Cadena posicion, entero pj, entero golesAnotados, entero ta, entero tr, entero asistencias) 
+        este.nombre = nombre;
+        este.posicion = posicion;
+        este.pj = pj;
+        este.golesAnotados = golesAnotados;
+        este.ta = ta;
+        este.tr = tr;
+        este.asistencias = asistencias;
+    finMetodo
+    
+    publico Jugador ingresarDatos()
+        Imprima("ingresar nombre: ");
+        lea nombre 
+        Imprima("ingresar posicion: ");
+        lea posicion 
+        Imprima("ingresar partidos jugados: ");
+        lea pj
+        Imprima("ingresar Goles Anotados: ");
+        lea golesAnotados
+        Imprima("ingresar Tarjetas Amarillas: ");
+        lea ta 
+        Imprima("ingresar Tarjetas Rojas: ");
+        lea  tr 
+        Imprima("ingresar Asistencias: ");
+        lea asistencias 
+        retornar nuevo Jugador(nombre, posicion, pj,golesAnotados, ta,tr,asistencias);
+    finMetodo
+
+    publico Cadena obtenerNombre() 
+        return nombre;
+    finMetodo
+
+    public void asignarNombre(Cadena nombre) 
+        este.nombre = nombre
+    finMetodo
+
+    publico Cadena obtenerPosicion() 
+        retornar posicion;
+    finMetodo
+
+    publico vacio asignarPosicion(Cadena posicion)
+        este.posicion = posicion;
+    finMetodo
+
+    publico entero obtenerPj()
+        retornar pj;
+    finMetodo
+
+    publico vacio asignarPj(entero pj)
+        este.pj = pj;
+    finMetodo
+
+    publico entero obtenerGolesAnotados()
+        retornar golesAnotados;
+    finMetodo
+
+    publico vacio asignarGolesAnotados(entero golesAnotados) 
+        este.golesAnotados = golesAnotados;
+    finMetodo
+
+    publico entero getTa() 
+        retornar ta;
+    finMetodo
+
+    publico vacio asignarTa(entero ta)
+        este.ta = ta;
+    finMetodo
+
+    publico entero obtenerTr() 
+        retornar tr;
+    finMetodo
+
+    publico vacio asignarTr(entero tr)
+        este.tr = tr;
+    finMetodo
+
+    public entero obtenerAsistencias() 
+       retornar asistencias;
+    finMetodo
+
+    publico vacio asignarAsistencias(entero asistencias)
+        este.asistencias = asistencias;
+    finMetodo
+
+    
+    publico Cadena toString() 
+        retrnar "Jugador{" + "nombre=" + nombre + ", posicion=" + posicion + ", pj=" + pj + ", golesAnotados=" + golesAnotados + ", ta=" + ta + ", tr=" + tr + ", asistencias=" + asistencias + '}';
+    finMetodo
+    
+    
+}

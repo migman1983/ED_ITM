@@ -1,0 +1,68 @@
+objeto jugador = nombre, posición, golesAnotados, pj, ta, tr, asistencias
+
+ya debe existir la clase Jugador
+
+crear una pila de jugadores y luego de creada llevar a un archivo llamado delanteros.txt todos los jugadores cuya posición sea delantero 
+
+publico Pila crearJugadores( ) 
+  Archivo objA = nuevo Archivo()
+  Jugador j = nuevo Jugador()
+  entero tamaño = 0
+  escriba("ingrese el tamaño de la pila")
+  lea tamaño
+  Pila pila = nueva Pila(tamaño)
+  Pila pilaAux = nueva Pila(tamaño)
+
+  mientras(pila.isFull() == falso)haga
+    j = j.ingresarDatos()
+    pila.push(j)
+  finMientras
+  objA.abrirArchivoModoEscritura("Delanteros.txt")
+  mientras(pila.isEmpty() == falso)haga
+    j = (Jugador)pila.pop()
+     si(j.obtenerPosicion()=="Delantero")entonces
+        objA.escribir(j.toString())
+       sino
+        pilaAux.push(j) 
+     finSi
+  finMientras
+    DevolverAux(pila, pilaAux)
+    retornar pila
+fin Método
+
+-----------------------------------------------
+crear una cola a partir de los datos del archivo generado que cumpla con la condición que los jugadores tengan más de 15 partidos jugados y 10 goles
+
+publico Cola jugadoresPrime()
+ 1. crear objeto Archivo
+    Archivo objA = nuevo Archivo()
+ 2. contar los registros del archivo  
+   entero tamañoVector = objA.contarLineas("Delanteros.txt") 
+ 3. crear vector de tipo jugador con el tamaño de la cantidad de registros del archivo
+    Jugador vec = nuevo Jugador[tamañoVector]
+ 4. se abre el archivo en modo lectura
+    objA.abrirArchivoModoLectura("Delanteros.txt")
+ 5. se asigna al vector lo que hay en el archivo
+    vec = objA.leer()
+ 6. se declara contador para identificar jugadores que cumplan con la condición
+    entero cont = 0
+ 7. se recorre vector para encontrar esos jugadores que cumplen con el requisito
+    para(entero i =0;i< vec.tamaño;i++)haga
+      si(vec[i].obtenerPJ() > 15) y (vec[i].obtenerGolesAnotados() == 10)entonces
+       cont++
+      finSi
+    finPara
+ 8. creamos la cola con la cantidad de jugadores  
+    Cola cola = nueva Cola(cont)
+ 9. recorrer el vector para insertar los jugadores que cumplen con el requisito en la   
+    cola    
+    para(entero i =0;i< vec.tamaño;i++)haga
+     si(vec[i].obtenerPJ() > 15) y (vec[i].obtenerGolesAnotados() == 10)entonces
+       cola.push(vec[i])   
+     finSi
+    finPara
+ 10. Cerrar Archivo en Modo Lectura 
+   objA.cerrarArchivoModoLectura()   
+ 11. retornar la cola creada
+  retornar cola
+finMetodo

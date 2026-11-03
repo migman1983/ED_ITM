@@ -1,0 +1,109 @@
+
+package pkg_arboles;
+
+import java.util.Scanner;
+
+public class Jugador 
+{
+  private String nombre, posicion;
+  private int pj, golesAnotados, ta, tr, asistencias;
+    public Jugador() 
+    {
+        
+    }
+
+    public Jugador(String nombre, String posicion, int pj, int golesAnotados, int ta, int tr, int asistencias) {
+        this.nombre = nombre;
+        this.posicion = posicion;
+        this.pj = pj;
+        this.golesAnotados = golesAnotados;
+        this.ta = ta;
+        this.tr = tr;
+        this.asistencias = asistencias;
+    }
+    
+    public Jugador ingresarDatos()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("ingresar nombre: ");
+        nombre = sc.nextLine();
+        System.out.println("ingresar posicion: ");
+        posicion = sc.nextLine();
+        System.out.println("ingresar partidos jugados: ");
+        pj = sc.nextInt();
+        System.out.println("ingresar Goles Anotados: ");
+        golesAnotados = sc.nextInt();
+        System.out.println("ingresar Tarjetas Amarillas: ");
+        ta = sc.nextInt();
+        System.out.println("ingresar Tarjetas Rojas: ");
+        tr = sc.nextInt();
+        System.out.println("ingresar Asistencias: ");
+        asistencias = sc.nextInt();
+        return new Jugador(nombre, posicion, pj,golesAnotados, ta,tr,asistencias);
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
+    }
+
+    public int getPj() {
+        return pj;
+    }
+
+    public void setPj(int pj) {
+        this.pj = pj;
+    }
+
+    public int getGolesAnotados() {
+        return golesAnotados;
+    }
+
+    public void setGolesAnotados(int golesAnotados) {
+        this.golesAnotados = golesAnotados;
+    }
+
+    public int getTa() {
+        return ta;
+    }
+
+    public void setTa(int ta) {
+        this.ta = ta;
+    }
+
+    public int getTr() {
+        return tr;
+    }
+
+    public void setTr(int tr) {
+        this.tr = tr;
+    }
+
+    public int getAsistencias() 
+    {
+        return asistencias;
+    }
+
+    public void setAsistencias(int asistencias) {
+        this.asistencias = asistencias;
+    }
+
+    @Override
+    public String toString() 
+    {
+        return "Jugador{" + "nombre=" + nombre + ", posicion=" + posicion + ", pj=" + pj + ", golesAnotados=" + golesAnotados + ", ta=" + ta + ", tr=" + tr + ", asistencias=" + asistencias + '}';
+    }
+    
+    
+}

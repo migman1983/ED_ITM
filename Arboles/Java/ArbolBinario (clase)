@@ -1,0 +1,138 @@
+package pkg_arboles;
+
+import java.util.Scanner;
+
+public class ArbolBinario
+{
+    private Nodo raiz;
+
+    // auxiliares
+    private Object info;
+    private Nodo aux;
+    private String recorrido;   // acumulador de los recorridos
+    private final Scanner sc = new Scanner(System.in);
+
+    public ArbolBinario()
+    {
+        raiz = null;
+        recorrido = "";
+    }
+
+    public void crearRaiz()
+    {
+        System.out.print("ingrese jugador para la raiz: ");
+        Jugador j= new Jugador();
+        info = j.ingresarDatos();
+        asignarRaiz(new Nodo(null,info, null));
+     }
+
+    public void ingresarHijo(Nodo q)
+    {
+        System.out.print("Digite dato para el hijo de " + q.obtenerDato() + ": ");
+        Jugador j= new Jugador();
+        info = j.ingresarDatos();
+        aux = new Nodo(null, info, null);
+    }
+
+    public boolean isEmpty()
+    {
+        return raiz == null;
+    }
+
+    public void insertarNodos(Nodo q)
+    {
+        String resp;
+
+        System.out.print("Ingresar hijo izquierdo (Anterior) de " + q.obtenerDato() + " ¿si / no?: ");
+        resp = sc.nextLine().trim();
+        if (resp.equalsIgnoreCase("si"))
+        {
+            ingresarHijo(q);
+            q.asignarAnt(aux);
+        }
+
+        System.out.print("Ingresar hijo derecho (Siguiente) de " + q.obtenerDato() + " ¿si / no?: ");
+        resp = sc.nextLine().trim();
+        if (resp.equalsIgnoreCase("si"))
+        {
+            ingresarHijo(q);
+            q.asignarSig(aux);
+        }
+    }
+
+    // método recursivo para crear el árbol
+    public void crear(Nodo q)
+    {
+        // caso base
+        if (q != null)
+        {
+            insertarNodos(q);
+            // llamada recursiva por la izquierda
+            crear(q.obtenerAnt());
+            // llamada recursiva por la derecha
+            crear(q.obtenerSig());
+        }
+    }
+
+    public Nodo obtenerRaiz()
+    {
+        return raiz;
+    }
+
+    public void asignarRaiz(Nodo raiz)
+    {
+        this.raiz = raiz;
+    }
+
+   private void preorden(Nodo q)
+    {
+        if (q != null)
+        {
+            recorrido += q.obtenerDato() + " ";
+            preorden(q.obtenerAnt());
+            preorden(q.obtenerSig());
+        }
+    }
+    public String preorden()
+    {
+        recorrido = "";
+        preorden(raiz);
+        return recorrido.trim();
+    }
+
+ 
+    private void inorden(Nodo q)
+    {
+        if (q != null)
+        {
+            inorden(q.obtenerAnt());
+            recorrido += q.obtenerDato() + " ";
+            inorden(q.obtenerSig());
+        }
+    }
+
+    
+    public String inorden()
+    {
+        recorrido = "";
+        inorden(raiz);
+        return recorrido.trim();
+    }
+
+    private void posorden(Nodo q)
+    {
+        if (q != null)
+        {
+            posorden(q.obtenerAnt());
+            posorden(q.obtenerSig());
+            recorrido += q.obtenerDato() + " ";
+        }
+    }
+    
+    public String posorden()
+    {
+        recorrido = "";
+        posorden(raiz);
+        return recorrido.trim();
+    }
+}
