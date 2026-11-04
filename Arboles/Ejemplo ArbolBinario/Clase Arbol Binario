@@ -147,5 +147,20 @@ Fin Metodo
      FinSi
      retornar buscarSinOrden(n.getDer(), clave)
  Fin Metodo
+  publico entero xxxxx()
+         este.contador = 0
+          xxxxx(este.raiz)
+          retornar este.contador
+  Fin Metodo
 
+  privado vacio xxxxxx(Nodo n)
+      Si (n == nulo) Entonces
+          retornar
+      FinSi
+      Si (n.getIzq() == nulo) y (n.getDer() == nulo) Entonces
+         este.contador = este.contador + 1
+      FinSi
+       xxxxxxx(n.getIzq())
+       xxxxxxx(n.getDer())
+    Fin Metodo
 fin clase ArbolBinario
