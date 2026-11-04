@@ -106,15 +106,13 @@ publico clase ArbolBinario
             posorden(q.obtenerSig())
             recorrido=recorrido+q.obtenerDato()+" "
         fin si
-    fin posorden
+     fin posorden
 
 publico cadena posorden()
         recorrido=""
         posorden(raiz)
         retornar recorrido
-    fin posorden
-fin clase ArbolBinario
-
+ fin posorden
 publico Nodo xxxx(entero clave)
    retornar xxxx(este.raiz, clave)
 Fin Metodo
@@ -133,3 +131,4 @@ Fin Metodo
      FinSi
   Fin Metodo
 
+fin clase ArbolBinario
