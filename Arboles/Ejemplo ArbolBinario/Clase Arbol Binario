@@ -114,3 +114,22 @@ publico cadena posorden()
         retornar recorrido
     fin posorden
 fin clase ArbolBinario
+
+publico Nodo xxxx(entero clave)
+   retornar xxxx(este.raiz, clave)
+Fin Metodo
+
+ privado Nodo xxxx(Nodo n, entero clave)
+     Si (n == nulo) Entonces
+        retornar nulo
+     FinSi
+     Si (clave == n.getDato()) Entonces
+       retornar n
+     FinSi
+     Si clave < n.getDato() Entonces
+         retornar xxxx(n.getIzq(), clave)
+        Sino
+         retornar xxxx(n.getDer(), clave)
+     FinSi
+  Fin Metodo
+
